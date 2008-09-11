@@ -1,0 +1,8 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form">
+    
+    <f:entry title="Rcov report directory" description="relative path to the coverage report directory">
+		<f:textbox name="rcov.reportDir" value="${instance.reportDir}"/>   
+  	</f:entry>        
+    
+</j:jelly>
