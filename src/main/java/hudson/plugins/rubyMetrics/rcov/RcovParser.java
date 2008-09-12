@@ -23,17 +23,11 @@ import org.htmlparser.filters.AndFilter;
 import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.TagNameFilter;
-import org.htmlparser.nodes.TagNode;
-import org.htmlparser.tags.CompositeTag;
 import org.htmlparser.tags.LinkTag;
-import org.htmlparser.tags.Span;
 import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
-import org.htmlparser.util.SimpleNodeIterator;
-
-import sun.misc.Regexp;
 
 public class RcovParser {
 
@@ -45,8 +39,7 @@ public class RcovParser {
 	
 	private static final String TABLE_TAG_NAME = "table";
 	private static final String TD_TAG_NAME = "td";
-	private static final String TT_TAG_NAME = "tt";
-	private static final String PRE_TAG_NAME = "pre";
+	private static final String TT_TAG_NAME = "tt";	
 	private static final String CLASS_ATTR_NAME = "class";
 
 	private final File rootFilePath;

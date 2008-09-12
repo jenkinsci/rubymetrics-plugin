@@ -23,10 +23,10 @@
 			    		<td class="lines_total">${it.result.totalLines}</td>
 					    <td class="lines_code">${it.result.codeLines}</td>
 					    
-					    <rcov:tableGraph coverage="${it.result.totalCoverage}" coveredWidth="${it.result.totalCoveredWith}" 
+					    <rcov:tableGraph coverage="${it.result.totalCoverage}" coveredWidth="${it.result.totalCoveredWidth}" 
 					    		uncoveredWidth="${it.result.totalUncoveredWidth}" />
 
-					    <rcov:tableGraph coverage="${it.result.codeCoverage}" coveredWidth="${it.result.codeCoveredWith}" 
+					    <rcov:tableGraph coverage="${it.result.codeCoverage}" coveredWidth="${it.result.codeCoveredWidth}" 
 					    		uncoveredWidth="${it.result.codeUncoveredWidth}" />
           				
 			    	</tr>			    				    	

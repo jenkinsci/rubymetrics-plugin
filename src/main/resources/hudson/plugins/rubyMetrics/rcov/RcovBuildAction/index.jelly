@@ -27,10 +27,10 @@
 			    		<td class="lines_total">${it.results.totalLines}</td>
 					    <td class="lines_code">${it.results.codeLines}</td>
 					    
-					    <rcov:tableGraph coverage="${it.results.totalCoverage}" coveredWidth="${it.results.totalCoveredWith}" 
+					    <rcov:tableGraph coverage="${it.results.totalCoverage}" coveredWidth="${it.results.totalCoveredWidth}" 
 					    		uncoveredWidth="${it.results.totalUncoveredWidth}" />
 
-					    <rcov:tableGraph coverage="${it.results.codeCoverage}" coveredWidth="${it.results.codeCoveredWith}" 
+					    <rcov:tableGraph coverage="${it.results.codeCoverage}" coveredWidth="${it.results.codeCoveredWidth}" 
 					    		uncoveredWidth="${it.results.codeUncoveredWidth}" />
           				
 			    	</tr>
@@ -41,10 +41,10 @@
 				    		<td class="lines_total">${file.totalLines}</td>
 						    <td class="lines_code">${file.codeLines}</td>
 						    
-						    <rcov:tableGraph coverage="${file.totalCoverage}" coveredWidth="${file.totalCoveredWith}" 
+						    <rcov:tableGraph coverage="${file.totalCoverage}" coveredWidth="${file.totalCoveredWidth}" 
 					    			uncoveredWidth="${file.totalUncoveredWidth}" />
 					    	
-						    <rcov:tableGraph coverage="${file.codeCoverage}" coveredWidth="${file.codeCoveredWith}" 
+						    <rcov:tableGraph coverage="${file.codeCoverage}" coveredWidth="${file.codeCoveredWidth}" 
 					    			uncoveredWidth="${file.codeUncoveredWidth}" />
 						    
 				    	</tr>
