@@ -1,15 +1,15 @@
 package hudson.plugins.rubyMetrics.rcov;
 
-import java.io.IOException;
-
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
-
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Actionable;
 import hudson.model.ProminentProjectAction;
 import hudson.model.Result;
+
+import java.io.IOException;
+
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerResponse;
 
 public class RcovProjectAction extends Actionable implements ProminentProjectAction {
 

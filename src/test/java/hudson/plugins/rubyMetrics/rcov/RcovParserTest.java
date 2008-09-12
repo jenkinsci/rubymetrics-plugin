@@ -1,6 +1,5 @@
 package hudson.plugins.rubyMetrics.rcov;
 
-import hudson.plugins.rubyMetrics.rcov.RcovParser;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 
 import java.io.File;
