@@ -2,12 +2,29 @@ package hudson.plugins.rubyMetrics.railsStats.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class RailsStatsResults {
 	
-	private Map<RailsClassType, Map<RailsStatsMetrics, Integer>> metrics = new HashMap<RailsClassType, Map<RailsStatsMetrics,Integer>>();
+	private Map<String, Map<RailsStatsMetrics, Integer>> metrics = new HashMap<String, Map<RailsStatsMetrics,Integer>>();
+	private List<String> sortedLabels = new ArrayList<String>();
+	
+	private class SortLabelsComparator implements Comparator<String> {
+
+		private final List<String> sortedLabels;
+		public SortLabelsComparator(List<String> coll) {
+			sortedLabels = coll;
+		}
+		
+		public int compare(String o1, String o2) {
+			return new Integer(sortedLabels.indexOf(o1)).compareTo(sortedLabels.indexOf(o2));
+		}
+		
+	}
 	
 	private String codeLocSummary;
 	private String testLocSummary;
@@ -25,18 +42,30 @@ public class RailsStatsResults {
 		return headers;
 	}
 	
-	public void addMetric(RailsClassType classType, Map<RailsStatsMetrics, Integer> metric) {
+	public void addMetric(String classType, Map<RailsStatsMetrics, Integer> metric) {
 		metrics.put(classType, metric);
+		if (!sortedLabels.contains(classType)) {
+			sortedLabels.add(classType);
+		}
 	}
 	
-	public Map<RailsStatsMetrics, Integer> getTotal() {
-		return metrics.get(RailsClassType.TOTAL);
+	public Map<RailsStatsMetrics, Integer> getTotal() {		
+		return metrics.get("Total");
 	}
 	
-	public Map<RailsClassType, Map<RailsStatsMetrics, Integer>> getMetrics() {
-		return metrics;
+	public Map<String, Map<RailsStatsMetrics, Integer>> getMetrics() {
+		Comparator<String> comparator = new SortLabelsComparator(sortedLabels);
+		
+		Map<String, Map<RailsStatsMetrics, Integer>> response = 
+			new TreeMap<String, Map<RailsStatsMetrics,Integer>>(comparator);
+		
+		for (Map.Entry<String, Map<RailsStatsMetrics, Integer>> entry : metrics.entrySet()) {
+			response.put(entry.getKey(), entry.getValue());
+		}
+		
+		return response;
 	}
-	public void setMetrics(Map<RailsClassType, Map<RailsStatsMetrics, Integer>> metrics) {
+	public void setMetrics(Map<String, Map<RailsStatsMetrics, Integer>> metrics) {
 		this.metrics = metrics;
 	}
 	public String getCodeLocSummary() {

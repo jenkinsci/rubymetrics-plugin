@@ -3,9 +3,7 @@ package hudson.plugins.rubyMetrics.rcov;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
-import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
-import hudson.plugins.rubyMetrics.railsStats.RailsStatsBuildAction;
 
 public class RcovProjectAction extends AbstractRubyMetricsProjectAction {
 

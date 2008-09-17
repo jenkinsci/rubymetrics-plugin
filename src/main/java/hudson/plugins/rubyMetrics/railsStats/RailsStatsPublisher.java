@@ -2,6 +2,7 @@ package hudson.plugins.rubyMetrics.railsStats;
 
 import hudson.FilePath;
 import hudson.Launcher;
+import hudson.model.Action;
 import hudson.model.Build;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
@@ -24,20 +25,15 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  */
 public class RailsStatsPublisher extends RubyMetricsPublisher {
-
-	private final boolean publish;
+	
 	private final Rake rake;
 	
 	@DataBoundConstructor
-	public RailsStatsPublisher(boolean publish) {
-		this.publish = publish;
+	public RailsStatsPublisher() {		
 		this.rake = new Rake(null, null, "stats", null, true);
 	}
 	
 	public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-		if (!publish) {
-			return true;
-		}
 		
 		final Project<?, ?> project = build.getParent();        
         FilePath workspace = project.getModuleRoot();
@@ -50,10 +46,13 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 		
 		StringOutputStream out = new StringOutputStream();		
 		BuildListener stringListener = new StreamBuildListener(out);
-		
+				
 		if (rake.perform(build, launcher, stringListener)) {
 			final RailsStatsParser parser = new RailsStatsParser();
 			RailsStatsResults results = parser.parse(out);
+			
+			RailsStatsBuildAction action = new RailsStatsBuildAction(build, results);
+			build.getActions().add(action);
 		}				
 		
 		return true;
@@ -69,6 +68,15 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 		}
 	}	
 	
+	
+	
+	@Override
+	public Action getProjectAction(Project project) {
+		return new RailsStatsProjectAction(project);
+	}
+
+
+
 	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
     public static final class DescriptorImpl extends Descriptor<Publisher> {
@@ -79,7 +87,7 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 
 		@Override
 		public String getDisplayName() {
-			return "Publish rails stats report";
+			return "Publish Rails stats report";
 		}
     	
     }

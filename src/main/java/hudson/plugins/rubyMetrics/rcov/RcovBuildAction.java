@@ -69,6 +69,11 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
             dsb.add(a.getResults().getCodeCoverageFloat(), "code coverage", label);            
         }
         return dsb;
+	}
+
+	@Override
+	protected String getRangeAxisLabel() {
+		return "%";
 	}    
 
 }

@@ -1,5 +1,8 @@
 package hudson.plugins.rubyMetrics.railsStats.model;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public enum RailsStatsMetrics {
 	LINES, LOC, CLASSES, METHODS, M_C, LOC_M;
 	
@@ -30,5 +33,16 @@ public enum RailsStatsMetrics {
 		} catch (Exception e) {
 			return null;
 		}
+	}
+	
+	public int getOrder() {
+		return Arrays.asList(RailsStatsMetrics.values()).indexOf(this);
+	}
+	
+	public static class COMPARATOR implements Comparator<RailsStatsMetrics> {
+		public int compare(RailsStatsMetrics o1, RailsStatsMetrics o2) {
+			return new Integer(o1.getOrder()).compareTo(new Integer(o2.getOrder()));
+		}
+		
 	}
 }
