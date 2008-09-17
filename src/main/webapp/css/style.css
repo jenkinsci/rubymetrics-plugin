@@ -122,3 +122,11 @@ table.report tr.light {
 table.report tr.dark {
  background-color: rgb(230, 230, 235);
 }
+
+div#summary {
+	margin-top: 2em;
+}
+
+div#summary span {
+	padding-right: 2.5em;
+}

@@ -52,6 +52,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     }
 
     protected abstract DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> getDataSetBuilder();
+    protected abstract String getRangeAxisLabel();
     
     public void doGraph(StaplerRequest req, StaplerResponse rsp) throws IOException {
         if (ChartUtil.awtProblem) {            
@@ -65,15 +66,15 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
             return; // up to date
         }
 
-        ChartUtil.generateGraph(req, rsp, createChart(getDataSetBuilder().build()), 500, 200);
+        ChartUtil.generateGraph(req, rsp, createChart(getDataSetBuilder().build(), getRangeAxisLabel()), 500, 200);
     }
 
-    private JFreeChart createChart(CategoryDataset dataset) {
+    private JFreeChart createChart(CategoryDataset dataset, String rangeAxisLabel) {
 
         final JFreeChart chart = ChartFactory.createLineChart(
                 null,                   // chart title
                 null,                   // unused
-                "%",                    // range axis label
+                rangeAxisLabel,          // range axis label
                 dataset,                  // data
                 PlotOrientation.VERTICAL, // orientation
                 true,                     // include legend

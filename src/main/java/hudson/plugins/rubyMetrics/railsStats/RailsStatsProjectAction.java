@@ -3,7 +3,6 @@ package hudson.plugins.rubyMetrics.railsStats;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
-import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
 
 public class RailsStatsProjectAction extends AbstractRubyMetricsProjectAction {

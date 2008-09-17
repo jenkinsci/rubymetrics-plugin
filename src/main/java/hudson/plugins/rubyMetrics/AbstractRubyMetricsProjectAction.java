@@ -1,10 +1,8 @@
 package hudson.plugins.rubyMetrics;
 
-import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Actionable;
 import hudson.model.ProminentProjectAction;
-import hudson.model.Result;
 
 import java.io.IOException;
 

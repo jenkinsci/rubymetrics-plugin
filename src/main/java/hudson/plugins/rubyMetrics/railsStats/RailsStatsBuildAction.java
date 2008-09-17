@@ -24,9 +24,13 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public RailsStatsResults getResults() {
+		return results;
+	}
 
 	public String getDisplayName() {
-		return "Rails total stats";
+		return "Rails stats";
 	}
 
 	public String getIconFileName() {
@@ -41,7 +45,8 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 	protected DataSetBuilder<String, NumberOnlyBuildLabel> getDataSetBuilder() {
 		DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> dsb = new DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel>();
         
-		Map<RailsStatsMetrics, Integer> total = results.getTotal();
+		Map<RailsStatsMetrics, Integer> total = results.getTotal();		
+		
 		for (RailsStatsBuildAction a = this; a != null; a = a.getPreviousResult()) {
 			ChartUtil.NumberOnlyBuildLabel label = new ChartUtil.NumberOnlyBuildLabel(a.owner);
 			
@@ -51,6 +56,11 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 		}		
 		
         return dsb;
+	}
+
+	@Override
+	protected String getRangeAxisLabel() {
+		return "";
 	}    
 
 }
