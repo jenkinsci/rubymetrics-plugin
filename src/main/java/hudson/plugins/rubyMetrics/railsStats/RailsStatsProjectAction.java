@@ -1,31 +1,30 @@
-package hudson.plugins.rubyMetrics.rcov;
+package hudson.plugins.rubyMetrics.railsStats;
 
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Result;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
-import hudson.plugins.rubyMetrics.railsStats.RailsStatsBuildAction;
 
-public class RcovProjectAction extends AbstractRubyMetricsProjectAction {
+public class RailsStatsProjectAction extends AbstractRubyMetricsProjectAction {
 
-	public RcovProjectAction(AbstractProject<?, ?> project) {
+	public RailsStatsProjectAction(AbstractProject<?, ?> project) {
 		super(project);
 	}
 	
 	public String getDisplayName() {
-		return "Rcov report";
+		return "Rails stats report";
 	}
 
-	public String getUrlName() {
-		return "rcov";
-	}	
+	public String getUrlName() {		
+		return "railsStats";
+	}
 	
-	public RcovBuildAction getLastResult() {
+	public RailsStatsBuildAction getLastResult() {
 		for (AbstractBuild<?, ?> b = project.getLastStableBuild(); b != null; b = b.getPreviousNotFailedBuild()) {
 	        if (b.getResult() == Result.FAILURE)
 	            continue;
-	        RcovBuildAction r = b.getAction(RcovBuildAction.class);
+	        RailsStatsBuildAction r = b.getAction(RailsStatsBuildAction.class);
 	        if (r != null)
 	            return r;
 	    }
@@ -36,7 +35,7 @@ public class RcovProjectAction extends AbstractRubyMetricsProjectAction {
 		for (AbstractBuild<?, ?> b = project.getLastStableBuild(); b != null; b = b.getPreviousNotFailedBuild()) {
             if (b.getResult() == Result.FAILURE)
                 continue;
-            RcovBuildAction r = b.getAction(RcovBuildAction.class);
+            RailsStatsBuildAction r = b.getAction(RailsStatsBuildAction.class);
             if (r != null)
                 return b.getNumber();
         }

@@ -1,0 +1,91 @@
+package hudson.plugins.rubyMetrics.railsStats;
+
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.model.Build;
+import hudson.model.BuildListener;
+import hudson.model.Descriptor;
+import hudson.model.Project;
+import hudson.model.StreamBuildListener;
+import hudson.plugins.rake.Rake;
+import hudson.plugins.rubyMetrics.RubyMetricsPublisher;
+import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
+import hudson.tasks.Publisher;
+
+import java.io.IOException;
+
+import org.codehaus.plexus.util.StringOutputStream;
+import org.kohsuke.stapler.DataBoundConstructor;
+
+/**
+ * Rails stats {@link Publisher}
+ * 
+ * @author David Calavera
+ *
+ */
+public class RailsStatsPublisher extends RubyMetricsPublisher {
+
+	private final boolean publish;
+	private final Rake rake;
+	
+	@DataBoundConstructor
+	public RailsStatsPublisher(boolean publish) {
+		this.publish = publish;
+		this.rake = new Rake(null, null, "stats", null, true);
+	}
+	
+	public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+		if (!publish) {
+			return true;
+		}
+		
+		final Project<?, ?> project = build.getParent();        
+        FilePath workspace = project.getModuleRoot();
+        
+        if (!isRailsProject(workspace)) {
+        	return fail(build, listener, "This is not a rails app directory: " + workspace.getName());
+        }
+		
+		listener.getLogger().println("Publishing rails stats report...");
+		
+		StringOutputStream out = new StringOutputStream();		
+		BuildListener stringListener = new StreamBuildListener(out);
+		
+		if (rake.perform(build, launcher, stringListener)) {
+			final RailsStatsParser parser = new RailsStatsParser();
+			RailsStatsResults results = parser.parse(out);
+		}				
+		
+		return true;
+	}
+	
+	private boolean isRailsProject(FilePath workspace) {
+		try { //relaxed rails app schema
+			return workspace.isDirectory()
+				&& workspace.list("app") != null && workspace.list("config") != null
+				&& workspace.list("db") != null && workspace.list("test") != null;
+		} catch (Exception e) {
+			return false;
+		}
+	}	
+	
+	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
+
+    public static final class DescriptorImpl extends Descriptor<Publisher> {
+
+		protected DescriptorImpl() {
+			super(RailsStatsPublisher.class);			
+		}
+
+		@Override
+		public String getDisplayName() {
+			return "Publish rails stats report";
+		}
+    	
+    }
+
+	public Descriptor<Publisher> getDescriptor() {
+		return DESCRIPTOR;
+	}
+
+}

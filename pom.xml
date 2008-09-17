@@ -19,7 +19,14 @@
   		<artifactId>hudson-test-harness</artifactId>
   		<version>1.252</version>
   		<scope>test</scope>
-  	</dependency>  	 
+  	</dependency>
+  	
+  	<dependency>
+  		<groupId>org.jvnet.hudson.plugins</groupId>
+  		<artifactId>rake</artifactId>
+  		<version>1.1</version>
+  	</dependency>
+  	  	 
     <dependency>
 		<groupId>org.htmlparser</groupId>
 	    <artifactId>htmlparser</artifactId>
