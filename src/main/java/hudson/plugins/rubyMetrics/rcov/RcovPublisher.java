@@ -10,6 +10,7 @@ import hudson.model.BuildListener;
 import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.model.Result;
+import hudson.plugins.rubyMetrics.RubyMetricsPublisher;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.tasks.Publisher;
 
@@ -25,7 +26,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author David Calavera
  *
  */
-public class RcovPublisher extends Publisher {
+public class RcovPublisher extends RubyMetricsPublisher {
 	
 	private final String reportDir;
 	
@@ -47,7 +48,7 @@ public class RcovPublisher extends Publisher {
     		return true;
     	}
     	listener.getLogger().println("Publishing Rcov report...");
-    	
+    	    	    	
         final Project<?, ?> project = build.getParent();        
         final FilePath workspace = project.getModuleRoot();        
     	
@@ -92,12 +93,6 @@ public class RcovPublisher extends Publisher {
         return false;
     }
     
-    private boolean fail(Build<?, ?> build, BuildListener listener, String message) {
-    	listener.getLogger().println(message);
-        build.setResult(Result.FAILURE);
-    	return true;
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
@@ -117,7 +112,7 @@ public class RcovPublisher extends Publisher {
 
 		@Override
 		public String getDisplayName() {
-			return "Rcov coverage publisher";
+			return "Publish Rcov report";
 		}
     	
     }
