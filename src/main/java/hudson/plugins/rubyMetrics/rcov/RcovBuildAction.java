@@ -10,7 +10,6 @@ import hudson.util.ChartUtil;
 import hudson.util.DataSetBuilder;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
 
-import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
@@ -50,7 +49,7 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 	
     public Object getDynamic(final String link, final StaplerRequest request, final StaplerResponse response) {    	
     	if (link.startsWith("file.")) {
-    		String file = StringUtils.substringAfter(link, "file.");
+    		String file = link.substring(link.indexOf("file.") + 5);
         	RcovFileResult fileResult = getResults().getFile(file);    	
         	return new RcovFileDetail(owner, fileResult);
     	}
@@ -75,5 +74,5 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 	protected String getRangeAxisLabel() {
 		return "%";
 	}    
-
+	
 }
