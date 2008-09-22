@@ -9,6 +9,7 @@ import hudson.model.Descriptor;
 import hudson.model.Project;
 import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
+import hudson.plugins.rake.RubyInstallation;
 import hudson.plugins.rubyMetrics.RubyMetricsPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.Publisher;
@@ -24,13 +25,16 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * @author David Calavera
  *
  */
+@SuppressWarnings("unchecked")
 public class RailsStatsPublisher extends RubyMetricsPublisher {
 	
 	private final Rake rake;
+	private final String rakeInstallation;
 	
 	@DataBoundConstructor
-	public RailsStatsPublisher() {		
-		this.rake = new Rake(null, null, "stats", null, true);
+	public RailsStatsPublisher(String rakeInstallation) {
+		this.rakeInstallation = rakeInstallation;
+		this.rake = new Rake(this.rakeInstallation, null, "stats", null, true);
 	}
 	
 	public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
@@ -58,6 +62,10 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 		return true;
 	}
 	
+	public String getRakeInstallation() {
+		return rakeInstallation;
+	}
+	
 	private boolean isRailsProject(FilePath workspace) {
 		try { //relaxed rails app schema
 			return workspace.isDirectory()
@@ -68,14 +76,11 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 		}
 	}	
 	
-	
-	
+		
 	@Override
 	public Action getProjectAction(Project project) {
 		return new RailsStatsProjectAction(project);
 	}
-
-
 
 	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
@@ -84,10 +89,19 @@ public class RailsStatsPublisher extends RubyMetricsPublisher {
 		protected DescriptorImpl() {
 			super(RailsStatsPublisher.class);			
 		}
+		
+		@Override
+        public String getHelpFile() {
+        	return "/plugin/rubyMetrics/railsStatsHelp.html";
+        }
 
 		@Override
 		public String getDisplayName() {
 			return "Publish Rails stats report";
+		}
+		
+		public RubyInstallation[] getRakeInstallations() {
+			return Rake.DESCRIPTOR.getInstallations();
 		}
     	
     }
