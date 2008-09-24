@@ -39,8 +39,8 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 				minMetric = target.getMetric();
 			}
 		}
-				
-		return new HealthReport(minValue, results.getHealthDescription(minMetric));
+		HealthReport report = minMetric != null?new HealthReport(minValue, results.getHealthDescription(minMetric)):null;	
+		return report;
 	}
 
 	public String getDisplayName() {
