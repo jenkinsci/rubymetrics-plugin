@@ -10,7 +10,7 @@
     
   <artifactId>rubyMetrics</artifactId>
   <packaging>hpi</packaging>
-  <version>1.2.1</version>
+  <version>1.2.1-SNAPSHOT</version>
   <name>Hudson ruby metrics  plugin</name>
   <url>http://hudson.gotdns.com/wiki/display/HUDSON/Ruby+Metrics+Plugin</url>
   
