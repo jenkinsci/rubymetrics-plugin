@@ -34,7 +34,7 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 		for (MetricTarget target : targets) {			
 			int value = calcRangeScore(target.getHealthy(), target.getUnhealthy(), 
 					results.getRatioFloat(target.getMetric()).intValue());
-			if (value < minValue) {
+			if (value <= minValue) {
 				minValue = value;
 				minMetric = target.getMetric();
 			}
