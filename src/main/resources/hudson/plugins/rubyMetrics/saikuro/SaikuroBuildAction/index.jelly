@@ -15,10 +15,10 @@
             	<thead>
             		<tr>
             			<td class='heading'>Class</td>
-					    <td class='heading'>Method</td>
-					    <td class='heading'>Complexity</td>					    
-			      	</tr>
-			    </thead>
+    					    <td class='heading'>Method</td>
+    					    <td class='heading'>Complexity</td>					    
+  			      	</tr>
+  			    </thead>
 			    <tbody>			    	
 			    	<j:forEach var="file" items="${it.results.files}">
 			    		<tr>
