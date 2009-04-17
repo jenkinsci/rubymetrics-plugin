@@ -1,18 +1,15 @@
 package hudson.plugins.rubyMetrics.rcov;
 
+import hudson.plugins.rubyMetrics.HtmlParser;
 import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.util.IOException2;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,29 +26,22 @@ import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
 
-public class RcovParser {
+public class RcovParser extends HtmlParser {
 
 	private static final String REPORT_CLASS_VALUE = "report";
 	private static final String TOTAL_LINES = "lines_total";
 	private static final String CODE_LINES = "lines_code";
 	private static final String TOTAL_COVERAGE = "coverage_total";
 	private static final String CODE_COVERAGE = "coverage_code";
-	
-	private static final String TABLE_TAG_NAME = "table";
-	private static final String TD_TAG_NAME = "td";
-	private static final String TT_TAG_NAME = "tt";	
-	private static final String CLASS_ATTR_NAME = "class";
 
-	private final File rootFilePath;
-	
 	public RcovParser(File rootFilePath) {
-		this.rootFilePath = rootFilePath;
+		super(rootFilePath);
 	}
 	
-    public RcovResult parse(File file) throws IOException {        
+	public RcovResult parse(File file) throws IOException {        
         return parse(new FileInputStream(file));
     }
-    
+	
     public RcovResult parse(InputStream input) throws IOException {
     	try {            
     		RcovResult result = new RcovResult();
@@ -79,25 +69,7 @@ public class RcovParser {
         }        
     }
     
-    private String getHtml(InputStream input) throws IOException {
-    	StringWriter sw = new StringWriter();
-    	PrintWriter pw = new PrintWriter(sw);
-    	
-    	BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-    	String line;
-    	while ((line = reader.readLine()) != null) {
-    		pw.write(line);
-    	}
-    	return sw.toString();
-    }
-    
-    private Parser initParser(String html) throws ParserException {
-    	final Parser htmlParser = new Parser();
-    	htmlParser.setInputHTML(html);
-    	return htmlParser;
-    }
-    
-    private TableTag getReportTable(Parser htmlParser) throws ParserException {
+    protected TableTag getReportTable(Parser htmlParser) throws ParserException {
     	final AndFilter filter = new AndFilter(new TagNameFilter(TABLE_TAG_NAME), 
     			new HasAttributeFilter(CLASS_ATTR_NAME, REPORT_CLASS_VALUE));
     	
@@ -150,7 +122,7 @@ public class RcovParser {
 	    return text;
     }
     
-    private String parseSource(String href) throws ParserException, IOException {    	    	
+    private String parseSource(String href) throws ParserException, IOException {    	
     	String html = null;
     	    	    	
     	File[] sourceFile = rootFilePath.listFiles(new RcovFilenameFilter(href));
@@ -167,8 +139,7 @@ public class RcovParser {
     	return html;
     }
 
-    private static class RcovFilenameFilter implements FilenameFilter {
-		
+    private static class RcovFilenameFilter implements FilenameFilter {		
 		String fileName;
 		public RcovFilenameFilter(String fileName) {
 			this.fileName = fileName;

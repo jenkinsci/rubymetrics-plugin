@@ -5,7 +5,7 @@ import hudson.model.BuildListener;
 import hudson.model.Result;
 import hudson.tasks.Publisher;
 
-public abstract class RubyMetricsPublisher extends Publisher {
+public abstract class AbstractRubyMetricsPublisher extends Publisher {
 	
 	protected boolean fail(Build<?, ?> build, BuildListener listener, String message) {
     	listener.getLogger().println(message);
