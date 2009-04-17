@@ -1,5 +1,6 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
+import hudson.model.BuildListener;
 import hudson.plugins.rubyMetrics.HtmlParser;
 import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileResult;
@@ -24,8 +25,9 @@ import org.htmlparser.util.ParserException;
 
 public class SaikuroParser extends HtmlParser {
 
-	public SaikuroParser(File rootFilePath) {
+	public SaikuroParser(File rootFilePath, BuildListener listener) {
 		super(rootFilePath);
+		this.listener = listener;
 	}
 	
 	public SaikuroResult parse(File file) throws IOException {        
@@ -76,9 +78,9 @@ public class SaikuroParser extends HtmlParser {
     	
     	NodeList columnList = new NodeList();
     	row.collectInto(columnList, new TagNameFilter(TD_TAG_NAME));
-    	if (nodeList.size() > 0) {    		
-    		file.setMethodName(getTextAtNode(nodeList, 1));
-    		file.setComplexity(getTextAtNode(nodeList, 2));
+    	if (columnList.size() > 0) {	
+    		file.setMethodName(getTextAtNode(columnList, 1));
+    		file.setComplexity(getTextAtNode(columnList, 2));
     	}    	    		    
     	return file;
     }
