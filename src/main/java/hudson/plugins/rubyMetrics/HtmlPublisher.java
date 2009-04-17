@@ -56,7 +56,7 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
         }
         
         File[] coverageFiles = build.getRootDir().listFiles(indexFilter);
-        if (!(coverageFiles != null && coverageFiles.length > 0)) {
+        if (coverageFiles == null || coverageFiles.length == 0) {
         	return fail(build, listener, "Saikuro report index file wasn't found");
         }
         

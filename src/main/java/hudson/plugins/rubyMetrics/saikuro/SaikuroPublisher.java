@@ -4,6 +4,7 @@ import hudson.Launcher;
 import hudson.model.Build;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
+import hudson.model.Result;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
 import hudson.tasks.Publisher;
@@ -27,14 +28,17 @@ public class SaikuroPublisher extends HtmlPublisher {
      */
     public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
     	final SaikuroFilenameFilter indexFilter = new SaikuroFilenameFilter();
-    	boolean success = prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
-    	if (!success) {
+    	prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
+    	if (build.getResult() == Result.FAILURE) {
     		return false;
     	}
     	
-    	SaikuroParser parser = new SaikuroParser(build.getRootDir());
+    	SaikuroParser parser = new SaikuroParser(build.getRootDir(), listener);
     	SaikuroResult results = parser.parse(getCoverageFiles(build, indexFilter)[0]);
     	
+    	SaikuroBuildAction action = new SaikuroBuildAction(build, results);        
+        build.getActions().add(action);
+        
     	return true;
     }
     

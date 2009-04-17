@@ -44,8 +44,8 @@ public class RcovPublisher extends HtmlPublisher {
      */
     public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {    	
     	final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
-    	boolean success = prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
-    	if (!success) {
+    	prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
+    	if (build.getResult() == Result.FAILURE) {
     		return false;
     	}
         
