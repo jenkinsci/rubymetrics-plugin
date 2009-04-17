@@ -10,7 +10,7 @@ public class SaikuroResult {
 	
 	public SaikuroFileResult getFile(String href) {
 		SaikuroFileResult file = null;
-		
+
 		for (SaikuroFileResult it : files) {
 			if (it.getHref().equalsIgnoreCase(href)) {
 				file = it;

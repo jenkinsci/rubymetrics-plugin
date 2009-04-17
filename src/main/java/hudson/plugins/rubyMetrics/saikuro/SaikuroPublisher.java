@@ -1,6 +1,8 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.Launcher;
+import hudson.model.AbstractProject;
+import hudson.model.Action;
 import hudson.model.Build;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
@@ -46,6 +48,11 @@ public class SaikuroPublisher extends HtmlPublisher {
         public boolean accept(File dir, String name) {            
             return name.equalsIgnoreCase("index_cyclo.html");
         }
+    }
+    
+    @Override
+    public Action getProjectAction(final AbstractProject<?, ?> project) {
+        return new SaikuroProjectAction(project);
     }
     
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();

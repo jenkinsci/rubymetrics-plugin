@@ -72,7 +72,10 @@ public class SaikuroParser extends HtmlParser {
     	
     	if (nodeList.size() > 0) {
     		LinkTag link = (LinkTag) nodeList.elementAt(0);    		
-    		file.setHref(link.getLink().replaceAll("_cyclo.html", ""));
+    		file.setHref(link.getLink()
+    		    .replaceAll("_cyclo.html", "")
+    		    .replaceAll("\\./", "")
+    		    .replaceAll("/", "-").trim());
     		file.setClassName(link.getLinkText());
     	}
     	
