@@ -1,0 +1,34 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
+    <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
+       
+       <st:include it="${it.owner}" page="sidepanel.jelly" />
+       
+        <l:main-panel>
+            <h1>Saikuro report</h1>
+            
+            <j:if test="${it.previousResult != null}">
+            	<img src="graph" width="500px" height="200px"/>
+            </j:if>
+            
+            <table class="report">
+            	<thead>
+            		<tr>
+            			<td class='heading'>Class</td>
+					    <td class='heading'>Method</td>
+					    <td class='heading'>Complexity</td>					    
+			      	</tr>
+			    </thead>
+			    <tbody>			    	
+			    	<j:forEach var="file" items="${it.results.files}">
+			    		<tr>
+				    		<td><a href="file.${file.href}">${file.className}</a></td>
+				    		<td>${file.methodName}</td>
+						    <td>${file.complexity}</td>
+				    	</tr>
+			    	</j:forEach>
+			    </tbody>
+			 </table> <!-- report -->
+        </l:main-panel>
+    </l:layout>
+</j:jelly>

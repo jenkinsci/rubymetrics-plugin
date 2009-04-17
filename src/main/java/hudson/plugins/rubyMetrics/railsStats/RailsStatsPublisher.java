@@ -10,7 +10,7 @@ import hudson.model.Project;
 import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
-import hudson.plugins.rubyMetrics.RubyMetricsPublisher;
+import hudson.plugins.rubyMetrics.AbstractRubyMetricsPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.Publisher;
 
@@ -26,7 +26,7 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  */
 @SuppressWarnings("unchecked")
-public class RailsStatsPublisher extends RubyMetricsPublisher {
+public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	
 	private final Rake rake;
 	private final String rakeInstallation;

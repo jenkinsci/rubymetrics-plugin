@@ -1,24 +1,17 @@
 package hudson.plugins.rubyMetrics.rcov;
 
-import static hudson.plugins.rake.Util.getGemsDir;
-import static hudson.plugins.rake.Util.hasGemsInstalled;
-import static hudson.plugins.rake.Util.isRakeInstalled;
-import hudson.FilePath;
 import hudson.Launcher;
-import hudson.Util;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.Build;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
-import hudson.model.Project;
 import hudson.model.Result;
-import hudson.plugins.rubyMetrics.RubyMetricsPublisher;
+import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.rcov.model.MetricTarget;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.plugins.rubyMetrics.rcov.model.Targets;
 import hudson.tasks.Publisher;
-import hudson.util.FormFieldValidator;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -26,12 +19,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-
 import org.apache.commons.beanutils.ConvertUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
 
 /**
  * Rcov {@link Publisher}
@@ -40,9 +30,8 @@ import org.kohsuke.stapler.StaplerResponse;
  *
  */
 @SuppressWarnings({"unchecked", "serial"})
-public class RcovPublisher extends RubyMetricsPublisher {
-	
-	private final String reportDir;
+public class RcovPublisher extends HtmlPublisher {
+		
 	private List<MetricTarget> targets;	
 	
 	@DataBoundConstructor
@@ -50,37 +39,18 @@ public class RcovPublisher extends RubyMetricsPublisher {
 		this.reportDir = reportDir;				
 	}
 	
-	public String getReportDir() {
-		return reportDir;
-	}
-	
 	/**
      * {@inheritDoc}
      */
-    public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-    	if (!Result.SUCCESS.equals(build.getResult())) {
-    		listener.getLogger().println("Build wasn't successful, skipping rcov coverage report");
-    		return true;
+    public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {    	
+    	final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
+    	boolean success = prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
+    	if (!success) {
+    		return false;
     	}
-    	listener.getLogger().println("Publishing Rcov report...");
-    	    	    	
-        final Project<?, ?> project = build.getParent();        
-        final FilePath workspace = project.getModuleRoot();        
-    	
-        boolean copied = moveReportsToBuildRootDir(workspace, build, listener);
-        if (!copied) {
-        	return fail(build, listener, "Rcov report directory wasn't found using the pattern '" + reportDir + "'.");
-        }
-        
-        final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
-        
-        File[] coverageFiles = build.getRootDir().listFiles(indexFilter);
-        if (!(coverageFiles != null && coverageFiles.length > 0)) {
-        	return fail(build, listener, "Rcov report index file wasn't found");
-        }
         
         RcovParser parser = new RcovParser(build.getRootDir());
-        RcovResult results = parser.parse(coverageFiles[0]);
+        RcovResult results = parser.parse(getCoverageFiles(build, indexFilter)[0]);
     	
         RcovBuildAction action = new RcovBuildAction(build, results, targets);        
         build.getActions().add(action);
@@ -106,26 +76,6 @@ public class RcovPublisher extends RubyMetricsPublisher {
     		}
     	}
     	return false;
-    }
-    
-    private boolean moveReportsToBuildRootDir(FilePath workspace, Build<?, ?> build, BuildListener listener) throws InterruptedException {    	
-        try {        	
-        	FilePath coverageDir = workspace.child(reportDir);
-            
-        	if (!coverageDir.exists()) {
-        		listener.getLogger().println("file not found: " + coverageDir);
-        		return false;
-        	}
-            
-            coverageDir.copyRecursiveTo("**/*", new FilePath(build.getRootDir()));
-            
-            return true;
-        } catch (IOException e) {
-            Util.displayIOException(e, listener);
-            e.printStackTrace(listener.fatalError("Unable to find coverage results"));
-            build.setResult(Result.FAILURE);
-        }
-        return false;
     }
     
     /** {@inheritDoc} */
@@ -157,6 +107,10 @@ public class RcovPublisher extends RubyMetricsPublisher {
 				add(new MetricTarget(Targets.TOTAL_COVERAGE, 80, null, null));
 				add(new MetricTarget(Targets.CODE_COVERAGE, 80, null, null));
 			}};
+		}
+		
+		public String getToolShortName() {
+			return "rcov";
 		}
 
 		@Override
