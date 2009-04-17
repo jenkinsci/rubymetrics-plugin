@@ -34,7 +34,7 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	@DataBoundConstructor
 	public RailsStatsPublisher(String rakeInstallation) {
 		this.rakeInstallation = rakeInstallation;
-		this.rake = new Rake(this.rakeInstallation, null, "stats", null, true);
+		this.rake = new Rake(this.rakeInstallation, null, "stats", null, null, true);
 	}
 	
 	public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
