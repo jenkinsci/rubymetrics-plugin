@@ -1,0 +1,56 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
+    <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
+       
+       <st:include it="${it.owner}" page="sidepanel.jelly" />
+       
+        <l:main-panel>
+            <h1>Rcov coverage report</h1>
+            
+            <j:if test="${it.previousResult != null}">
+            	<img src="graph" width="500px" height="200px"/>
+            </j:if>
+            
+            <table class="report">
+            	<thead>
+            		<tr>
+            			<td class='heading'>Name</td>
+					    <td class='heading'>Total lines</td>
+					    <td class='heading'>Lines of code</td>
+					    <td class='heading'>Total coverage</td>
+					    <td class='heading'>Code coverage</td>
+			      	</tr>
+			    </thead>
+			    <tbody>
+			    	<tr>
+			    		<td>TOTAL</td>
+			    		<td class="lines_total">${it.results.totalLines}</td>
+					    <td class="lines_code">${it.results.codeLines}</td>
+					    
+					    <rcov:tableGraph coverage="${it.results.totalCoverage}" coveredWidth="${it.results.totalCoveredWidth}" 
+					    		uncoveredWidth="${it.results.totalUncoveredWidth}" />
+
+					    <rcov:tableGraph coverage="${it.results.codeCoverage}" coveredWidth="${it.results.codeCoveredWidth}" 
+					    		uncoveredWidth="${it.results.codeUncoveredWidth}" />
+          				
+			    	</tr>
+			    	
+			    	<j:forEach var="file" items="${it.results.files}">
+			    		<tr>
+				    		<td><a href="file.${file.href}">${file.name}</a></td>
+				    		<td class="lines_total">${file.totalLines}</td>
+						    <td class="lines_code">${file.codeLines}</td>
+						    
+						    <rcov:tableGraph coverage="${file.totalCoverage}" coveredWidth="${file.totalCoveredWidth}" 
+					    			uncoveredWidth="${file.totalUncoveredWidth}" />
+					    	
+						    <rcov:tableGraph coverage="${file.codeCoverage}" coveredWidth="${file.codeCoveredWidth}" 
+					    			uncoveredWidth="${file.codeUncoveredWidth}" />
+						    
+				    	</tr>
+			    	</j:forEach>
+			    </tbody>
+			 </table> <!-- report -->
+        </l:main-panel>
+    </l:layout>
+</j:jelly>

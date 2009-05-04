@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  
+  <parent>
+    <groupId>org.jvnet.hudson.plugins</groupId>
+    <artifactId>plugin</artifactId>
+    <version>1.303</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+    
+  <artifactId>rubyMetrics</artifactId>
+  <packaging>hpi</packaging>
+  <version>1.2.3</version>
+  <name>Hudson ruby metrics  plugin</name>
+  <url>http://wiki.hudson-ci.org/display/HUDSON/Ruby+Metrics+Plugin</url>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jvnet.hudson.main</groupId>
+      <artifactId>maven-plugin</artifactId>
+    </dependency>
+  	
+  	<dependency>
+  		<groupId>org.jvnet.hudson.plugins</groupId>
+  		<artifactId>rake</artifactId>
+  		<version>1.5</version>
+  	</dependency>
+  	  	 
+    <dependency>
+		<groupId>org.htmlparser</groupId>
+	    <artifactId>htmlparser</artifactId>
+	    <version>1.6</version>
+	</dependency> 
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <forkMode>never</forkMode>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <scm>
+    <connection>scm:svn:https://guest@svn.dev.java.net/svn/hudson/tags/rubyMetrics-1.2.3</connection>
+    <developerConnection>scm:svn:https://svn.dev.java.net/svn/hudson/tags/rubyMetrics-1.2.3</developerConnection>
+    <url>https://hudson.dev.java.net/source/browse/hudson/hudson/plugins/rubyMetrics/tags/rubyMetrics-1.2.3</url>
+  </scm>
+</project>
