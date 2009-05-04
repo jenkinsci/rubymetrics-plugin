@@ -14,8 +14,8 @@ import hudson.tasks.BuildStep;
  */
 public class PluginImpl extends Plugin {
     public void start() throws Exception {    	
-        BuildStep.PUBLISHERS.add(RcovPublisher.DESCRIPTOR);        
-        BuildStep.PUBLISHERS.add(RailsStatsPublisher.DESCRIPTOR);
-        BuildStep.PUBLISHERS.add(SaikuroPublisher.DESCRIPTOR);
+        BuildStep.PUBLISHERS.addRecorder(RcovPublisher.DESCRIPTOR);        
+        BuildStep.PUBLISHERS.addRecorder(RailsStatsPublisher.DESCRIPTOR);
+//        BuildStep.PUBLISHERS.addRecorder(SaikuroPublisher.DESCRIPTOR);
     }
 }
