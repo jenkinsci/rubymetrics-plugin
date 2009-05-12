@@ -2,7 +2,7 @@
          xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
     <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
     
-	   
+	   <st:include it="${it.owner}" page="sidepanel.jelly" />
 	    
 	    <l:main-panel>
 	            <h1>Rails stats report</h1>

@@ -55,10 +55,6 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 		return "rcov";
 	}
 
-	public AbstractBuild<?, ?> getOwner() {
-		return owner;
-	}
-
 	public RcovResult getResults() {
 		return results;
 	}
