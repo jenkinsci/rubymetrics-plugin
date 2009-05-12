@@ -118,4 +118,8 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
 
         return chart;
     }
+
+	public AbstractBuild<?, ?> getOwner() {
+		return owner;
+	}
 }
