@@ -16,6 +16,5 @@ public class PluginImpl extends Plugin {
     public void start() throws Exception {    	
         BuildStep.PUBLISHERS.addRecorder(RcovPublisher.DESCRIPTOR);        
         BuildStep.PUBLISHERS.addRecorder(RailsStatsPublisher.DESCRIPTOR);
-//        BuildStep.PUBLISHERS.addRecorder(SaikuroPublisher.DESCRIPTOR);
     }
 }
