@@ -2,6 +2,8 @@ package hudson.plugins.rubyMetrics.rcov.model;
 
 import java.math.BigDecimal;
 
+import org.apache.commons.lang.StringUtils;
+
 public class RcovAbstractResult {
 	
 	private String totalLines;
@@ -32,7 +34,7 @@ public class RcovAbstractResult {
 	}
 	
 	public Float getTotalCoverageFloat() {
-		return Float.valueOf(totalCoverage.replaceAll("%", ""));
+		return StringUtils.isEmpty(totalCoverage)? 0 : Float.valueOf(totalCoverage.replaceAll("%", ""));
 	}
 	
 	public String getTotalCoverage() {
@@ -43,7 +45,7 @@ public class RcovAbstractResult {
 	}
 	
 	public Float getCodeCoverageFloat() {
-		return Float.valueOf(codeCoverage.replaceAll("%", ""));
+		return StringUtils.isEmpty(codeCoverage)? 0 : Float.valueOf(codeCoverage.replaceAll("%", ""));
 	}
 	
 	public String getCodeCoverage() {
