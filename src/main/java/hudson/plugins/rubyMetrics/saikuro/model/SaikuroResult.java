@@ -42,10 +42,8 @@ public class SaikuroResult {
 		this.totalComplexity = totalComplexity;
 	}
 	
-	public void sumComplexity(int complexity) {
-		int curComplexity = totalComplexity == null?0 : Integer.parseInt(totalComplexity);
-		
-		totalComplexity = String.valueOf(curComplexity + complexity);
+	public void sumComplexity(int complexity) {		
+		totalComplexity = String.valueOf(getTotalComplexityAsInt() + complexity);
 	}
 	
 	public Integer getTotalComplexityAsInt() {

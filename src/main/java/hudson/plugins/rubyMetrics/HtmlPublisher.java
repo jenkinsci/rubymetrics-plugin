@@ -42,22 +42,22 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
 	protected boolean prepareMetricsReportBeforeParse(Build<?, ?> build, BuildListener listener, 
 			FilenameFilter indexFilter, String toolShortName) throws InterruptedException {
 		if (!Result.SUCCESS.equals(build.getResult())) {
-    		listener.getLogger().println("Build wasn't successful, skipping saikuro coverage report");
+    		listener.getLogger().println("Build wasn't successful, skipping " + toolShortName + " coverage report");
     		return true;
     	}
-    	listener.getLogger().println("Publishing saikuro report...");
+    	listener.getLogger().println("Publishing " + toolShortName + " report...");
     	
     	final Project<?, ?> project = build.getParent();        
         final FilePath workspace = project.getModuleRoot();        
     	
         boolean copied = moveReportsToBuildRootDir(workspace, build, listener);
         if (!copied) {
-        	return fail(build, listener, "Saikuro report directory wasn't found using the pattern '" + reportDir + "'.");
+        	return fail(build, listener, toolShortName + " report directory wasn't found using the pattern '" + reportDir + "'.");
         }
         
         File[] coverageFiles = build.getRootDir().listFiles(indexFilter);
         if (coverageFiles == null || coverageFiles.length == 0) {
-        	return fail(build, listener, "Saikuro report index file wasn't found");
+        	return fail(build, listener, toolShortName + " report index file wasn't found");
         }
         
         return true;
