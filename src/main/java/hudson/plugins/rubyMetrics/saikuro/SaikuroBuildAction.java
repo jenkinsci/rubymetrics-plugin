@@ -66,10 +66,6 @@ public class SaikuroBuildAction extends AbstractRubyMetricsBuildAction{
 		return "saikuro";
 	}
 	
-	public AbstractBuild<?, ?> getOwner() {
-		return owner;
-	}
-
 	public SaikuroResult getResults() {
 		return results;
 	}
