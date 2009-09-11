@@ -21,6 +21,7 @@ import org.htmlparser.filters.HasAttributeFilter;
 import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.LinkTag;
+import org.htmlparser.tags.TableColumn;
 import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
@@ -50,17 +51,18 @@ public class RcovParser extends HtmlParser {
         	TableTag report = getReportTable(parser);
         	
         	if (report.getRowCount() > 0) {        		
-        		//row at 0 is the header row, so we have to get the row at 1 
-        		TableRow totalRow = report.getRow(1);        		
-        		
-        		result.setTotalLines(getColumnByClassName(totalRow, TD_TAG_NAME, TOTAL_LINES));
-        		result.setCodeLines(getColumnByClassName(totalRow, TD_TAG_NAME, CODE_LINES));
-        		result.setTotalCoverage(getColumnByClassName(totalRow, TT_TAG_NAME, TOTAL_COVERAGE));
-        		result.setCodeCoverage(getColumnByClassName(totalRow, TT_TAG_NAME, CODE_COVERAGE));
-        		
-	        	for (int i = 2; i < report.getRowCount(); i++) {
-	        		result.addFile(parseRow(report.getRow(i)));
-	        	}
+        		  //row at 0 is the header row, so we have to get the row at 1 
+        		  TableRow totalRow = report.getRow(1);        		
+        		  TableColumn[] columns = totalRow.getColumns();
+
+              result.setTotalLines(getTextFromTT(columns[1]));
+              result.setCodeLines(getTextFromTT(columns[2]));
+              result.setTotalCoverage(getTextFromTT(columns[3]));
+              result.setCodeCoverage(getTextFromTT(columns[4]));
+
+	        	  for (int i = 2; i < report.getRowCount(); i++) {
+	        		  result.addFile(parseRow(report.getRow(i)));
+	        	  }
         	}        	
         	
         	return result;
@@ -81,47 +83,64 @@ public class RcovParser extends HtmlParser {
     }
     
     private RcovFileResult parseRow(TableRow row) throws ParserException, IOException {
-    	final RcovFileResult file = new RcovFileResult();
+    	  final RcovFileResult file = new RcovFileResult();
     	
-    	NodeList nodeList = new NodeList();
-    	row.collectInto(nodeList, new TagNameFilter("a"));
-    	String linkPath = null;
-    	if (nodeList.size() > 0) {
-    		LinkTag link = (LinkTag) nodeList.elementAt(0);
-    		linkPath = link.getLink();
-    		file.setHref(link.getLink().replaceAll(".html", ""));
-    		file.setName(link.getLinkText());
-    	}
-    	    		    
-    	file.setTotalLines(getColumnByClassName(row, TD_TAG_NAME, TOTAL_LINES));
+    	  NodeList nodeList = new NodeList();
+    	  row.collectInto(nodeList, new TagNameFilter("a"));
+    	  String linkPath = null;
+    	  if (nodeList.size() > 0) {
+    		  LinkTag link = (LinkTag) nodeList.elementAt(0);
+    		  linkPath = link.getLink();
+    		  file.setHref(link.getLink().replaceAll(".html", ""));
+    		  file.setName(link.getLinkText());
+    	  }
+
+        TableColumn[] columns = row.getColumns();
+        file.setTotalLines(getTextFromTT(columns[1]));
+        file.setCodeLines(getTextFromTT(columns[2]));
+        file.setTotalCoverage(getTextFromTT(columns[3]));
+        file.setCodeCoverage(getTextFromTT(columns[4]));        
+
+/*    	file.setTotalLines(getColumnByClassName(row, TD_TAG_NAME, TOTAL_LINES));
     	file.setCodeLines(getColumnByClassName(row, TD_TAG_NAME, CODE_LINES));
     	
     	file.setTotalCoverage(getColumnByClassName(row, TT_TAG_NAME, TOTAL_COVERAGE));
     	file.setCodeCoverage(getColumnByClassName(row, TT_TAG_NAME, CODE_COVERAGE));
+  */  	
+    	  file.setSourceCode(parseSource(linkPath));
     	
-    	file.setSourceCode(parseSource(linkPath));
-    	
-    	return file;
+    	  return file;
     }
     
     private String getColumnByClassName(TableRow row, String tagName, String className) {
     	NodeList nodeList = new NodeList();
 	    row.collectInto(nodeList, new AndFilter(new TagNameFilter(tagName), new HasAttributeFilter(CLASS_ATTR_NAME, className)));
 	    
-	    String text = null;
-	    
-	    if (nodeList.size() > 0) {
-	    	Node first = nodeList.elementAt(0);	    
-	    	nodeList = new NodeList();
-	    	Node parent = first.getChildren() != null && first.getChildren().size() > 0?first:first.getParent();
-	    	
-	    	parent.collectInto(nodeList, new NodeClassFilter(Text.class));
-    		text = nodeList.elementAt(0).getText();    		
-	    }
-	    
-	    return text;
+	    return getTextFromFirstNode(nodeList);
+    }
+
+    private String getTextFromTT(TableColumn td) {
+        NodeList nodeList = new NodeList();
+        td.collectInto(nodeList, new TagNameFilter(TT_TAG_NAME));
+
+        return getTextFromFirstNode(nodeList);
     }
     
+    private String getTextFromFirstNode(NodeList nodeList) {
+        String text = null;
+
+        if (nodeList.size() > 0) {
+            Node first = nodeList.elementAt(0);
+            nodeList = new NodeList();
+            Node parent = first.getChildren() != null && first.getChildren().size() > 0?first:first.getParent();
+
+            parent.collectInto(nodeList, new NodeClassFilter(Text.class));
+            text = nodeList.elementAt(0).getText();
+        }
+
+        return text;
+    }
+
     private String parseSource(String href) throws ParserException, IOException {    	
     	String html = null;
     	    	    	
