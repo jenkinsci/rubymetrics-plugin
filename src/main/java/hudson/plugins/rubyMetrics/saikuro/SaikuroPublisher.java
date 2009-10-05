@@ -1,20 +1,22 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
+import hudson.Extension;
 import hudson.Launcher;
+import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.Build;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
 import hudson.model.Result;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
+import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
+import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -28,7 +30,8 @@ public class SaikuroPublisher extends HtmlPublisher {
 	/**
      * {@inheritDoc}
      */
-    public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+    @Override
+    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
     	final SaikuroFilenameFilter indexFilter = new SaikuroFilenameFilter();
     	prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
     	if (build.getResult() == Result.FAILURE) {
@@ -54,10 +57,11 @@ public class SaikuroPublisher extends HtmlPublisher {
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new SaikuroProjectAction(project);
     }
-    
+
+    //@Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-    public static final class DescriptorImpl extends Descriptor<Publisher> {
+    public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
     	
 		protected DescriptorImpl() {
 			super(SaikuroPublisher.class);			
@@ -71,14 +75,20 @@ public class SaikuroPublisher extends HtmlPublisher {
 		public String getDisplayName() {
 			return "Publish Saikuro report";
 		}
+
+		@Override
+		public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+			return true;
+		}
 		
 		@Override
-		public SaikuroPublisher newInstance(StaplerRequest req) throws FormException {
+		public SaikuroPublisher newInstance(StaplerRequest req, JSONObject formData) throws FormException {
 			return req.bindParameters(SaikuroPublisher.class, "saikuro.");			
 		}		
     }
 
-	public Descriptor<Publisher> getDescriptor() {
+	@Override
+	public BuildStepDescriptor<Publisher> getDescriptor() {
 		return DESCRIPTOR;
 	}
 

@@ -2,6 +2,7 @@ package hudson.plugins.rubyMetrics.rcov.model;
 
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import org.jvnet.localizer.Localizable;
 
 public class RcovResult extends RcovAbstractResult {
 	
@@ -40,7 +41,7 @@ public class RcovResult extends RcovAbstractResult {
 		return metric.equals(Targets.TOTAL_COVERAGE)? getTotalCoverage():getCodeCoverage();
 	}
 	
-	public String getHealthDescription(Targets metric) {
-		return "Rcov coverage: " + metric.getName() + " " + getRatio(metric) + "("+ getRatioFloat(metric) +")";		
+	public Localizable getHealthDescription(Targets metric) {
+		return Messages._RcovResult_HealthDescription(metric.getName(), getRatio(metric), getRatioFloat(metric));
 	}
 }

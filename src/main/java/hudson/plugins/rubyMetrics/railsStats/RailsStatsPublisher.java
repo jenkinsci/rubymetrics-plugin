@@ -1,17 +1,18 @@
 package hudson.plugins.rubyMetrics.railsStats;
 
+import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
+import hudson.model.AbstractBuild;
+import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.Build;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
-import hudson.model.Project;
 import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
+import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
@@ -36,11 +37,11 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 		this.rakeInstallation = rakeInstallation;
 		this.rake = new Rake(this.rakeInstallation, null, "stats", null, null, true);
 	}
-	
-	public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+
+	@Override
+	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
 		
-		final Project<?, ?> project = build.getParent();        
-        FilePath workspace = project.getModuleRoot();
+        FilePath workspace = build.getModuleRoot();
         
         if (!isRailsProject(workspace)) {
         	return fail(build, listener, "This is not a rails app directory: " + workspace.getName());
@@ -78,13 +79,14 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	
 		
 	@Override
-	public Action getProjectAction(Project project) {
+	public Action getProjectAction(AbstractProject<?,?> project) {
 		return new RailsStatsProjectAction(project);
 	}
 
+	@Extension
 	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-    public static final class DescriptorImpl extends Descriptor<Publisher> {
+    public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
 		protected DescriptorImpl() {
 			super(RailsStatsPublisher.class);			
@@ -103,10 +105,16 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 		public RubyInstallation[] getRakeInstallations() {
 			return Rake.DESCRIPTOR.getInstallations();
 		}
-    	
+
+        @Override
+        public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+            return true;
+        }
+
     }
 
-	public Descriptor<Publisher> getDescriptor() {
+	@Override
+	public BuildStepDescriptor<Publisher> getDescriptor() {
 		return DESCRIPTOR;
 	}
 

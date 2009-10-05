@@ -55,7 +55,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     protected abstract String getRangeAxisLabel();
     
     public void doGraph(StaplerRequest req, StaplerResponse rsp) throws IOException {
-        if (ChartUtil.awtProblem) {            
+        if (ChartUtil.awtProblemCause != null) {
             rsp.sendRedirect2(req.getContextPath() + "/images/headless.png");
             return;
         }
