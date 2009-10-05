@@ -2,9 +2,8 @@ package hudson.plugins.rubyMetrics;
 
 import hudson.FilePath;
 import hudson.Util;
-import hudson.model.Build;
+import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
-import hudson.model.Project;
 import hudson.model.Result;
 
 import java.io.File;
@@ -19,7 +18,7 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
 		return reportDir;
 	}
 	
-	protected boolean moveReportsToBuildRootDir(FilePath workspace, Build<?, ?> build, BuildListener listener) throws InterruptedException {    	
+	protected boolean moveReportsToBuildRootDir(FilePath workspace, AbstractBuild<?, ?> build, BuildListener listener) throws InterruptedException {
         try {        	
         	FilePath coverageDir = workspace.child(reportDir);
             
@@ -39,7 +38,7 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
         return false;
     }
 	
-	protected boolean prepareMetricsReportBeforeParse(Build<?, ?> build, BuildListener listener, 
+	protected boolean prepareMetricsReportBeforeParse(AbstractBuild<?, ?> build, BuildListener listener,
 			FilenameFilter indexFilter, String toolShortName) throws InterruptedException {
 		if (!Result.SUCCESS.equals(build.getResult())) {
     		listener.getLogger().println("Build wasn't successful, skipping " + toolShortName + " coverage report");
@@ -47,8 +46,7 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
     	}
     	listener.getLogger().println("Publishing " + toolShortName + " report...");
     	
-    	final Project<?, ?> project = build.getParent();        
-        final FilePath workspace = project.getModuleRoot();        
+        final FilePath workspace = build.getModuleRoot();
     	
         boolean copied = moveReportsToBuildRootDir(workspace, build, listener);
         if (!copied) {
@@ -63,7 +61,7 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
         return true;
 	}
 	
-	protected File[] getCoverageFiles(Build<?, ?> build, FilenameFilter indexFilter) {
+	protected File[] getCoverageFiles(AbstractBuild<?, ?> build, FilenameFilter indexFilter) {
 		return build.getRootDir().listFiles(indexFilter);
 	}
 }

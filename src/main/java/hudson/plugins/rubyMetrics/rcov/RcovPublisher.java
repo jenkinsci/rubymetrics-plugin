@@ -1,16 +1,17 @@
 package hudson.plugins.rubyMetrics.rcov;
 
+import hudson.Extension;
 import hudson.Launcher;
+import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.Build;
 import hudson.model.BuildListener;
-import hudson.model.Descriptor;
 import hudson.model.Result;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.rcov.model.MetricTarget;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.plugins.rubyMetrics.rcov.model.Targets;
+import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
 import java.io.File;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
@@ -42,7 +44,8 @@ public class RcovPublisher extends HtmlPublisher {
 	/**
      * {@inheritDoc}
      */
-    public boolean perform(Build<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {    	
+    @Override
+    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
     	final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
     	prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
     	if (build.getResult() == Result.FAILURE) {
@@ -91,13 +94,14 @@ public class RcovPublisher extends HtmlPublisher {
     public void setTargets(List<MetricTarget> targets) {
     	this.targets = targets;
     }
-	
-	/**
+
+    /**
      * Descriptor should be singleton.
      */
+    @Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
-    public static final class DescriptorImpl extends Descriptor<Publisher> {
+    public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
     	private final List<MetricTarget> targets;
     	
@@ -127,7 +131,12 @@ public class RcovPublisher extends HtmlPublisher {
 		}
 
 		@Override
-		public RcovPublisher newInstance(StaplerRequest req) throws FormException {
+		public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+		    return true;
+		}
+
+		@Override
+		public RcovPublisher newInstance(StaplerRequest req, JSONObject formData) throws FormException {
 			RcovPublisher instance = req.bindParameters(RcovPublisher.class, "rcov.");
 			
 			ConvertUtils.register(MetricTarget.CONVERTER, Targets.class);
@@ -138,7 +147,8 @@ public class RcovPublisher extends HtmlPublisher {
 		
     }
 
-	public Descriptor<Publisher> getDescriptor() {
+	@Override
+	public BuildStepDescriptor<Publisher> getDescriptor() {
 		return DESCRIPTOR;
 	}
 	
