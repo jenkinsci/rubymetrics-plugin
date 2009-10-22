@@ -38,17 +38,21 @@ public class RcovParserTest extends TestCase {
 
         assertTrue(result.getFiles().size() > 0);
 
-        assertNotNull(result.getTotalCoverage());
-        assertNotNull(result.getTotalLines());
-        assertNotNull(result.getCodeCoverage());
-        assertNotNull(result.getCodeLines());
+        assertIsAValidNode(result.getTotalCoverage());
+        assertIsAValidNode(result.getTotalLines());
+        assertIsAValidNode(result.getCodeCoverage());
+        assertIsAValidNode(result.getCodeLines());
 
         //Check first file
         RcovFileResult fileResult = result.getFiles().iterator().next();
         
-        assertNotNull(fileResult.getTotalCoverage());
-        assertNotNull(fileResult.getTotalLines());
-        assertNotNull(fileResult.getCodeCoverage());
-        assertNotNull(fileResult.getCodeLines());
+        assertIsAValidNode(fileResult.getTotalCoverage());
+        assertIsAValidNode(fileResult.getTotalLines());
+        assertIsAValidNode(fileResult.getCodeCoverage());
+        assertIsAValidNode(fileResult.getCodeLines());
+    }
+    
+    private void assertIsAValidNode(String element) {
+        assertTrue(element.matches("[0-9%.]+"));
     }
 }

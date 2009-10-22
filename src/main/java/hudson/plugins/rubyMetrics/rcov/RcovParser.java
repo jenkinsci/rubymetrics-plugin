@@ -100,16 +100,10 @@ public class RcovParser extends HtmlParser {
         file.setCodeLines(getTextFromTT(columns[2]));
         file.setTotalCoverage(getTextFromTT(columns[3]));
         file.setCodeCoverage(getTextFromTT(columns[4]));        
-
-/*    	file.setTotalLines(getColumnByClassName(row, TD_TAG_NAME, TOTAL_LINES));
-    	file.setCodeLines(getColumnByClassName(row, TD_TAG_NAME, CODE_LINES));
+	
+    	file.setSourceCode(parseSource(linkPath));
     	
-    	file.setTotalCoverage(getColumnByClassName(row, TT_TAG_NAME, TOTAL_COVERAGE));
-    	file.setCodeCoverage(getColumnByClassName(row, TT_TAG_NAME, CODE_COVERAGE));
-  */  	
-    	  file.setSourceCode(parseSource(linkPath));
-    	
-    	  return file;
+    	return file;
     }
     
     private String getColumnByClassName(TableRow row, String tagName, String className) {
@@ -135,7 +129,7 @@ public class RcovParser extends HtmlParser {
             Node parent = first.getChildren() != null && first.getChildren().size() > 0?first:first.getParent();
 
             parent.collectInto(nodeList, new NodeClassFilter(Text.class));
-            text = nodeList.elementAt(0).getText();
+            text = nodeList.toHtml(true).replaceAll("&nbsp;", "").trim();
         }
 
         return text;
