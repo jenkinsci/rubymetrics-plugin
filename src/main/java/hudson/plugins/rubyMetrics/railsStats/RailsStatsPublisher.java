@@ -31,11 +31,13 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	
 	private final Rake rake;
 	private final String rakeInstallation;
+	private final String rakeWorkingDir;
 	
 	@DataBoundConstructor
-	public RailsStatsPublisher(String rakeInstallation) {
+	public RailsStatsPublisher(String rakeInstallation, String rakeWorkingDir) {
 		this.rakeInstallation = rakeInstallation;
-		this.rake = new Rake(this.rakeInstallation, null, "stats", null, null, true);
+		this.rakeWorkingDir = rakeWorkingDir;
+		this.rake = new Rake(this.rakeInstallation, null, "stats", null, this.rakeWorkingDir, true);
 	}
 
 	@Override
@@ -65,6 +67,10 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	
 	public String getRakeInstallation() {
 		return rakeInstallation;
+	}
+	
+	public String getRakeWorkingDir() {
+	    return rakeWorkingDir;
 	}
 	
 	private boolean isRailsProject(FilePath workspace) {
