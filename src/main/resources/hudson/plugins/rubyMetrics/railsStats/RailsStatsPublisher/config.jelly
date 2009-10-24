@@ -9,5 +9,11 @@
 	      </j:forEach>
 	    </select>
   	</f:entry>     
+  	
+  	<f:advanced>
+        <f:entry title="Rake working directory" description="Specify the rake working directory, by default it's '.'">
+            <f:textbox name="rake.rakeWorkingDir" value="${instance.rakeWorkingDir}"/>
+        </f:entry>
+    </f:advanced>
       
 </j:jelly>
