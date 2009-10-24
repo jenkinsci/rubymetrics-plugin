@@ -1,0 +1,40 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
+    <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
+    
+	   <st:include it="${it.owner}" page="sidepanel.jelly" />
+	    
+	    <l:main-panel>
+	            <h1>Annotations (Rails notes) report</h1>
+	            
+	            <j:if test="${it.previousResult != null}">
+	            	<img src="graph" width="500px" height="200px"/>
+	            </j:if>
+	            
+	            <table class="report">
+	            	<thead>
+	            		<tr>
+	            			<j:forEach var="header" items="${it.results.headers}">
+	            				<td class='heading'>${header}</td>
+	            			</j:forEach>            			
+				      	</tr>
+				    </thead>
+				    <tbody>
+				    	<j:forEach var="metric" items="${it.results.metrics}">
+				    		<tr>
+					    		<td>${metric.key}</td>
+					    		<j:forEach var="values" items="${metric.value}">
+					    			<td>${values.value}</td>
+					    		</j:forEach>
+					    	</tr>
+				    	</j:forEach>
+				    </tbody>
+				 </table>
+
+                 <h2>Output</h2>				 
+				 <div id="output">
+				 	<pre>${it.results.output}</pre>
+				 </div>
+	        </l:main-panel>
+    </l:layout>
+</j:jelly>
