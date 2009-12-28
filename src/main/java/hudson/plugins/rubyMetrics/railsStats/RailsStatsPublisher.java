@@ -46,7 +46,11 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
         FilePath workspace = build.getModuleRoot();
         
         if (!isRailsProject(workspace)) {
-        	return fail(build, listener, "This is not a rails app directory: " + workspace.getName());
+            String message = "Your workspace is not a valid rails application directory";
+            if (workspace != null) {
+                message += ": " + workspace.getName();
+            }
+        	return fail(build, listener, message);
         }
 		
 		listener.getLogger().println("Publishing rails stats report...");
@@ -75,7 +79,7 @@ public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
 	
 	private boolean isRailsProject(FilePath workspace) {
 		try { //relaxed rails app schema
-			return workspace.isDirectory()
+			return workspace != null && workspace.isDirectory()
 				&& workspace.list("app") != null && workspace.list("config") != null
 				&& workspace.list("db") != null && workspace.list("test") != null;
 		} catch (Exception e) {
