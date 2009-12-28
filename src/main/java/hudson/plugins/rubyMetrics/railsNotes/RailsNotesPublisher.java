@@ -10,7 +10,7 @@ import hudson.model.BuildListener;
 import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
-import hudson.plugins.rubyMetrics.AbstractRubyMetricsPublisher;
+import hudson.plugins.rubyMetrics.AbstractRailsTaskPublisher;
 import hudson.plugins.rubyMetrics.railsNotes.model.RailsNotesResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -25,62 +25,21 @@ import org.kohsuke.stapler.DataBoundConstructor;
  * 
  * @author Adam Stegman
  */
-public class RailsNotesPublisher extends AbstractRubyMetricsPublisher {
-    private final Rake rake;
-    private final String rakeInstallation;
-    private final String rakeWorkingDir;
+public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
     
     @DataBoundConstructor
     public RailsNotesPublisher(String rakeInstallation, String rakeWorkingDir) {
-        this.rakeInstallation = rakeInstallation;
-        this.rakeWorkingDir = rakeWorkingDir;
-        this.rake = new Rake(this.rakeInstallation, null, "notes", null, this.rakeWorkingDir, true);
+        super(rakeInstallation, rakeWorkingDir, "notes");
     }
 
-    @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+    protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+    	final RailsNotesParser parser = new RailsNotesParser();
+        RailsNotesResults results = parser.parse(out);
         
-        FilePath workspace = build.getModuleRoot();
-        
-        if (!isRailsProject(workspace)) {
-            return fail(build, listener, "This is not a rails app directory: " + workspace.getName());
-        }
-        
-        listener.getLogger().println("Publishing rails notes report...");
-        
-        StringOutputStream out = new StringOutputStream();      
-        BuildListener stringListener = new StreamBuildListener(out);
-                
-        if (rake.perform(build, launcher, stringListener)) {
-            final RailsNotesParser parser = new RailsNotesParser();
-            RailsNotesResults results = parser.parse(out);
-            
-            RailsNotesBuildAction action = new RailsNotesBuildAction(build, results);
-            build.getActions().add(action);
-        }               
-        
-        return true;
-    }
-    
-    public String getRakeInstallation() {
-        return rakeInstallation;
-    }
-    
-    public String getRakeWorkingDir() {
-        return rakeWorkingDir;
-    }
-    
-    private boolean isRailsProject(FilePath workspace) {
-        try { //relaxed rails app schema
-            return workspace.isDirectory()
-                && workspace.list("app") != null && workspace.list("config") != null
-                && workspace.list("db") != null && workspace.list("test") != null;
-        } catch (Exception e) {
-            return false;
-        }
-    }   
-    
-        
+        RailsNotesBuildAction action = new RailsNotesBuildAction(build, results);
+        build.getActions().add(action);
+    }  
+       
     @Override
     public Action getProjectAction(AbstractProject<?,?> project) {
         return new RailsNotesProjectAction(project);
