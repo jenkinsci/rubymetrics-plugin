@@ -30,7 +30,10 @@ public class RailsStatsParser {
 		lines = removeSeparators(lines);		
 		
 		Iterator<String> linesIterator = lines.iterator();		
-		String[] header = cleanArray(linesIterator.next().split("[|]+")); //report header		
+		String[] header = new String[1];
+		while (header.length < 2 && linesIterator.hasNext()) {
+		    header = cleanArray(linesIterator.next().split("[|]+")); //report header
+        }
 				
 		while (linesIterator.hasNext()) {
 			String line = linesIterator.next();
