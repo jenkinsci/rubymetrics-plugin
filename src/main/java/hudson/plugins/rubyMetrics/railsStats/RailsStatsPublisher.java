@@ -10,7 +10,7 @@ import hudson.model.BuildListener;
 import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
-import hudson.plugins.rubyMetrics.AbstractRubyMetricsPublisher;
+import hudson.plugins.rubyMetrics.AbstractRailsTaskPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
@@ -27,66 +27,20 @@ import org.kohsuke.stapler.DataBoundConstructor;
  *
  */
 @SuppressWarnings("unchecked")
-public class RailsStatsPublisher extends AbstractRubyMetricsPublisher {
-	
-	private final Rake rake;
-	private final String rakeInstallation;
-	private final String rakeWorkingDir;
+public class RailsStatsPublisher extends AbstractRailsTaskPublisher {
 	
 	@DataBoundConstructor
 	public RailsStatsPublisher(String rakeInstallation, String rakeWorkingDir) {
-		this.rakeInstallation = rakeInstallation;
-		this.rakeWorkingDir = rakeWorkingDir;
-		this.rake = new Rake(this.rakeInstallation, null, "stats", null, this.rakeWorkingDir, true);
+		super(rakeInstallation, rakeWorkingDir, "stats");
 	}
 
-	@Override
-	public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+	protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+		final RailsStatsParser parser = new RailsStatsParser();
+		RailsStatsResults results = parser.parse(out);
 		
-        FilePath workspace = build.getModuleRoot();
-        
-        if (!isRailsProject(workspace)) {
-            String message = "Your workspace is not a valid rails application directory";
-            if (workspace != null) {
-                message += ": " + workspace.getName();
-            }
-        	return fail(build, listener, message);
-        }
-		
-		listener.getLogger().println("Publishing rails stats report...");
-		
-		StringOutputStream out = new StringOutputStream();		
-		BuildListener stringListener = new StreamBuildListener(out);
-				
-		if (rake.perform(build, launcher, stringListener)) {
-			final RailsStatsParser parser = new RailsStatsParser();
-			RailsStatsResults results = parser.parse(out);
-			
-			RailsStatsBuildAction action = new RailsStatsBuildAction(build, results);
-			build.getActions().add(action);
-		}				
-		
-		return true;
+		RailsStatsBuildAction action = new RailsStatsBuildAction(build, results);
+		build.getActions().add(action);
 	}
-	
-	public String getRakeInstallation() {
-		return rakeInstallation;
-	}
-	
-	public String getRakeWorkingDir() {
-	    return rakeWorkingDir;
-	}
-	
-	private boolean isRailsProject(FilePath workspace) {
-		try { //relaxed rails app schema
-			return workspace != null && workspace.isDirectory()
-				&& workspace.list("app") != null && workspace.list("config") != null
-				&& workspace.list("db") != null && workspace.list("test") != null;
-		} catch (Exception e) {
-			return false;
-		}
-	}	
-	
 		
 	@Override
 	public Action getProjectAction(AbstractProject<?,?> project) {
