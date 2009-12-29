@@ -104,10 +104,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
         domainAxis.setUpperMargin(0.0);
         domainAxis.setCategoryMargin(0.0);
 
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis.setUpperBound(100);
-        rangeAxis.setLowerBound(0);
+        final NumberAxis rangeAxis = getRangeAxis(plot);
 
         final LineAndShapeRenderer renderer = (LineAndShapeRenderer) plot.getRenderer();
         renderer.setBaseStroke(new BasicStroke(2.0f));
@@ -121,5 +118,14 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
 
 	public AbstractBuild<?, ?> getOwner() {
 		return owner;
+	}
+	
+	protected NumberAxis getRangeAxis(CategoryPlot plot) {
+		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        rangeAxis.setUpperBound(100);
+        rangeAxis.setLowerBound(0);
+        
+        return rangeAxis;
 	}
 }
