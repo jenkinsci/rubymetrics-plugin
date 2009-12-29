@@ -1,6 +1,6 @@
 package hudson.plugins.rubyMetrics.flog;
 
-import hudson.plugins.rubyMetrics.flog.model.FlogResults;
+import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,16 +24,16 @@ public class FlogParserTest extends TestCase {
 			}
 		}
 		
-		FlogResults results = parser.parse(mock.toString());
+		FlogFileResults results = parser.parse(mock.toString());
 		assertEquals(80.3f, results.total);
 		assertEquals(40.2f, results.average);
-		assertEquals(2, results.getMethodsResults().size());
+		assertEquals(2, results.getMethodResults().size());
 		
-		assertEquals(79.2f, results.getMethodsResults().get(0).score);
-		assertNotNull(results.getMethodsResults().get(0).name);
-		assertFalse(results.getMethodsResults().get(0).getOperators().isEmpty());
-		assertEquals(1.1f, results.getMethodsResults().get(1).score);
-		assertNotNull(results.getMethodsResults().get(0).name);
-		assertFalse(results.getMethodsResults().get(1).getOperators().isEmpty());
+		assertEquals(79.2f, results.getMethodResults().get(0).score);
+		assertNotNull(results.getMethodResults().get(0).name);
+		assertFalse(results.getMethodResults().get(0).getOperatorResults().isEmpty());
+		assertEquals(1.1f, results.getMethodResults().get(1).score);
+		assertNotNull(results.getMethodResults().get(0).name);
+		assertFalse(results.getMethodResults().get(1).getOperatorResults().isEmpty());
 	}
 }

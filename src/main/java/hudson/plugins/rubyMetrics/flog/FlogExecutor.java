@@ -23,7 +23,7 @@ public class FlogExecutor {
 		try {
 			OutputStream out = launch(arguments("--help"), launcher, environment, workspace);
 			
-			return out == null;
+			return out != null;
 		} catch (Exception e) {
 			return false;
 		}
@@ -34,7 +34,13 @@ public class FlogExecutor {
 		Map<String, StringOutputStream> results = new HashMap<String, StringOutputStream>();
 		
 		for (String path : rbDirectories) {
-			PathPattern pattern = new PathPattern(path + "/**/*.rb");
+			String filePattern = path + "/**/*.rb";
+			if (workspace != null) {
+				filePattern = workspace.toURI().getPath() + filePattern;
+			}
+			launcher.getListener().getLogger().println("searching ruby classes into: " + filePattern);
+			
+			PathPattern pattern = new PathPattern(filePattern);
 			Enumeration rubyFiles = pattern.enumerateFiles();
 			
 			while (rubyFiles.hasMoreElements()) {
@@ -46,7 +52,7 @@ public class FlogExecutor {
 					results.clear();
 					return results;
 				}
-				results.put(rubyFile.getPath(), out);
+				results.put(prettifyFilePath(path, rubyFile), out);
 			}
 		}
 		
@@ -68,12 +74,16 @@ public class FlogExecutor {
 	
 	public ArgumentListBuilder arguments(String... args) {
 		ArgumentListBuilder flogArguments = new ArgumentListBuilder();
-		flogArguments.add("sudo");
 		flogArguments.add("flog");
 		for (String arg : args) {
 			flogArguments.add(arg);
 		}
 		
 		return flogArguments;
+	}
+	
+	private String prettifyFilePath(String path, File rubyFile) {
+		String absPath = rubyFile.getAbsolutePath();
+		return absPath.substring(absPath.indexOf(path));
 	}
 }

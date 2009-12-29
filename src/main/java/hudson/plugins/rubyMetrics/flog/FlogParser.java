@@ -1,7 +1,7 @@
 package hudson.plugins.rubyMetrics.flog;
 
-import hudson.plugins.rubyMetrics.flog.model.FlogResults;
-import hudson.plugins.rubyMetrics.flog.model.MethodResults;
+import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
+import hudson.plugins.rubyMetrics.flog.model.FlogMethodResults;
 import jregex.Matcher;
 import jregex.Pattern;
 
@@ -9,14 +9,14 @@ import org.codehaus.plexus.util.StringOutputStream;
 
 public class FlogParser {
 	
-	private final Pattern operatorRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s({operator}.*)$");
-	private final Pattern methodRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s+({method}[A-Za-z:]+(?:#|::).*)");
+	private final static Pattern operatorRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s({operator}.*)$");
+	private final static Pattern methodRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s+({method}[A-Za-z:]+(?:#|::).*)");
 	
-	public FlogResults parse(StringOutputStream results) {
+	public FlogFileResults parse(StringOutputStream results) {
 		return parse(results.toString());
 	}
 	
-	public FlogResults parse(String results) {
+	public FlogFileResults parse(String results) {
 		String[] resultsSplit = results.split("\n\n");
 		if (resultsSplit == null || resultsSplit.length == 0) {
 			return null;
@@ -25,7 +25,7 @@ public class FlogParser {
 		String total = getScoreFromOperator(totalAndAverage[0]);
 		String average = getScoreFromOperator(totalAndAverage[1]);
 		
-		FlogResults flogResults = new FlogResults(total, average);
+		FlogFileResults flogResults = new FlogFileResults(total, average);
 		for (int index = 1; index < resultsSplit.length; index++) {
 			for (String line : resultsSplit[index].split("\n")) {
 				addFlogResults(flogResults, line);
@@ -41,10 +41,10 @@ public class FlogParser {
 		return matcher.group("score");
 	}
 	
-	private void addFlogResults(FlogResults flogResults, String line) {
+	private void addFlogResults(FlogFileResults flogResults, String line) {
 		Matcher matcher = methodRegex.matcher(line);
 		if (matcher.matches()) {
-			MethodResults methodResults = new MethodResults(matcher.group("method"), matcher.group("score"));
+			FlogMethodResults methodResults = new FlogMethodResults(matcher.group("method"), matcher.group("score"));
 			flogResults.addMethodResult(methodResults);
 		} else {
 			matcher = operatorRegex.matcher(line);

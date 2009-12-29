@@ -1,21 +1,15 @@
 package hudson.plugins.rubyMetrics.railsStats;
 
 import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.BuildListener;
-import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
 import hudson.plugins.rubyMetrics.AbstractRailsTaskPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
-
-import java.io.IOException;
 
 import org.codehaus.plexus.util.StringOutputStream;
 import org.kohsuke.stapler.DataBoundConstructor;
