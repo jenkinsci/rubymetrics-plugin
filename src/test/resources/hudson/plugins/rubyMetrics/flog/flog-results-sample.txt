@@ -1,0 +1,27 @@
+    80.3: flog total
+    40.2: flog/method average
+
+    79.2: CommandLineParser::parse         /Users/david/dev/trinidad/lib/trinidad/command_line_parser.rb:5
+    38.7:   assignment
+    24.3:   branch
+    16.8:   on
+    14.8:   []
+     3.4:   delete
+     3.4:   to_i
+     3.2:   nil?
+     3.2:   puts
+     3.2:   exit
+     2.4:   dirname
+     2.2:   join
+     2.0:   read
+     1.8:   load_file
+     1.8:   chomp
+     1.6:   deep_merge!
+     1.4:   separator
+     1.4:   parse!
+     1.2:   new
+     0.9:   lit_fixnum
+
+     1.1: Trinidad#none
+     1.1:   require
+
