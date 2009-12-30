@@ -20,6 +20,7 @@ public class FlogExecutorTest extends HudsonTestCase {
 	EnvVars environment = new EnvVars();
 	Launcher launcher;
 	FilePath workspace;
+	FreeStyleProject project;
 	
 	@BeforeClass
 	public void setup() throws InterruptedException, IOException {
@@ -31,7 +32,7 @@ public class FlogExecutorTest extends HudsonTestCase {
 	@Test
 	public void testExecute() throws InterruptedException, IOException {
 		if (flog.isFlogInstalled(launcher, environment, workspace)) {
-			assertTrue(flog.execute(new String[]{"/tmp"}, launcher, environment, workspace).isEmpty());
+			assertTrue(flog.execute(new String[]{"/tmp"}, launcher, environment, workspace, project.getRootDir()).isEmpty());
 		}
 	}
 	

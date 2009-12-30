@@ -40,14 +40,14 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
 		final FlogExecutor flog = new FlogExecutor();
 		
 		EnvVars environment = build.getEnvironment(listener);
-		FilePath workspace = build.getWorkspace();
+		FilePath workspace = build.getModuleRoot();
 		
 		if (!flog.isFlogInstalled(launcher, environment, workspace)) {
 			return fail(build, listener, "Seems flog is not installed. Ensure flog is in your PATH");
 		}
 		listener.getLogger().println("Publishing flog report...");
 		
-		Map<String, StringOutputStream> execResults = flog.execute(splittedDirectories, launcher, environment, workspace);
+		Map<String, StringOutputStream> execResults = flog.execute(splittedDirectories, launcher, environment, workspace, build.getRootDir());
 		
 		FlogBuildResults buildResults = buildResults(build, execResults);
 		
@@ -62,7 +62,7 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
 		FlogBuildResults buildResults = new FlogBuildResults();
 		
 		for (Map.Entry<String, StringOutputStream> entry : execResults.entrySet()) {
-			FlogFileResults resultsForFile = parser.parse(entry.getValue());
+			FlogFileResults resultsForFile = parser.parse(entry.getKey(), entry.getValue());
 			buildResults.addFileResults(entry.getKey(), resultsForFile);
 		}
 		

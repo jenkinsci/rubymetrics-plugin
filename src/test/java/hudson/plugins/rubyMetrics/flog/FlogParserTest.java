@@ -24,13 +24,13 @@ public class FlogParserTest extends TestCase {
 			}
 		}
 		
-		FlogFileResults results = parser.parse(mock.toString());
+		FlogFileResults results = parser.parse("lib/trinidad/command_line_parser.rb", mock.toString());
 		assertEquals(80.3f, results.total);
 		assertEquals(40.2f, results.average);
 		assertEquals(2, results.getMethodResults().size());
 		
 		assertEquals(79.2f, results.getMethodResults().get(0).score);
-		assertNotNull(results.getMethodResults().get(0).name);
+		assertEquals("CommandLineParser::parse lib/trinidad/command_line_parser.rb:5", results.getMethodResults().get(0).name.replaceAll("\\s+", " "));
 		assertFalse(results.getMethodResults().get(0).getOperatorResults().isEmpty());
 		assertEquals(1.1f, results.getMethodResults().get(1).score);
 		assertNotNull(results.getMethodResults().get(0).name);

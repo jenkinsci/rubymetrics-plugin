@@ -1,14 +1,13 @@
 package hudson.plugins.rubyMetrics;
 
+import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 import hudson.FilePath;
-import hudson.Util;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.Result;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 
 public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
 
@@ -17,26 +16,6 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
 	public String getReportDir() {
 		return reportDir;
 	}
-	
-	protected boolean moveReportsToBuildRootDir(FilePath workspace, AbstractBuild<?, ?> build, BuildListener listener) throws InterruptedException {
-        try {        	
-        	FilePath coverageDir = workspace.child(reportDir);
-            
-        	if (!coverageDir.exists()) {
-        		listener.getLogger().println("file not found: " + coverageDir);
-        		return false;
-        	}
-            
-            coverageDir.copyRecursiveTo("**/*", new FilePath(build.getRootDir()));
-            
-            return true;
-        } catch (IOException e) {
-            Util.displayIOException(e, listener);
-            e.printStackTrace(listener.fatalError("Unable to find coverage results"));
-            build.setResult(Result.FAILURE);
-        }
-        return false;
-    }
 	
 	protected boolean prepareMetricsReportBeforeParse(AbstractBuild<?, ?> build, BuildListener listener,
 			FilenameFilter indexFilter, String toolShortName) throws InterruptedException {
@@ -48,8 +27,9 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
     	
         final FilePath workspace = build.getModuleRoot();
     	
-        boolean copied = moveReportsToBuildRootDir(workspace, build, listener);
+        boolean copied = moveReportsToBuildRootDir(workspace, build.getRootDir(), listener, reportDir, "**/*");
         if (!copied) {
+        	build.setResult(Result.FAILURE);
         	return fail(build, listener, toolShortName + " report directory wasn't found using the pattern '" + reportDir + "'.");
         }
         
