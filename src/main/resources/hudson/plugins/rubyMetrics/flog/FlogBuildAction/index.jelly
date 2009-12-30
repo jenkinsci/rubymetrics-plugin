@@ -35,6 +35,7 @@
 				        </li>
 			        </j:forEach>
 			    </ul>
+			    
 	        </l:main-panel>
     </l:layout>
 </j:jelly>
