@@ -130,3 +130,59 @@ div#summary {
 div#summary span {
 	padding-right: 2.5em;
 }
+
+pre, code {
+  color: #000000;
+  font-family: "Bitstream Vera Sans Mono","Monaco","Courier New",monospace;
+  font-size: 95%;
+  line-height: 1.3em;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  word-wrap: break-word;
+}
+
+table.details {
+  margin-top: 1em;
+  border-collapse: collapse;
+  width: 100%;
+  border: 1px solid #666666;
+}
+
+table.details tr {
+  line-height: 1.75em;
+  }
+
+table.details td {
+  padding: .25em;
+  }
+
+span.inferred, span.inferred1, span.marked, span.marked1, span.uncovered, span.uncovered1 {
+  display: block;
+  padding: .25em;
+}
+
+tr.inferred td, span.inferred {
+  background-color: #e0dedb;
+}
+
+tr.inferred1 td, span.inferred1 {
+  background-color: #e0dedb;
+}
+
+tr.marked td, span.marked, span.marked1 {
+  background-color: #bed2be;
+}
+
+tr.uncovered td, span.uncovered {
+  background-color: #ce8b8c;
+}
+
+tr.uncovered1 td, span.uncovered1 {
+  background-color: #ce8b8c;
+}
+
+div.key {
+  border: 1px solid #666666;
+  margin: 1em 0em;
+}
