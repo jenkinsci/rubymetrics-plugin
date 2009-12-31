@@ -7,6 +7,7 @@ import hudson.util.IOException2;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,10 +31,6 @@ import org.htmlparser.util.ParserException;
 public class RcovParser extends HtmlParser {
 
 	private static final String REPORT_CLASS_VALUE = "report";
-	private static final String TOTAL_LINES = "lines_total";
-	private static final String CODE_LINES = "lines_code";
-	private static final String TOTAL_COVERAGE = "coverage_total";
-	private static final String CODE_COVERAGE = "coverage_code";
 
 	public RcovParser(File rootFilePath) {
 		super(rootFilePath);
@@ -106,13 +103,6 @@ public class RcovParser extends HtmlParser {
     	return file;
     }
     
-    private String getColumnByClassName(TableRow row, String tagName, String className) {
-    	NodeList nodeList = new NodeList();
-	    row.collectInto(nodeList, new AndFilter(new TagNameFilter(tagName), new HasAttributeFilter(CLASS_ATTR_NAME, className)));
-	    
-	    return getTextFromFirstNode(nodeList);
-    }
-
     private String getTextFromTT(TableColumn td) {
         NodeList nodeList = new NodeList();
         td.collectInto(nodeList, new TagNameFilter(TT_TAG_NAME));
@@ -135,21 +125,50 @@ public class RcovParser extends HtmlParser {
         return text;
     }
 
-    private String parseSource(String href) throws ParserException, IOException {    	
-    	String html = null;
+    public String parseSource(String href) throws ParserException, IOException {    	
+    	String source = null;
     	    	    	
     	File[] sourceFile = rootFilePath.listFiles(new RcovFilenameFilter(href));
     	    	
     	if (sourceFile != null && sourceFile.length > 0 && sourceFile[0].exists()) {
-    		html = getHtml(new FileInputStream(sourceFile[0]));
-    		Pattern pattern = Pattern.compile(".+<table class='report'>.+(<pre>(.+)</pre>).+");
-    		Matcher matcher = pattern.matcher(html);
-    		if (matcher.matches()) {
-    			html = matcher.group(1);    			
+    		String html = getHtml(new FileInputStream(sourceFile[0]));
+    		
+    		String sourceFromDetails = parseSourceInTableDetails(html);
+    		if (sourceFromDetails != null) {
+    			source = sourceFromDetails;
+    		} else {
+	    		source = parseSourceFromRegularExpression(html);
     		}
     	}
     	
-    	return html;
+    	return source;
+    }
+    
+    private String parseSourceInTableDetails(String html) throws FileNotFoundException, ParserException, IOException {
+    	String source = null;
+
+    	final Parser htmlParser = initParser(html);
+		final AndFilter filter = new AndFilter(new TagNameFilter(TABLE_TAG_NAME), 
+    			new HasAttributeFilter(CLASS_ATTR_NAME, "details"));
+    	
+    	NodeList reportNode = htmlParser.extractAllNodesThatMatch(filter);
+    	if (reportNode != null && reportNode.size() > 0) {
+    		source = ((TableTag) reportNode.elements().nextNode()).toHtml(true);
+    	}
+    	
+    	return source;
+    }
+    
+    private String parseSourceFromRegularExpression(String html) {
+    	String source = null;
+    	
+    	Pattern pattern = Pattern.compile(".+<table class='report'>.+(<pre>(.+)</pre>).+");
+		Matcher matcher = pattern.matcher(html);
+		if (matcher.matches()) {
+			source = matcher.group(1);    			
+		}
+    	
+    	return source;
     }
 
     private static class RcovFilenameFilter implements FilenameFilter {		
