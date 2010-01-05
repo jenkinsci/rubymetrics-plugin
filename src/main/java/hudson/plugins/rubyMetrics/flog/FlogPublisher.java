@@ -63,7 +63,9 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
 		
 		for (Map.Entry<String, StringOutputStream> entry : execResults.entrySet()) {
 			FlogFileResults resultsForFile = parser.parse(entry.getKey(), entry.getValue());
-			buildResults.addFileResults(entry.getKey(), resultsForFile);
+			if (resultsForFile != null) {
+				buildResults.addFileResults(entry.getKey(), resultsForFile);
+			}
 		}
 		
 		return buildResults;

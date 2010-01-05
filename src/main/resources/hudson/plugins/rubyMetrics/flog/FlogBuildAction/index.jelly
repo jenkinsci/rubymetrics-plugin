@@ -1,6 +1,6 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags">
-    <l:layout xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
+    <l:layout css="/plugin/rubyMetrics/css/style.css">
 
 	    <st:include it="${it.owner}" page="sidepanel.jelly" />
 
@@ -17,28 +17,28 @@
         </div>
 
         <dl id="flog-accordion" class="accordion">
-          <j:foreach var="fileresult" items="${it.results.fileresults}">
-            <dt>${fileresult.value.total}: ${fileresult.key}</dt>
+          <j:forEach var="fileResult" items="${it.results.fileResults}">
+            <dt>${fileResult.value.total}: ${fileResult.key}</dt>
             <dd>
                 <dl>
-                  <j:foreach var="methodresult" items="${fileresult.value.methodresults}">
-                    <dt>${methodresult.score}: ${methodresult.name}</dt>
+                  <j:forEach var="methodResult" items="${fileResult.value.methodResults}">
+                    <dt>${methodResult.score}: ${methodResult.name}</dt>
                     <dd>
                       <ul>
-                        <j:foreach var="operatorresult" items="${methodresult.operatorresults}">
-                            <li>${operatorresult.value}: ${operatorresult.key}</li>
-                        </j:foreach>
+                        <j:forEach var="operatorResult" items="${methodResult.operatorResults}">
+                            <li>${operatorResult.value}: ${operatorResult.key}</li>
+                        </j:forEach>
                       </ul>
                     </dd>
-                  </j:foreach>
+                  </j:forEach>
                 </dl>
             </dd>
-          </j:foreach>
+          </j:forEach>
         </dl>
 
       </l:main-panel>
 
-      <script type="text/javscript" src="${rootURL}/plugin/rubyMetrics/js/flog.accordion.js"></script>
+      <script type="text/javascript" src="${rootURL}/plugin/rubyMetrics/js/flog.accordion.js"></script>
     </l:layout>
 </j:jelly>
 
