@@ -1,0 +1,39 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
+    <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
+ 
+ 	<st:include it="${it.owner}" page="sidepanel.jelly" />
+ 
+ 	<l:main-panel>
+            <h1>${it.displayName}</h1>
+            
+            <table class="report">
+            	<thead>
+            		<tr>
+            			<td class='heading'>Name</td>
+					    <td class='heading'>Total lines</td>
+					    <td class='heading'>Lines of code</td>
+					    <td class='heading'>Total coverage</td>
+					    <td class='heading'>Code coverage</td>
+			      	</tr>
+			    </thead>
+			    <tbody>
+			    	<tr>
+			    		<td>${it.result.name}</td>
+			    		<td class="lines_total">${it.result.totalLines}</td>
+					    <td class="lines_code">${it.result.codeLines}</td>
+					    
+					    <rcov:tableGraph coverage="${it.result.totalCoverage}" coveredWidth="${it.result.totalCoveredWidth}" 
+					    		uncoveredWidth="${it.result.totalUncoveredWidth}" />
+
+					    <rcov:tableGraph coverage="${it.result.codeCoverage}" coveredWidth="${it.result.codeCoveredWidth}" 
+					    		uncoveredWidth="${it.result.codeUncoveredWidth}" />
+          				
+			    	</tr>			    				    	
+			    </tbody>
+			 </table> <!-- report -->
+			 ${it.result.sourceCode}
+    </l:main-panel>        
+    
+    </l:layout>
+ </j:jelly>

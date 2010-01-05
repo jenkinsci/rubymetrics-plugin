@@ -1,0 +1,44 @@
+<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
+         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags">
+    <l:layout css="/plugin/rubyMetrics/css/style.css">
+
+	    <st:include it="${it.owner}" page="sidepanel.jelly" />
+
+	    <l:main-panel>
+        <h1>Flog report</h1>
+
+        <j:if test="${it.previousResult != null}">
+          <img src="graph" width="500px" height="200px"/>
+        </j:if>
+
+        <div id="summary">
+          <span><strong>Total score:</strong> ${it.results.total}</span>
+          <span><strong>Average score:</strong> ${it.results.average}</span>
+        </div>
+
+        <dl id="flog-accordion" class="accordion">
+          <j:forEach var="fileResult" items="${it.results.fileResults}">
+            <dt>${fileResult.value.total}: ${fileResult.key}</dt>
+            <dd>
+                <dl>
+                  <j:forEach var="methodResult" items="${fileResult.value.methodResults}">
+                    <dt>${methodResult.score}: ${methodResult.name}</dt>
+                    <dd>
+                      <ul>
+                        <j:forEach var="operatorResult" items="${methodResult.operatorResults}">
+                            <li>${operatorResult.value}: ${operatorResult.key}</li>
+                        </j:forEach>
+                      </ul>
+                    </dd>
+                  </j:forEach>
+                </dl>
+            </dd>
+          </j:forEach>
+        </dl>
+
+      </l:main-panel>
+
+      <script type="text/javascript" src="${rootURL}/plugin/rubyMetrics/js/flog.accordion.js"></script>
+    </l:layout>
+</j:jelly>
+
