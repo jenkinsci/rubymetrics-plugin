@@ -1,41 +1,44 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags">
     <l:layout xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
-    
-	   <st:include it="${it.owner}" page="sidepanel.jelly" />
-	    
+
+	    <st:include it="${it.owner}" page="sidepanel.jelly" />
+
 	    <l:main-panel>
-	            <h1>Flog report</h1>
-	            
-	            <j:if test="${it.previousResult != null}">
-	            	<img src="graph" width="500px" height="200px"/>
-	            </j:if>
-				 
-				 <div id="summary">
-				 	<span>Total score: ${it.results.total}</span>
-				 	<span>Average score: ${it.results.average}</span>
-				 </div>
-				 
-			    <ul class="flog-file">
-			        <j:forEach var="fileResult" items="${it.results.fileResults}">
-				        <li>
-    				        <p>${fileResult.value.total}: ${fileResult.key}</p>
-    				        <ul class="flog-method">
-        				        <j:forEach var="methodResult" items="${fileResult.value.methodResults}">
-    				                <li>
-    				                    <p>${methodResult.score}: ${methodResult.name}</p>
-    				                    <ul class="flog-operator">
-            				                <j:forEach var="operatorResult" items="${methodResult.operatorResults}">
-            				                    <li>${operatorResult.value}: ${operatorResult.key}</li>
-            				                </j:forEach>
-        				                </ul>
-    				                </li>
-        				        </j:forEach>
-    				        </ul>
-				        </li>
-			        </j:forEach>
-			    </ul>
-			    
-	        </l:main-panel>
+        <h1>Flog report</h1>
+
+        <j:if test="${it.previousResult != null}">
+          <img src="graph" width="500px" height="200px"/>
+        </j:if>
+
+        <div id="summary">
+          <span><strong>Total score:</strong> ${it.results.total}</span>
+          <span><strong>Average score:</strong> ${it.results.average}</span>
+        </div>
+
+        <dl id="flog-accordion" class="accordion">
+          <j:foreach var="fileresult" items="${it.results.fileresults}">
+            <dt>${fileresult.value.total}: ${fileresult.key}</dt>
+            <dd>
+                <dl>
+                  <j:foreach var="methodresult" items="${fileresult.value.methodresults}">
+                    <dt>${methodresult.score}: ${methodresult.name}</dt>
+                    <dd>
+                      <ul>
+                        <j:foreach var="operatorresult" items="${methodresult.operatorresults}">
+                            <li>${operatorresult.value}: ${operatorresult.key}</li>
+                        </j:foreach>
+                      </ul>
+                    </dd>
+                  </j:foreach>
+                </dl>
+            </dd>
+          </j:foreach>
+        </dl>
+
+      </l:main-panel>
+
+      <script type="text/javscript" src="${rootURL}/plugin/rubyMetrics/js/flog.accordion.js"></script>
     </l:layout>
 </j:jelly>
+

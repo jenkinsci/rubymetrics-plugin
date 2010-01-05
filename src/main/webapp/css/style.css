@@ -186,3 +186,44 @@ div.key {
   border: 1px solid #666666;
   margin: 1em 0em;
 }
+
+/* Flog accordion */
+
+.accordion {
+  border: 1px solid #aaa;
+  padding: 4px;
+  margin: 1em;
+  background: #fff;
+}
+
+.accordion dt {
+  background: #3a6ba9;
+  color: #fff;
+  font-weight: bold;
+  padding: 3px 8px;
+}
+
+.accordion dt.selected {
+  background: #fcaf3e;
+}
+
+.accordion dt:hover, .accordion dt.over {
+  text-decoration: underline;
+  cursor: pointer;
+  cursor: hand;
+}
+
+.accordion dd {
+  display: none;
+  border: 1px solid #aaa;
+  padding: 4px;
+  overflow: hidden;
+}
+
+.accordion dd.open {
+  display: block;
+}
+
+.accordion dd.getHeight {
+  display: block;
+}
