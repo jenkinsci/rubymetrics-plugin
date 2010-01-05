@@ -64,7 +64,7 @@ public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
 	}
 
 	public String getDisplayName() {
-		return "Flog";
+		return "Flog report";
 	}
 
 	public String getIconFileName() {
