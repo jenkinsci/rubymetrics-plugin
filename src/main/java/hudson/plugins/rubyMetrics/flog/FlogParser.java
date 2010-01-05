@@ -42,8 +42,7 @@ public class FlogParser {
 	
 	private String getScoreFromOperator(String line) {
 		Matcher matcher = operatorRegex.matcher(line);
-		matcher.matches();
-		return matcher.group("score");
+		return matcher.matches() ? matcher.group("score") : "0.0";
 	}
 	
 	private void addFlogResults(String filePath, FlogFileResults flogResults, String line) {
