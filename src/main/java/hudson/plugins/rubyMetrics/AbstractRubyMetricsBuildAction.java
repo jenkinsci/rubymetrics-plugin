@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics;
 
 import hudson.model.AbstractBuild;
+import hudson.model.HealthReport;
 import hudson.model.HealthReportingAction;
 import hudson.model.Result;
 import hudson.util.ChartUtil;
@@ -52,7 +53,6 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     }
 
     protected abstract DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> getDataSetBuilder();
-    protected abstract String getRangeAxisLabel();
     
     public void doGraph(StaplerRequest req, StaplerResponse rsp) throws IOException {
         if (ChartUtil.awtProblemCause != null) {
@@ -127,5 +127,18 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
         rangeAxis.setLowerBound(0);
         
         return rangeAxis;
+	}
+	
+	protected String getRangeAxisLabel() {
+		return "";
+	}
+
+	public HealthReport getBuildHealth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public String getIconFileName() {
+		return "graph.gif";
 	}
 }

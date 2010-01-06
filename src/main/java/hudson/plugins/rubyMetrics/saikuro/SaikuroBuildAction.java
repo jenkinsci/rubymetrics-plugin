@@ -44,22 +44,8 @@ public class SaikuroBuildAction extends AbstractRubyMetricsBuildAction{
     	return null;    	
     }
 
-	public HealthReport getBuildHealth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	protected String getRangeAxisLabel() {
-		return "";
-	}
-
 	public String getDisplayName() {
 		return "Saikuro report";
-	}
-
-	public String getIconFileName() {
-		return "graph.gif";
 	}
 
 	public String getUrlName() {

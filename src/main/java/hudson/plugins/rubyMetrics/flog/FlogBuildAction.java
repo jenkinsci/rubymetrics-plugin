@@ -49,15 +49,7 @@ public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
         return rangeAxis;
 	}
 
-	@Override
-	protected String getRangeAxisLabel() {
-		return "";
-	}
-
-	public HealthReport getBuildHealth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	
 	public FlogBuildResults getResults() {
 		return results;
@@ -65,10 +57,6 @@ public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
 
 	public String getDisplayName() {
 		return "Flog report";
-	}
-
-	public String getIconFileName() {
-		return "graph.gif";
 	}
 
 	public String getUrlName() {
