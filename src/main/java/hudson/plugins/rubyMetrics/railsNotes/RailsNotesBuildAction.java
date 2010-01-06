@@ -18,11 +18,6 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
         super(owner);
         this.results = results;
     }
-
-    public HealthReport getBuildHealth() {
-        // TODO Auto-generated method stub
-        return null;
-    }
     
     public RailsNotesResults getResults() {
         return results;
@@ -30,10 +25,6 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
 
     public String getDisplayName() {
         return "Annotations (Rails notes)";
-    }
-
-    public String getIconFileName() {
-        return "graph.gif";
     }
 
     public String getUrlName() {

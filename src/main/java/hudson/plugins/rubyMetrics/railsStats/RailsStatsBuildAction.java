@@ -20,21 +20,12 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 		this.results = results;
 	}
 	
-	public HealthReport getBuildHealth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	public RailsStatsResults getResults() {
 		return results;
 	}
 
 	public String getDisplayName() {
 		return "Rails stats";
-	}
-
-	public String getIconFileName() {
-		return "graph.gif";
 	}
 
 	public String getUrlName() {
@@ -56,11 +47,6 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 		}		
 		
         return dsb;
-	}
-
-	@Override
-	protected String getRangeAxisLabel() {
-		return "";
-	}    
+	} 
 
 }

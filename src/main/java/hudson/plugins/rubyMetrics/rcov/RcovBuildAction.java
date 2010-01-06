@@ -47,10 +47,6 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 		return "Rcov report";
 	}
 
-	public String getIconFileName() {
-		return "graph.gif";
-	}
-
 	public String getUrlName() {
 		return "rcov";
 	}
