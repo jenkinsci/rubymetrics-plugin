@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.rcov.model;
 
 import org.apache.commons.beanutils.Converter;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 public class MetricTarget {
 	
@@ -18,6 +19,7 @@ public class MetricTarget {
      * @param unstable
      * @stapler-constructor
      */
+    @DataBoundConstructor
 	public MetricTarget(Targets metric, Integer healthy, Integer unhealthy, Integer unstable) {		
 		this.metric = metric;
 		this.healthy = healthy != null?healthy:80;
