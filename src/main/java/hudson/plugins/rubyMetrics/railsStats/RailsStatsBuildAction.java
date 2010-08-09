@@ -36,11 +36,10 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 	protected DataSetBuilder<String, NumberOnlyBuildLabel> getDataSetBuilder() {
 		DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> dsb = new DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel>();
         
-		Map<RailsStatsMetrics, Integer> total = results.getTotal();		
-		
 		for (RailsStatsBuildAction a = this; a != null; a = a.getPreviousResult()) {
 			ChartUtil.NumberOnlyBuildLabel label = new ChartUtil.NumberOnlyBuildLabel(a.owner);
 			
+		    Map<RailsStatsMetrics, Integer> total = a.getResults().getTotal();
 			for (Map.Entry<RailsStatsMetrics, Integer> entry : total.entrySet()) {
 				dsb.add(entry.getValue(), entry.getKey().prettyPrint(), label);
 			}
