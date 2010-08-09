@@ -1,0 +1,8 @@
+RubyMetrics plugin for Hudson CI
+================================
+
+Ruby metric reports for Hudson. Rcov, Rails stats, Rails notes and Flog.
+
+
+See http://wiki.hudson-ci.org/display/HUDSON/Ruby+Metrics+Plugin for more
+information.
