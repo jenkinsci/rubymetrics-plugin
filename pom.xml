@@ -10,14 +10,14 @@
     
   <artifactId>rubyMetrics</artifactId>
   <packaging>hpi</packaging>
-  <version>1.4.1</version>
+  <version>1.5-SNAPSHOT</version>
   <name>Hudson ruby metrics  plugin</name>
   <url>http://wiki.hudson-ci.org/display/HUDSON/Ruby+Metrics+Plugin</url>
   
   <scm>
-    <connection>scm:git:git://github.com/hudson/rubymetrics-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:hudson/rubymetrics-plugin.git</developerConnection>
-    <url>http://github.com/hudson/rubymetrics-plugin</url>
+    <connection>scm:git:git://github.com/hudson/rubymetrics_plugin.git</connection>
+    <developerConnection>scm:git:git@github.com:hudson/rubymetrics_plugin.git</developerConnection>
+    <url>http://github.com/hudson/rubymetrics_plugin</url>
   </scm>
 
   <developers>
