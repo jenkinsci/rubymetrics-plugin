@@ -16,53 +16,53 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Rails stats {@link Publisher}
- * 
+ *
  * @author David Calavera
  *
  */
 @SuppressWarnings("unchecked")
 public class RailsStatsPublisher extends AbstractRailsTaskPublisher {
-	
-	@DataBoundConstructor
-	public RailsStatsPublisher(String rakeInstallation, String rakeWorkingDir) {
-		super(rakeInstallation, rakeWorkingDir, "stats");
-	}
 
-	protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
-		final RailsStatsParser parser = new RailsStatsParser();
-		RailsStatsResults results = parser.parse(out);
-		
-		RailsStatsBuildAction action = new RailsStatsBuildAction(build, results);
-		build.getActions().add(action);
-	}
-		
-	@Override
-	public Action getProjectAction(AbstractProject<?,?> project) {
-		return new RailsStatsProjectAction(project);
-	}
+    @DataBoundConstructor
+    public RailsStatsPublisher(String rakeInstallation, String rakeWorkingDir) {
+        super(rakeInstallation, rakeWorkingDir, "stats");
+    }
 
-	@Extension
-	public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
+    protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+        final RailsStatsParser parser = new RailsStatsParser();
+        RailsStatsResults results = parser.parse(out);
+
+        RailsStatsBuildAction action = new RailsStatsBuildAction(build, results);
+        build.getActions().add(action);
+    }
+
+    @Override
+    public Action getProjectAction(AbstractProject<?,?> project) {
+        return new RailsStatsProjectAction(project);
+    }
+
+    @Extension
+    public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
-		protected DescriptorImpl() {
-			super(RailsStatsPublisher.class);			
-		}
-		
-		@Override
-        public String getHelpFile() {
-        	return "/plugin/rubyMetrics/railsStatsHelp.html";
+        protected DescriptorImpl() {
+            super(RailsStatsPublisher.class);
         }
 
-		@Override
-		public String getDisplayName() {
-			return "Publish Rails stats report";
-		}
-		
-		public RubyInstallation[] getRakeInstallations() {
-			return Rake.DESCRIPTOR.getInstallations();
-		}
+        @Override
+        public String getHelpFile() {
+            return "/plugin/rubyMetrics/railsStatsHelp.html";
+        }
+
+        @Override
+        public String getDisplayName() {
+            return "Publish Rails stats report";
+        }
+
+        public RubyInstallation[] getRakeInstallations() {
+            return Rake.DESCRIPTOR.getInstallations();
+        }
 
         @Override
         public boolean isApplicable(Class<? extends AbstractProject> jobType) {
@@ -71,9 +71,9 @@ public class RailsStatsPublisher extends AbstractRailsTaskPublisher {
 
     }
 
-	@Override
-	public BuildStepDescriptor<Publisher> getDescriptor() {
-		return DESCRIPTOR;
-	}
+    @Override
+    public BuildStepDescriptor<Publisher> getDescriptor() {
+        return DESCRIPTOR;
+    }
 
 }

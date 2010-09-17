@@ -16,14 +16,14 @@ public class RailsNotesParser {
     public RailsNotesResults parse(StringOutputStream output) {
         return parse(output.toString());
     }
-    
+
     public RailsNotesResults parse(String output) {
         RailsNotesResults response = new RailsNotesResults();
-        
+
         String[] aux = output.split("[\n\r]");
         Collection<String> lines = new LinkedHashSet<String>(Arrays.asList(aux));
         lines = removeSeparators(lines);
-        
+
         // Fortunately a LinkedHashSet has a predictable order, so this can use the filenames
         Iterator<String> linesIterator = lines.iterator();
         String lastFile = "";
@@ -44,17 +44,17 @@ public class RailsNotesParser {
                 }
             }
         }
-        
+
         response.setOutput(output);
         return response;
     }
-    
+
     private Collection<String> removeSeparators(Collection<String> lines) {
         Collection<String> response = new LinkedHashSet<String>();
         for (String line : lines) {
             response.add(line.replaceAll("[\\r\\n+-]+", ""));
         }
-        
+
         response.remove("");
         return response;
     }

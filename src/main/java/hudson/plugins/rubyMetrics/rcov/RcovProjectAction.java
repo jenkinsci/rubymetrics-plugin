@@ -5,21 +5,21 @@ import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
 
 public class RcovProjectAction<RcovBuildAction> extends AbstractRubyMetricsProjectAction {
 
-	public RcovProjectAction(AbstractProject<?, ?> project) {
-		super(project);
-	}
-	
-	public String getDisplayName() {
-		return "Rcov report";
-	}
+    public RcovProjectAction(AbstractProject<?, ?> project) {
+        super(project);
+    }
 
-	public String getUrlName() {
-		return "rcov";
-	}
+    public String getDisplayName() {
+        return "Rcov report";
+    }
 
-	@Override
-	protected Class getBuildActionClass() {
-		return hudson.plugins.rubyMetrics.rcov.RcovBuildAction.class;
-	}
+    public String getUrlName() {
+        return "rcov";
+    }
+
+    @Override
+    protected Class getBuildActionClass() {
+        return hudson.plugins.rubyMetrics.rcov.RcovBuildAction.class;
+    }
 
 }

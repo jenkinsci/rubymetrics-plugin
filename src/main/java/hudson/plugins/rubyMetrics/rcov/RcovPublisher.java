@@ -27,72 +27,72 @@ import org.kohsuke.stapler.StaplerRequest;
 
 /**
  * Rcov {@link Publisher}
- * 
+ *
  * @author David Calavera
  *
  */
 @SuppressWarnings({"unchecked", "serial"})
 public class RcovPublisher extends HtmlPublisher {
-		
-	private List<MetricTarget> targets;	
-	
-	@DataBoundConstructor
-	public RcovPublisher(String reportDir) {
-		this.reportDir = reportDir;				
-	}
-	
-	/**
+
+    private List<MetricTarget> targets;
+
+    @DataBoundConstructor
+    public RcovPublisher(String reportDir) {
+        this.reportDir = reportDir;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-    	final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
-    	prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
-    	if (build.getResult() == Result.FAILURE) {
-    		return false;
-    	}
-        
+        final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
+        prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
+        if (build.getResult() == Result.FAILURE) {
+            return false;
+        }
+
         RcovParser parser = new RcovParser(build.getRootDir());
         RcovResult results = parser.parse(getCoverageFiles(build, indexFilter)[0]);
-    	
-        RcovBuildAction action = new RcovBuildAction(build, results, targets);        
+
+        RcovBuildAction action = new RcovBuildAction(build, results, targets);
         build.getActions().add(action);
-        
+
         if (failMetrics(results, listener)) {
-        	build.setResult(Result.UNSTABLE);
+            build.setResult(Result.UNSTABLE);
         }
-        
-    	return true;
+
+        return true;
     }
-    
+
     private boolean failMetrics(RcovResult results, BuildListener listener) {
-    	float initRatio = 0;
-    	float resultRatio = 0;
-    	for (MetricTarget target : targets) {
-    		initRatio = target.getUnstable();
-    		resultRatio = results.getRatioFloat(target.getMetric());
-    		
-    		if (resultRatio < initRatio) {
-    			listener.getLogger().println("Code coverage enforcement failed for the following metrics:");
-    			listener.getLogger().println("    " + target.getMetric().getName());
-    			return true;
-    		}
-    	}
-    	return false;
+        float initRatio = 0;
+        float resultRatio = 0;
+        for (MetricTarget target : targets) {
+            initRatio = target.getUnstable();
+            resultRatio = results.getRatioFloat(target.getMetric());
+
+            if (resultRatio < initRatio) {
+                listener.getLogger().println("Code coverage enforcement failed for the following metrics:");
+                listener.getLogger().println("    " + target.getMetric().getName());
+                return true;
+            }
+        }
+        return false;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Action getProjectAction(final AbstractProject<?, ?> project) {
         return new RcovProjectAction(project);
     }
-    
+
     public List<MetricTarget> getTargets() {
-    	return targets;
+        return targets;
     }
-    
+
     public void setTargets(List<MetricTarget> targets) {
-    	this.targets = targets;
+        this.targets = targets;
     }
 
     /**
@@ -103,59 +103,59 @@ public class RcovPublisher extends HtmlPublisher {
 
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
-    	private final List<MetricTarget> targets;
-    	
-		protected DescriptorImpl() {
-			super(RcovPublisher.class);
-			targets = new ArrayList<MetricTarget>(){{
-				add(new MetricTarget(Targets.TOTAL_COVERAGE, 80, null, null));
-				add(new MetricTarget(Targets.CODE_COVERAGE, 80, null, null));
-			}};
-		}
-		
-		public String getToolShortName() {
-			return "rcov";
-		}
+        private final List<MetricTarget> targets;
 
-		@Override
-		public String getDisplayName() {
-			return "Publish Rcov report";
-		}
-		
-		public List<MetricTarget> getTargets(RcovPublisher instance) {			
-			return instance != null && instance.getTargets() != null?instance.getTargets() : getDefaultTargets();            
+        protected DescriptorImpl() {
+            super(RcovPublisher.class);
+            targets = new ArrayList<MetricTarget>(){{
+                add(new MetricTarget(Targets.TOTAL_COVERAGE, 80, null, null));
+                add(new MetricTarget(Targets.CODE_COVERAGE, 80, null, null));
+            }};
         }
-		
-		private List<MetricTarget> getDefaultTargets() {
-			return targets;
-		}
 
-		@Override
-		public boolean isApplicable(Class<? extends AbstractProject> jobType) {
-		    return true;
-		}
+        public String getToolShortName() {
+            return "rcov";
+        }
 
-		@Override
-		public RcovPublisher newInstance(StaplerRequest req, JSONObject formData) throws FormException {
-			RcovPublisher instance = req.bindParameters(RcovPublisher.class, "rcov.");
-			
-			ConvertUtils.register(MetricTarget.CONVERTER, Targets.class);
-			List<MetricTarget> targets = req.bindParametersToList(MetricTarget.class, "rcov.target.");
-			instance.setTargets(targets);
-			return instance;
-		}
-		
+        @Override
+        public String getDisplayName() {
+            return "Publish Rcov report";
+        }
+
+        public List<MetricTarget> getTargets(RcovPublisher instance) {
+            return instance != null && instance.getTargets() != null?instance.getTargets() : getDefaultTargets();
+        }
+
+        private List<MetricTarget> getDefaultTargets() {
+            return targets;
+        }
+
+        @Override
+        public boolean isApplicable(Class<? extends AbstractProject> jobType) {
+            return true;
+        }
+
+        @Override
+        public RcovPublisher newInstance(StaplerRequest req, JSONObject formData) throws FormException {
+            RcovPublisher instance = req.bindParameters(RcovPublisher.class, "rcov.");
+
+            ConvertUtils.register(MetricTarget.CONVERTER, Targets.class);
+            List<MetricTarget> targets = req.bindParametersToList(MetricTarget.class, "rcov.target.");
+            instance.setTargets(targets);
+            return instance;
+        }
+
     }
 
-	@Override
-	public BuildStepDescriptor<Publisher> getDescriptor() {
-		return DESCRIPTOR;
-	}
-	
-	private static class RcovFilenameFilter implements FilenameFilter {		
-        public boolean accept(File dir, String name) {            
+    @Override
+    public BuildStepDescriptor<Publisher> getDescriptor() {
+        return DESCRIPTOR;
+    }
+
+    private static class RcovFilenameFilter implements FilenameFilter {
+        public boolean accept(File dir, String name) {
             return name.equalsIgnoreCase("index.html");
         }
     }
-	
+
 }

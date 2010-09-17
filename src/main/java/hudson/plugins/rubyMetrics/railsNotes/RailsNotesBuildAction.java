@@ -18,7 +18,7 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
         super(owner);
         this.results = results;
     }
-    
+
     public RailsNotesResults getResults() {
         return results;
     }
@@ -34,17 +34,17 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
     @Override
     protected DataSetBuilder<String, NumberOnlyBuildLabel> getDataSetBuilder() {
         DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> dsb = new DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel>();
-        
-        Map<RailsNotesMetrics, Integer> total = results.getTotal();     
-        
+
+        Map<RailsNotesMetrics, Integer> total = results.getTotal();
+
         for (RailsNotesBuildAction a = this; a != null; a = a.getPreviousResult()) {
             ChartUtil.NumberOnlyBuildLabel label = new ChartUtil.NumberOnlyBuildLabel(a.owner);
-            
+
             for (Map.Entry<RailsNotesMetrics, Integer> entry : total.entrySet()) {
                 dsb.add(entry.getValue(), entry.getKey().toString(), label);
             }
         }
-        
+
         return dsb;
     }
 

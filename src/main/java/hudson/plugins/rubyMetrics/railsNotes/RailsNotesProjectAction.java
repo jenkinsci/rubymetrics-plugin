@@ -7,17 +7,17 @@ public class RailsNotesProjectAction<RailsNotesBuildAction> extends AbstractRuby
     public RailsNotesProjectAction(AbstractProject<?, ?> project) {
         super(project);
     }
-    
+
     public String getDisplayName() {
         return "Annotations report";
     }
 
-    public String getUrlName() {        
+    public String getUrlName() {
         return "railsNotes";
     }
 
-	@Override
-	protected Class getBuildActionClass() {
-		return hudson.plugins.rubyMetrics.railsNotes.RailsNotesBuildAction.class;
-	}
+    @Override
+    protected Class getBuildActionClass() {
+        return hudson.plugins.rubyMetrics.railsNotes.RailsNotesBuildAction.class;
+    }
 }

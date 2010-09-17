@@ -25,66 +25,66 @@ import org.htmlparser.util.ParserException;
 
 public class SaikuroParser extends HtmlParser {
 
-	public SaikuroParser(File rootFilePath, BuildListener listener) {
-		super(rootFilePath);
-		this.listener = listener;
-	}
-	
-	public SaikuroResult parse(File file) throws IOException {        
-        return parse(new FileInputStream(file));
-    }
-	
-    public SaikuroResult parse(InputStream input) throws IOException {
-    	try {
-    		SaikuroResult result = new SaikuroResult();
-    		
-    		Parser parser = initParser(getHtml(input));
-    		TableTag report = getReportTable(parser);
-    		
-    		if (report.getRowCount() > 0) {
-    			//row at 0 is the header row
-    			for (int i = 1; i < report.getRowCount(); i++) {
-    				result.addFile(parseRow(report.getRow(i)));
-    			}
-    		}
-    		
-    		
-    		return result;
-    	} catch (Exception e) {
-    		throw new IOException2("cannot parse saikuro report file", e);
-    	}
+    public SaikuroParser(File rootFilePath, BuildListener listener) {
+        super(rootFilePath);
+        this.listener = listener;
     }
 
-	@Override
-	protected TableTag getReportTable(Parser htmlParser) throws ParserException {
-		NodeList node = htmlParser.extractAllNodesThatMatch(new TagNameFilter(TABLE_TAG_NAME));
-		if (!(node != null && node.size() > 0)) {
-    		throw new ParserException("cannot parse saikuro file, report element wasn't found");
-    	}
-    	return (TableTag) node.elements().nextNode();				
-	}
-	
-	private SaikuroFileResult parseRow(TableRow row) throws ParserException, IOException {
-    	final SaikuroFileResult file = new SaikuroFileResult();
-    	
-    	NodeList nodeList = new NodeList();
-    	row.collectInto(nodeList, new TagNameFilter("a"));
-    	
-    	if (nodeList.size() > 0) {
-    		LinkTag link = (LinkTag) nodeList.elementAt(0);    		
-    		file.setHref(link.getLink()
-    		    .replaceAll("_cyclo.html", "")
-    		    .replaceAll("\\./", "")
-    		    .replaceAll("/", "-").trim());
-    		file.setClassName(link.getLinkText());
-    	}
-    	
-    	NodeList columnList = new NodeList();
-    	row.collectInto(columnList, new TagNameFilter(TD_TAG_NAME));
-    	if (columnList.size() > 0) {	
-    		file.setMethodName(getTextAtNode(columnList, 1));
-    		file.setComplexity(getTextAtNode(columnList, 2));
-    	}    	    		    
-    	return file;
+    public SaikuroResult parse(File file) throws IOException {
+        return parse(new FileInputStream(file));
+    }
+
+    public SaikuroResult parse(InputStream input) throws IOException {
+        try {
+            SaikuroResult result = new SaikuroResult();
+
+            Parser parser = initParser(getHtml(input));
+            TableTag report = getReportTable(parser);
+
+            if (report.getRowCount() > 0) {
+                //row at 0 is the header row
+                for (int i = 1; i < report.getRowCount(); i++) {
+                    result.addFile(parseRow(report.getRow(i)));
+                }
+            }
+
+
+            return result;
+        } catch (Exception e) {
+            throw new IOException2("cannot parse saikuro report file", e);
+        }
+    }
+
+    @Override
+    protected TableTag getReportTable(Parser htmlParser) throws ParserException {
+        NodeList node = htmlParser.extractAllNodesThatMatch(new TagNameFilter(TABLE_TAG_NAME));
+        if (!(node != null && node.size() > 0)) {
+            throw new ParserException("cannot parse saikuro file, report element wasn't found");
+        }
+        return (TableTag) node.elements().nextNode();
+    }
+
+    private SaikuroFileResult parseRow(TableRow row) throws ParserException, IOException {
+        final SaikuroFileResult file = new SaikuroFileResult();
+
+        NodeList nodeList = new NodeList();
+        row.collectInto(nodeList, new TagNameFilter("a"));
+
+        if (nodeList.size() > 0) {
+            LinkTag link = (LinkTag) nodeList.elementAt(0);
+            file.setHref(link.getLink()
+                .replaceAll("_cyclo.html", "")
+                .replaceAll("\\./", "")
+                .replaceAll("/", "-").trim());
+            file.setClassName(link.getLinkText());
+        }
+
+        NodeList columnList = new NodeList();
+        row.collectInto(columnList, new TagNameFilter(TD_TAG_NAME));
+        if (columnList.size() > 0) {
+            file.setMethodName(getTextAtNode(columnList, 1));
+            file.setComplexity(getTextAtNode(columnList, 2));
+        }
+        return file;
     }
 }

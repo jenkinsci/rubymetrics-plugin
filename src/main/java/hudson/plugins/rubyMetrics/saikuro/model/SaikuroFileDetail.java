@@ -9,21 +9,21 @@ public class SaikuroFileDetail implements ModelObject, Serializable  {
 
     private final AbstractBuild<?, ?> owner;
     private final SaikuroFileResult result;
-    
-    public SaikuroFileDetail(final AbstractBuild<?, ?> owner, final SaikuroFileResult result) {        
+
+    public SaikuroFileDetail(final AbstractBuild<?, ?> owner, final SaikuroFileResult result) {
         this.owner = owner;
         this.result = result;
     }
-    
+
     public AbstractBuild<?, ?> getOwner() {
-		return owner;
-	}
+        return owner;
+    }
 
-	public SaikuroFileResult getResult() {
-		return result;
-	}
+    public SaikuroFileResult getResult() {
+        return result;
+    }
 
-	public String getDisplayName() {		
-		return "Saikuro report for: " + result.getClassName();
-	}
+    public String getDisplayName() {
+        return "Saikuro report for: " + result.getClassName();
+    }
 }

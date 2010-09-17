@@ -7,11 +7,11 @@ import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Recorder;
 
 public abstract class AbstractRubyMetricsPublisher extends Recorder {
-	
+
     protected boolean fail(AbstractBuild<?, ?> build, BuildListener listener, String message) {
-    	listener.getLogger().println(message);
+        listener.getLogger().println(message);
         build.setResult(Result.FAILURE);
-    	return true;
+        return true;
     }
 
     public BuildStepMonitor getRequiredMonitorService() {

@@ -22,24 +22,24 @@ import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Rails notes {@link Publisher}
- * 
+ *
  * @author Adam Stegman
  */
 public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
-    
+
     @DataBoundConstructor
     public RailsNotesPublisher(String rakeInstallation, String rakeWorkingDir) {
         super(rakeInstallation, rakeWorkingDir, "notes");
     }
 
     protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
-    	final RailsNotesParser parser = new RailsNotesParser();
+        final RailsNotesParser parser = new RailsNotesParser();
         RailsNotesResults results = parser.parse(out);
-        
+
         RailsNotesBuildAction action = new RailsNotesBuildAction(build, results);
         build.getActions().add(action);
-    }  
-       
+    }
+
     @Override
     public Action getProjectAction(AbstractProject<?,?> project) {
         return new RailsNotesProjectAction(project);
@@ -51,9 +51,9 @@ public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
     public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
         protected DescriptorImpl() {
-            super(RailsNotesPublisher.class);           
+            super(RailsNotesPublisher.class);
         }
-        
+
         @Override
         public String getHelpFile() {
             return "/plugin/rubyMetrics/railsNotesHelp.html";
@@ -63,7 +63,7 @@ public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
         public String getDisplayName() {
             return "Publish Rails Notes report";
         }
-        
+
         public RubyInstallation[] getRakeInstallations() {
             return Rake.DESCRIPTOR.getInstallations();
         }

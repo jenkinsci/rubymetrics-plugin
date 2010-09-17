@@ -5,48 +5,48 @@ import java.util.Collection;
 
 public class SaikuroResult {
 
-	private Collection<SaikuroFileResult> files = new ArrayList<SaikuroFileResult>();
-	private String totalComplexity;
-	
-	public SaikuroFileResult getFile(String href) {
-		SaikuroFileResult file = null;
+    private Collection<SaikuroFileResult> files = new ArrayList<SaikuroFileResult>();
+    private String totalComplexity;
 
-		for (SaikuroFileResult it : files) {
-			if (it.getHref().equalsIgnoreCase(href)) {
-				file = it;
-				break;
-			}
-		}
-		
-		return file;
-	}
+    public SaikuroFileResult getFile(String href) {
+        SaikuroFileResult file = null;
 
-	public Collection<SaikuroFileResult> getFiles() {
-		return files;
-	}
-	
-	public void setFiles(Collection<SaikuroFileResult> files) {
-		this.files = files;
-	}
-	
-	public void addFile(SaikuroFileResult file) {
-		this.files.add(file);
-		sumComplexity(file.getComplexityAsInt());
-	}
+        for (SaikuroFileResult it : files) {
+            if (it.getHref().equalsIgnoreCase(href)) {
+                file = it;
+                break;
+            }
+        }
 
-	public String getTotalComplexity() {
-		return totalComplexity;
-	}
+        return file;
+    }
 
-	public void setTotalComplexity(String totalComplexity) {
-		this.totalComplexity = totalComplexity;
-	}
-	
-	public void sumComplexity(int complexity) {		
-		totalComplexity = String.valueOf(getTotalComplexityAsInt() + complexity);
-	}
-	
-	public Integer getTotalComplexityAsInt() {
-		return totalComplexity != null?Integer.parseInt(totalComplexity) : 0;
-	}
+    public Collection<SaikuroFileResult> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Collection<SaikuroFileResult> files) {
+        this.files = files;
+    }
+
+    public void addFile(SaikuroFileResult file) {
+        this.files.add(file);
+        sumComplexity(file.getComplexityAsInt());
+    }
+
+    public String getTotalComplexity() {
+        return totalComplexity;
+    }
+
+    public void setTotalComplexity(String totalComplexity) {
+        this.totalComplexity = totalComplexity;
+    }
+
+    public void sumComplexity(int complexity) {
+        totalComplexity = String.valueOf(getTotalComplexityAsInt() + complexity);
+    }
+
+    public Integer getTotalComplexityAsInt() {
+        return totalComplexity != null?Integer.parseInt(totalComplexity) : 0;
+    }
 }

@@ -6,7 +6,7 @@ import junit.framework.TestCase;
 public class RailsNotesParserTest extends TestCase {
     public void testParse() throws Exception {
         RailsNotesParser parser = new RailsNotesParser();
-        
+
         String out =    "app/controllers/a_controller.rb:\n" +
                         "  * [ 53] [TODO] do this\n" +
                         "\n" +
@@ -24,9 +24,9 @@ public class RailsNotesParserTest extends TestCase {
                         "  * [  5] [FIXME]\n" +
                         "\n" +
                         "\n";
-        
+
         RailsNotesResults metrics = parser.parse(out);
-        
+
         assertFalse(metrics.getMetrics().isEmpty());
         assertNotNull(metrics.getOutput());
         assertFalse(metrics.getOutput() == "");

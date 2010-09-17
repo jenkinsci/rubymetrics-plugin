@@ -31,14 +31,14 @@ import org.kohsuke.stapler.StaplerResponse;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractRubyMetricsBuildAction implements HealthReportingAction {
-	
-	protected final AbstractBuild<?, ?> owner;
-	
-	protected AbstractRubyMetricsBuildAction(AbstractBuild<?, ?> owner) {
-		this.owner = owner;
-	}
-	
-	public <T extends AbstractRubyMetricsBuildAction>T getPreviousResult() {        
+
+    protected final AbstractBuild<?, ?> owner;
+
+    protected AbstractRubyMetricsBuildAction(AbstractBuild<?, ?> owner) {
+        this.owner = owner;
+    }
+
+    public <T extends AbstractRubyMetricsBuildAction>T getPreviousResult() {
         AbstractBuild<?, ?> b = owner;
         while (true) {
             b = b.getPreviousBuild();
@@ -53,7 +53,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     }
 
     protected abstract DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> getDataSetBuilder();
-    
+
     public void doGraph(StaplerRequest req, StaplerResponse rsp) throws IOException {
         if (ChartUtil.awtProblemCause != null) {
             rsp.sendRedirect2(req.getContextPath() + "/images/headless.png");
@@ -116,29 +116,29 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
         return chart;
     }
 
-	public AbstractBuild<?, ?> getOwner() {
-		return owner;
-	}
-	
-	protected NumberAxis getRangeAxis(CategoryPlot plot) {
-		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+    public AbstractBuild<?, ?> getOwner() {
+        return owner;
+    }
+
+    protected NumberAxis getRangeAxis(CategoryPlot plot) {
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         rangeAxis.setUpperBound(100);
         rangeAxis.setLowerBound(0);
-        
-        return rangeAxis;
-	}
-	
-	protected String getRangeAxisLabel() {
-		return "";
-	}
 
-	public HealthReport getBuildHealth() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public String getIconFileName() {
-		return "graph.gif";
-	}
+        return rangeAxis;
+    }
+
+    protected String getRangeAxisLabel() {
+        return "";
+    }
+
+    public HealthReport getBuildHealth() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getIconFileName() {
+        return "graph.gif";
+    }
 }
