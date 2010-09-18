@@ -19,7 +19,7 @@ public enum RailsStatsMetrics {
     }
 
     private String defaultPrettyPrint() {
-        String prettySting = this.toString().toLowerCase();
+        String prettyString = this.toString().toLowerCase();
         return prettyString.substring(0, 1).toUpperCase() + prettyString.substring(1);
     }
 
