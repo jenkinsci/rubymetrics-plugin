@@ -37,7 +37,7 @@
       <dependency>
           <groupId>org.jvnet.hudson.plugins</groupId>
           <artifactId>rake</artifactId>
-          <version>1.7.1</version>
+          <version>[1.7.1,)</version>
       </dependency>
 
     <dependency>
