@@ -32,8 +32,8 @@ public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
         for (FlogBuildAction action = this; action != null; action = action.getPreviousResult()) {
             ChartUtil.NumberOnlyBuildLabel label = new ChartUtil.NumberOnlyBuildLabel(action.owner);
 
-            dsb.add(results.getTotal(), "Total score", label);
-            dsb.add(results.getAverage(), "Average score", label);
+            dsb.add(action.getResults().getTotal(), "Total score", label);
+            dsb.add(action.getResults().getAverage(), "Average score", label);
         }
 
         return dsb;
