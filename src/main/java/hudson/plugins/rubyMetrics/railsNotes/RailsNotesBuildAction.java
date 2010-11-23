@@ -35,12 +35,10 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
     protected DataSetBuilder<String, NumberOnlyBuildLabel> getDataSetBuilder() {
         DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> dsb = new DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel>();
 
-        Map<RailsNotesMetrics, Integer> total = results.getTotal();
-
         for (RailsNotesBuildAction a = this; a != null; a = a.getPreviousResult()) {
             ChartUtil.NumberOnlyBuildLabel label = new ChartUtil.NumberOnlyBuildLabel(a.owner);
 
-            for (Map.Entry<RailsNotesMetrics, Integer> entry : total.entrySet()) {
+            for (Map.Entry<RailsNotesMetrics, Integer> entry : a.getResults().getTotal().entrySet()) {
                 dsb.add(entry.getValue(), entry.getKey().toString(), label);
             }
         }
