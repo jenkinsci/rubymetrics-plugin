@@ -8,9 +8,18 @@
 	            <h1>Rails stats report</h1>
 	            
 	            <j:if test="${it.previousResult != null}">
-	            	<img src="graph" width="500px" height="200px"/>
-	            </j:if>
-	            
+	            	<h2>Ratios</h2>
+                    <img src="graph" width="500px" height="200px"/>
+                    <br/>
+                    <h2>Classes</h2>
+                    <img src="graphClasses" width="500px" height="200px"/>
+                    <br/>
+                    <h2>Lines of Code</h2>
+                    <img src="graphLoc" width="500px" height="200px"/>
+                    <br/>
+                    <h2>Stats</h2>
+                </j:if>
+                
 	            <table class="report">
 	            	<thead>
 	            		<tr>
