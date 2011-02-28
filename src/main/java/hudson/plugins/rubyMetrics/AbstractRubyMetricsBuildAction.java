@@ -1,9 +1,9 @@
 package hudson.plugins.rubyMetrics;
 
-import hudson.model.AbstractBuild;
 import hudson.model.HealthReport;
 import hudson.model.HealthReportingAction;
 import hudson.model.Result;
+import hudson.model.AbstractBuild;
 import hudson.util.ChartUtil;
 import hudson.util.ColorPalette;
 import hudson.util.DataSetBuilder;
@@ -38,7 +38,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
         this.owner = owner;
     }
 
-    public <T extends AbstractRubyMetricsBuildAction>T getPreviousResult() {
+    public <T extends AbstractRubyMetricsBuildAction> T getPreviousResult() {
         AbstractBuild<?, ?> b = owner;
         while (true) {
             b = b.getPreviousBuild();
@@ -55,32 +55,44 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     protected abstract DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> getDataSetBuilder();
 
     public void doGraph(StaplerRequest req, StaplerResponse rsp) throws IOException {
+        if (shouldGenerateGraph(req, rsp)) {
+            generateGraph(req, rsp, getDataSetBuilder());
+        }
+    }
+
+    protected void generateGraph(StaplerRequest req, StaplerResponse rsp,
+            DataSetBuilder<String, ChartUtil.NumberOnlyBuildLabel> dsb) throws IOException {
+        ChartUtil.generateGraph(req, rsp, createChart(dsb.build(), getRangeAxisLabel()), 500, 200);
+    }
+
+    protected boolean shouldGenerateGraph(StaplerRequest req, StaplerResponse rsp)
+            throws IOException {
         if (ChartUtil.awtProblemCause != null) {
             rsp.sendRedirect2(req.getContextPath() + "/images/headless.png");
-            return;
+            return false;
         }
 
         Calendar t = owner.getTimestamp();
 
         if (req.checkIfModified(t, rsp)) {
-            return; // up to date
+            return false; // up to date
         }
 
-        ChartUtil.generateGraph(req, rsp, createChart(getDataSetBuilder().build(), getRangeAxisLabel()), 500, 200);
+        return true;
     }
 
     private JFreeChart createChart(CategoryDataset dataset, String rangeAxisLabel) {
 
-        final JFreeChart chart = ChartFactory.createLineChart(
-                null,                   // chart title
-                null,                   // unused
-                rangeAxisLabel,          // range axis label
-                dataset,                  // data
+        final JFreeChart chart = ChartFactory.createLineChart(null, // chart
+                                                                    // title
+                null, // unused
+                rangeAxisLabel, // range axis label
+                dataset, // data
                 PlotOrientation.VERTICAL, // orientation
-                true,                     // include legend
-                true,                     // tooltips
-                false                     // urls
-        );
+                true, // include legend
+                true, // tooltips
+                false // urls
+                );
 
         // NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
 
@@ -123,7 +135,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
     protected NumberAxis getRangeAxis(CategoryPlot plot) {
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
         rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        rangeAxis.setUpperBound(100);
+        // rangeAxis.setUpperBound(100);
         rangeAxis.setLowerBound(0);
 
         return rangeAxis;
