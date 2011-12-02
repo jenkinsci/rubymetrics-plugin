@@ -66,7 +66,7 @@ public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPubl
         if (rake.perform(build, launcher, stringListener)) {
             buildAction(out, build);
         } else {
-            return false;
+            return fail(build, listener, stringListener.toString());
         }
 
         return true;
