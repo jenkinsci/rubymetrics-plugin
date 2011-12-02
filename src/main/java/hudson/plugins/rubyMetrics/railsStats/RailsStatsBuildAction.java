@@ -84,7 +84,7 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
                 String label = entry.getKey();
                 if (label.equalsIgnoreCase("Total")) {
                     continue;
-                } else if (label.endsWith(" tests")) {
+                } else if (label.endsWith(" tests") || label.endsWith(" specs")) {
                     sumTestLoc += entry.getValue().get(RailsStatsMetrics.LOC);
                 } else {
                     sumLoc += entry.getValue().get(RailsStatsMetrics.LOC);
