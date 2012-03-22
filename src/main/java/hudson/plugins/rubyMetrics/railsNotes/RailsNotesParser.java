@@ -36,7 +36,7 @@ public class RailsNotesParser {
             } else {
                 for (RailsNotesMetrics metric : RailsNotesMetrics.values()) {
                     // Match "  * [line#] [ANNOTATION]"
-                    Pattern metricPattern = Pattern.compile("^  \\* \\[[\\s\\d]+\\] \\[" + metric.toString() + "\\]");
+                    Pattern metricPattern = Pattern.compile("^  \\* \\[[\\s\\d]+\\] ?\\[" + metric.toString() + "\\]");
                     if (metricPattern.matcher(line).find()) {
                         response.addAnnotationFor(lastFile, metric);
                         break; // next line
