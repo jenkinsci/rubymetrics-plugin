@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import org.apache.commons.lang.StringUtils;
 
+import static hudson.plugins.rubyMetrics.Utils.newString;
+
 public class RcovAbstractResult {
 
     private String totalLines;
@@ -19,7 +21,7 @@ public class RcovAbstractResult {
         return totalLines;
     }
     public void setTotalLines(String totalLines) {
-        this.totalLines = totalLines;
+        this.totalLines = newString(totalLines);
     }
 
     public Integer getCodeLinesInteger() {
@@ -30,7 +32,7 @@ public class RcovAbstractResult {
         return codeLines;
     }
     public void setCodeLines(String codeLines) {
-        this.codeLines = codeLines;
+        this.codeLines = newString(codeLines);
     }
 
     public Float getTotalCoverageFloat() {
@@ -41,7 +43,7 @@ public class RcovAbstractResult {
         return totalCoverage;
     }
     public void setTotalCoverage(String totalCoverage) {
-        this.totalCoverage = totalCoverage;
+        this.totalCoverage = newString(totalCoverage);
     }
 
     public Float getCodeCoverageFloat() {
@@ -52,7 +54,7 @@ public class RcovAbstractResult {
         return codeCoverage;
     }
     public void setCodeCoverage(String codeCoverage) {
-        this.codeCoverage = codeCoverage;
+        this.codeCoverage = newString(codeCoverage);
     }
 
     public String getTotalCoveredWidth() {
