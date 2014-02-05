@@ -3,7 +3,12 @@ package hudson.plugins.rubyMetrics.rcov.model;
 import hudson.model.AbstractBuild;
 import hudson.model.ModelObject;
 
+import hudson.plugins.rubyMetrics.rcov.RcovParser;
+
+import java.io.IOException;
 import java.io.Serializable;
+
+import org.htmlparser.util.ParserException;
 
 public class RcovFileDetail implements ModelObject, Serializable  {
 
@@ -31,6 +36,11 @@ public class RcovFileDetail implements ModelObject, Serializable  {
 
     public String getDisplayName() {
         return "Rcov report for: " + result.getName();
+    }
+
+    public String loadSourceCode() throws IOException, ParserException {
+        RcovParser parser = new RcovParser(owner.getRootDir());
+        return parser.parseSource(getResult().getLinkPath());
     }
 
 

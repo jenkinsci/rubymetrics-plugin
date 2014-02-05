@@ -98,8 +98,6 @@ public class RcovParser extends HtmlParser {
         file.setTotalCoverage(getTextFromTT(columns[3]));
         file.setCodeCoverage(getTextFromTT(columns[4]));
 
-        file.setSourceCode(parseSource(linkPath));
-
         return file;
     }
 

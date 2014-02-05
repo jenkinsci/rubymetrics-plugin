@@ -1,12 +1,16 @@
 package hudson.plugins.rubyMetrics.rcov.model;
 
+import java.io.ObjectStreamException;
+import java.io.Serializable;
 
+public class RcovFileResult extends RcovAbstractResult implements Serializable {
 
-public class RcovFileResult extends RcovAbstractResult {
+    static final long serialVersionUID = 7875682204781173769L;
 
     private String name;
     private String href;
-    private String sourceCode;
+    @Deprecated
+    private transient String sourceCode;
 
     public String getName() {
         return name;
@@ -20,10 +24,18 @@ public class RcovFileResult extends RcovAbstractResult {
     public void setHref(String href) {
         this.href = href;
     }
-    public String getSourceCode() {
-        return sourceCode;
+
+    public String getLinkPath() {
+        if (href == null || href.endsWith(".html")) {
+            return href;
+        } else {
+            return href + ".html";
+        }
     }
-    public void setSourceCode(String sourceCode) {
-        this.sourceCode = sourceCode;
+
+    // Ensure that the sourceCode field is discarded when loading old builds
+    private Object readResolve() throws ObjectStreamException {
+        this.sourceCode = null;
+        return this;
     }
 }

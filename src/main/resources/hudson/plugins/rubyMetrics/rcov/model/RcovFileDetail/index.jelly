@@ -32,7 +32,7 @@
 			    	</tr>			    				    	
 			    </tbody>
 			 </table> <!-- report -->
-			 ${it.result.sourceCode}
+			 ${it.loadSourceCode()}
     </l:main-panel>        
     
     </l:layout>

@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causes>
+        <hudson.model.Cause_-UserIdCause/>
+      </causes>
+    </hudson.model.CauseAction>
+    <hudson.plugins.rubyMetrics.rcov.RcovBuildAction plugin="rubyMetrics@1.5.1-SNAPSHOT (private-02/05/2014 13:20-mike)">
+      <owner class="build" reference="../../.."/>
+      <results>
+        <totalLines>32</totalLines>
+        <codeLines>19</codeLines>
+        <totalCoverage>100.00%</totalCoverage>
+        <codeCoverage>100.00%</codeCoverage>
+        <files class="linked-hash-set">
+          <hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+            <totalLines>5</totalLines>
+            <codeLines>3</codeLines>
+            <totalCoverage>100.00%</totalCoverage>
+            <codeCoverage>100.00%</codeCoverage>
+            <name>lib/app.rb</name>
+            <href>lib-app_rb</href>
+            <sourceCode>&lt;table class=&quot;details&quot;&gt;      &lt;tbody&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line2&quot;&gt;2&lt;/a&gt; require &apos;app/version&apos;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line3&quot;&gt;3&lt;/a&gt; require &apos;app/service&apos;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line4&quot;&gt;4&lt;/a&gt; &lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line5&quot;&gt;5&lt;/a&gt; module App&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line6&quot;&gt;6&lt;/a&gt; end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;      &lt;/tbody&gt;    &lt;/table&gt;</sourceCode>
+          </hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+          <hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+            <totalLines>11</totalLines>
+            <codeLines>6</codeLines>
+            <totalCoverage>100.00%</totalCoverage>
+            <codeCoverage>100.00%</codeCoverage>
+            <name>lib/app/service.rb</name>
+            <href>lib-app-service_rb</href>
+            <sourceCode>&lt;table class=&quot;details&quot;&gt;      &lt;tbody&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line2&quot;&gt;2&lt;/a&gt; module App&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line3&quot;&gt;3&lt;/a&gt;   class Service&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line4&quot;&gt;4&lt;/a&gt;     def do_it&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line5&quot;&gt;5&lt;/a&gt;       &amp;quot;Doing it!&amp;quot;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line6&quot;&gt;6&lt;/a&gt;     end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line7&quot;&gt;7&lt;/a&gt; &lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line8&quot;&gt;8&lt;/a&gt;     def fail&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line9&quot;&gt;9&lt;/a&gt;       raise &amp;quot;Fail!&amp;quot;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line10&quot;&gt;10&lt;/a&gt;     end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line11&quot;&gt;11&lt;/a&gt;   end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line12&quot;&gt;12&lt;/a&gt; end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;      &lt;/tbody&gt;    &lt;/table&gt;</sourceCode>
+          </hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+          <hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+            <totalLines>3</totalLines>
+            <codeLines>2</codeLines>
+            <totalCoverage>100.00%</totalCoverage>
+            <codeCoverage>100.00%</codeCoverage>
+            <name>lib/app/version.rb</name>
+            <href>lib-app-version_rb</href>
+            <sourceCode>&lt;table class=&quot;details&quot;&gt;      &lt;tbody&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line2&quot;&gt;2&lt;/a&gt; module App&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line3&quot;&gt;3&lt;/a&gt;   VERSION = &apos;1.0.0&apos;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line4&quot;&gt;4&lt;/a&gt; end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;      &lt;/tbody&gt;    &lt;/table&gt;</sourceCode>
+          </hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+          <hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+            <totalLines>13</totalLines>
+            <codeLines>8</codeLines>
+            <totalCoverage>100.00%</totalCoverage>
+            <codeCoverage>100.00%</codeCoverage>
+            <name>spec/app_spec.rb</name>
+            <href>spec-app_spec_rb</href>
+            <sourceCode>&lt;table class=&quot;details&quot;&gt;      &lt;tbody&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line2&quot;&gt;2&lt;/a&gt; require &apos;app&apos;&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line3&quot;&gt;3&lt;/a&gt; &lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line4&quot;&gt;4&lt;/a&gt; describe App::Service do&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line5&quot;&gt;5&lt;/a&gt;   it &amp;quot;returns from do_it&amp;quot; do&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line6&quot;&gt;6&lt;/a&gt;     service = App::Service.new&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line7&quot;&gt;7&lt;/a&gt;     service.do_it.should_not be_nil &lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line8&quot;&gt;8&lt;/a&gt;   end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line9&quot;&gt;9&lt;/a&gt; &lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line10&quot;&gt;10&lt;/a&gt;   it &amp;quot;raises from fail&amp;quot; do&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line11&quot;&gt;11&lt;/a&gt;     service = App::Service.new&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;marked&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line12&quot;&gt;12&lt;/a&gt;     expect { service.fail }.to raise_error&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line13&quot;&gt;13&lt;/a&gt;   end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;        &lt;tr class=&quot;inferred&quot;&gt;          &lt;td&gt;&lt;pre&gt;&lt;a name=&quot;line14&quot;&gt;14&lt;/a&gt; end&lt;/pre&gt;&lt;/td&gt;        &lt;/tr&gt;      &lt;/tbody&gt;    &lt;/table&gt;</sourceCode>
+          </hudson.plugins.rubyMetrics.rcov.model.RcovFileResult>
+        </files>
+      </results>
+      <targets>
+        <hudson.plugins.rubyMetrics.rcov.model.MetricTarget>
+          <metric>TOTAL_COVERAGE</metric>
+          <healthy>80</healthy>
+          <unhealthy>0</unhealthy>
+          <unstable>0</unstable>
+        </hudson.plugins.rubyMetrics.rcov.model.MetricTarget>
+        <hudson.plugins.rubyMetrics.rcov.model.MetricTarget>
+          <metric>CODE_COVERAGE</metric>
+          <healthy>80</healthy>
+          <unhealthy>0</unhealthy>
+          <unstable>0</unstable>
+        </hudson.plugins.rubyMetrics.rcov.model.MetricTarget>
+      </targets>
+    </hudson.plugins.rubyMetrics.rcov.RcovBuildAction>
+  </actions>
+  <number>4</number>
+  <result>SUCCESS</result>
+  <duration>690</duration>
+  <charset>UTF-8</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>/Users/mike/proj/rubymetrics-plugin/work/jobs/test/workspace</workspace>
+  <hudsonVersion>1.484</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>
