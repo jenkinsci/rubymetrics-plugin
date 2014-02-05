@@ -34,4 +34,13 @@ public class Utils {
         }
         return false;
     }
+
+    /**
+     * Creates a copy of a String that ensures the underyling character array
+     * is not oversized; akin to <code>new String(String)</code> while handling
+     * <code>null</code>.
+     */
+    public static String newString(String input) {
+        return input == null ? null : new String(input);
+    }
 }
