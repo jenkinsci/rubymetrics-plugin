@@ -1,3 +1,4 @@
+<?jelly escape-by-default='true'?>
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
          xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
     <l:layout xmlns:rcov="/hudson/plugins/rubyMetrics/tags" css="/plugin/rubyMetrics/css/style.css">
@@ -32,7 +33,7 @@
 			    	</tr>			    				    	
 			    </tbody>
 			 </table> <!-- report -->
-			 ${it.loadSourceCode()}
+			 <j:out value="${it.loadSourceCode()}"/>
     </l:main-panel>        
     
     </l:layout>
