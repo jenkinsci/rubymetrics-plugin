@@ -1,98 +1,46 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.jenkins-ci.plugins</groupId>
-    <artifactId>plugin</artifactId>
-    <version>1.397</version>
-  </parent>
+    <parent>
+        <groupId>org.jenkins-ci.plugins</groupId>
+        <artifactId>plugin</artifactId>
+        <version>1.532.3</version>
+    </parent>
 
-  <artifactId>rubyMetrics</artifactId>
-  <packaging>hpi</packaging>
-  <version>1.5.1-SNAPSHOT</version>
-  <name>Jenkins ruby metrics plugin</name>
-  <url>http://wiki.jenkins-ci.org/display/JENKINS/Ruby+Metrics+Plugin</url>
+    <artifactId>rubyMetrics</artifactId>
+    <packaging>hpi</packaging>
+    <version>1.5.1-SNAPSHOT</version>
+    <name>Jenkins Ruby metrics plugin</name>
+    <url>http://wiki.jenkins-ci.org/display/JENKINS/Ruby+Metrics+Plugin</url>
 
-  <scm>
-    <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
-    <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
-    <url>http://github.com/jenkins/rubymetrics-plugin</url>
-  </scm>
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
+        <url>http://github.com/jenkins/rubymetrics-plugin</url>
+    </scm>
 
-  <developers>
-    <developer>
-      <id>david_calavera</id>
-      <name>David Calavera</name>
-      <email>calavera@apache.org</email>
-    </developer>
-  </developers>
+    <developers>
+        <developer>
+            <id>david_calavera</id>
+            <name>David Calavera</name>
+            <email>calavera@apache.org</email>
+        </developer>
+    </developers>
 
-  <distributionManagement>
-    <repository>
-      <id>maven.jenkins-ci.org</id>
-      <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
-    </repository>
-  </distributionManagement>
+    <distributionManagement>
+        <repository>
+            <id>maven.jenkins-ci.org</id>
+            <url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+        </repository>
+    </distributionManagement>
 
-  <repositories>
-    <repository>
-      <id>repo.jenkins-ci.org</id>
-      <url>http://repo.jenkins-ci.org/public/</url>
-    </repository>
-  </repositories>
-
-
-  <dependencies>
-    <dependency>
-      <groupId>org.jenkins-ci.main</groupId>
-      <artifactId>maven-plugin</artifactId>
-    </dependency>
-
-      <dependency>
-          <groupId>org.jenkins-ci.plugins</groupId>
-          <artifactId>rake</artifactId>
-          <version>[1.8.0,)</version>
-      </dependency>
-
-    <dependency>
-        <groupId>org.htmlparser</groupId>
-        <artifactId>htmlparser</artifactId>
-        <version>1.6</version>
-    </dependency>
-
-    <dependency>
-          <groupId>net.sourceforge.jregex</groupId>
-          <artifactId>jregex</artifactId>
-          <version>1.2_01</version>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <forkMode>never</forkMode>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-release-plugin</artifactId>
-        <configuration>
-          <goals>deploy</goals>
-        </configuration>
-      </plugin>
-    </plugins>
-
-    <extensions>
-      <extension>
-        <groupId>org.jvnet.wagon-svn</groupId>
-        <artifactId>wagon-svn</artifactId>
-        <version>1.9</version>
-      </extension>
-    </extensions>
-  </build>
+    <repositories>
+        <repository>
+            <id>repo.jenkins-ci.org</id>
+            <url>http://repo.jenkins-ci.org/public/</url>
+        </repository>
+    </repositories>
 
     <pluginRepositories>
         <pluginRepository>
@@ -100,5 +48,25 @@
             <url>http://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-</project>  
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>rake</artifactId>
+            <version>[1.8.0,)</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.htmlparser</groupId>
+            <artifactId>htmlparser</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jregex</groupId>
+            <artifactId>jregex</artifactId>
+            <version>1.2_01</version>
+        </dependency>
+    </dependencies>
+</project>
 
