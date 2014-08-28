@@ -9,3 +9,7 @@ See https://wiki.jenkins-ci.org/display/JENKINS/RubyMetrics+plugin for more info
 
 * [Piotr Kuczynski](http://github.com/pkuczynski)
 * David Calavera (retired)
+
+## License
+
+RubyMetrics is released under the [MIT License](http://www.opensource.org/licenses/MIT).

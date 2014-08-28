@@ -8,16 +8,18 @@
     </parent>
 
     <artifactId>rubyMetrics</artifactId>
-    <packaging>hpi</packaging>
     <version>1.6.1-SNAPSHOT</version>
+    <packaging>hpi</packaging>
+
     <name>RubyMetrics plugin for Jenkins</name>
     <url>https://wiki.jenkins-ci.org/display/JENKINS/RubyMetrics+plugin</url>
 
-    <scm>
-        <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
-        <url>https://github.com/jenkins/rubymetrics-plugin</url>
-    </scm>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://opensource.org/licenses/MIT</url>
+        </license>
+    </licenses>
 
     <developers>
         <developer>
@@ -35,6 +37,32 @@
             </roles>
         </developer>
     </developers>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.jenkins-ci.plugins</groupId>
+            <artifactId>rake</artifactId>
+            <version>[1.8.0,)</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.htmlparser</groupId>
+            <artifactId>htmlparser</artifactId>
+            <version>1.6</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jregex</groupId>
+            <artifactId>jregex</artifactId>
+            <version>1.2_01</version>
+        </dependency>
+    </dependencies>
+
+    <scm>
+        <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
+        <url>https://github.com/jenkins/rubymetrics-plugin</url>
+    </scm>
 
     <distributionManagement>
         <repository>
@@ -56,25 +84,5 @@
             <url>http://repo.jenkins-ci.org/public/</url>
         </pluginRepository>
     </pluginRepositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.jenkins-ci.plugins</groupId>
-            <artifactId>rake</artifactId>
-            <version>[1.8.0,)</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.htmlparser</groupId>
-            <artifactId>htmlparser</artifactId>
-            <version>1.6</version>
-        </dependency>
-
-        <dependency>
-            <groupId>net.sourceforge.jregex</groupId>
-            <artifactId>jregex</artifactId>
-            <version>1.2_01</version>
-        </dependency>
-    </dependencies>
 </project>
 
