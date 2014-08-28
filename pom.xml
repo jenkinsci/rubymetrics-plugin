@@ -17,7 +17,7 @@
     <scm>
         <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
-        <url>http://github.com/jenkins/rubymetrics-plugin</url>
+        <url>https://github.com/jenkins/rubymetrics-plugin</url>
     </scm>
 
     <developers>
