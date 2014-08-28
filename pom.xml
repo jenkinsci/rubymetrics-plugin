@@ -49,9 +49,9 @@
     </dependency>
 
       <dependency>
-          <groupId>org.jvnet.hudson.plugins</groupId>
+          <groupId>org.jenkins-ci.plugins</groupId>
           <artifactId>rake</artifactId>
-          <version>[1.7.1,)</version>
+          <version>[1.8.0,)</version>
       </dependency>
 
     <dependency>

@@ -22,7 +22,7 @@ public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPubl
         this.rakeInstallation = rakeInstallation;
         this.rakeWorkingDir = rakeWorkingDir;
         this.task = task;
-        this.rake = new Rake(this.rakeInstallation, null, task, null, this.rakeWorkingDir, true);
+        this.rake = new Rake(this.rakeInstallation, null, task, null, this.rakeWorkingDir, true, true);
     }
 
     public String getRakeInstallation() {
