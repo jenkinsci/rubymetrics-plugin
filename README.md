@@ -1,4 +1,4 @@
-# RubyMetrics plugin for Jenkins CI
+# RubyMetrics plugin
 
 Ruby metric reports for Jenkins. Supports Rcov, Rails stats, Rails notes and Flog
 
