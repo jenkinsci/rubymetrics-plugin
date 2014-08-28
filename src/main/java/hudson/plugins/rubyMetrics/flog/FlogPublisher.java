@@ -16,8 +16,8 @@ import hudson.tasks.Publisher;
 
 import java.io.IOException;
 import java.util.Map;
+import java.io.ByteArrayOutputStream;
 
-import org.codehaus.plexus.util.StringOutputStream;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 public class FlogPublisher extends AbstractRubyMetricsPublisher {
@@ -47,7 +47,7 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
         }
         listener.getLogger().println("Publishing flog report...");
 
-        Map<String, StringOutputStream> execResults = flog.execute(splittedDirectories, launcher, environment, workspace, build.getRootDir());
+        Map<String, ByteArrayOutputStream> execResults = flog.execute(splittedDirectories, launcher, environment, workspace, build.getRootDir());
 
         FlogBuildResults buildResults = buildResults(build, execResults);
 
@@ -57,11 +57,11 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
         return true;
     }
 
-    private FlogBuildResults buildResults(AbstractBuild<?, ?> build, Map<String, StringOutputStream> execResults) {
+    private FlogBuildResults buildResults(AbstractBuild<?, ?> build, Map<String, ByteArrayOutputStream> execResults) {
         final FlogParser parser = new FlogParser();
         FlogBuildResults buildResults = new FlogBuildResults();
 
-        for (Map.Entry<String, StringOutputStream> entry : execResults.entrySet()) {
+        for (Map.Entry<String, ByteArrayOutputStream> entry : execResults.entrySet()) {
             FlogFileResults resultsForFile = parser.parse(entry.getKey(), entry.getValue());
             if (resultsForFile != null) {
                 buildResults.addFileResults(entry.getKey(), resultsForFile);

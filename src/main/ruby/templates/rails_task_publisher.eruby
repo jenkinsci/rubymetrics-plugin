@@ -11,7 +11,8 @@ import hudson.plugins.rubyMetrics.<%= @package_name %>.model.<%= @camelized_name
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
-import org.codehaus.plexus.util.StringOutputStream;
+import java.io.ByteArrayOutputStream;
+
 import org.kohsuke.stapler.DataBoundConstructor;
 
 @SuppressWarnings("unchecked")
@@ -22,7 +23,7 @@ public class <%= @camelized_name %>Publisher extends AbstractRailsTaskPublisher 
         super(rakeInstallation, rakeWorkingDir, <%= @rake_task %>);
     }
 
-    protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+    protected void buildAction(ByteArrayOutputStream out, AbstractBuild<?, ?> build) {
         final <%= @camelized_name %>Parser parser = new <%= @camelized_name %>Parser();
         <%= @camelized_name %>BuildResults results = parser.parse(out);
 

@@ -8,8 +8,8 @@ import hudson.util.ArgumentListBuilder;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
-import org.codehaus.plexus.util.StringOutputStream;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.jvnet.hudson.test.HudsonTestCase;
@@ -40,7 +40,7 @@ public class FlogExecutorTest extends HudsonTestCase {
     public void testJoin() throws InterruptedException, IOException {
         if (flog.isFlogInstalled(launcher, environment, workspace)) {
             ArgumentListBuilder arguments = flog.arguments("-ad", new File("command_line_parser.rb").getAbsolutePath());
-            StringOutputStream out = flog.launch(arguments, launcher, environment, workspace);
+            ByteArrayOutputStream out = flog.launch(arguments, launcher, environment, workspace);
             assertNotNull(out);
             assertTrue(out.toString().contains("CommandLineParser::parse"));
         }

@@ -9,10 +9,10 @@ import hudson.util.ArgumentListBuilder;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.ByteArrayOutputStream;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.codehaus.plexus.util.StringOutputStream;
 
 public class FlogExecutor {
 
@@ -26,8 +26,8 @@ public class FlogExecutor {
         }
     }
 
-    public Map<String, StringOutputStream> execute(String[] rbDirectories, Launcher launcher, EnvVars environment, FilePath workspace, File buildRootDir) throws InterruptedException, IOException {
-        Map<String, StringOutputStream> results = new HashMap<String, StringOutputStream>();
+    public Map<String, ByteArrayOutputStream> execute(String[] rbDirectories, Launcher launcher, EnvVars environment, FilePath workspace, File buildRootDir) throws InterruptedException, IOException {
+        Map<String, ByteArrayOutputStream> results = new HashMap<String, ByteArrayOutputStream>();
 
         for (String relativePath : rbDirectories) {
             if (workspace.child(relativePath) == null) {
@@ -40,7 +40,7 @@ public class FlogExecutor {
                 String rubyFilePath = rubyFile.toURI().getPath();
                 ArgumentListBuilder arguments = arguments("-ad", rubyFilePath);
 
-                StringOutputStream out = launch(arguments, launcher, environment, workspace);
+                ByteArrayOutputStream out = launch(arguments, launcher, environment, workspace);
                 if (out == null) {
                     results.clear();
                     return results;
@@ -52,8 +52,8 @@ public class FlogExecutor {
         return results;
     }
 
-    public StringOutputStream launch(ArgumentListBuilder arguments, Launcher launcher, EnvVars environment, FilePath workspace) throws InterruptedException, IOException {
-        StringOutputStream out = new StringOutputStream();
+    public ByteArrayOutputStream launch(ArgumentListBuilder arguments, Launcher launcher, EnvVars environment, FilePath workspace) throws InterruptedException, IOException {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
 
         int result = launcher.launch()
             .cmds(arguments)

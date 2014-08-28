@@ -12,12 +12,11 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.codehaus.plexus.util.StringOutputStream;
+import java.io.ByteArrayOutputStream;
 
 public class RailsStatsParser {
 
-    public RailsStatsResults parse(StringOutputStream output) {
+    public RailsStatsResults parse(ByteArrayOutputStream output) {
         return parse(output.toString());
     }
 
