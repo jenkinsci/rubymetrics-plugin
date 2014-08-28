@@ -5,19 +5,19 @@ import hudson.plugins.rubyMetrics.flog.model.FlogMethodResults;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.io.ByteArrayOutputStream;
 
 import jregex.Matcher;
 import jregex.Pattern;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.plexus.util.StringOutputStream;
 
 public class FlogParser {
 
     private final static Pattern operatorRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s({operator}.*)$");
     private final static Pattern methodRegex = new Pattern("\\s*({score}\\d+\\.\\d+):\\s+({method}[A-Za-z:]+(?:#|::).*)");
 
-    public FlogFileResults parse(String filePath, StringOutputStream results) {
+    public FlogFileResults parse(String filePath, ByteArrayOutputStream results) {
         return parse(filePath, results.toString());
     }
 

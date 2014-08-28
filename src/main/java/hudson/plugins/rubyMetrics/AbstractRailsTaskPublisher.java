@@ -8,8 +8,7 @@ import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 
 import java.io.IOException;
-
-import org.codehaus.plexus.util.StringOutputStream;
+import java.io.ByteArrayOutputStream;
 
 public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPublisher {
 
@@ -57,7 +56,7 @@ public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPubl
 
         listener.getLogger().println("Publishing rails " + task + " report...");
 
-        StringOutputStream out = new StringOutputStream();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
         BuildListener stringListener = new StreamBuildListener(out);
 
         if (rake.perform(build, launcher, stringListener)) {
@@ -67,5 +66,5 @@ public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPubl
         return true;
     }
 
-    protected abstract void buildAction(StringOutputStream out, AbstractBuild<?, ?> build);
+    protected abstract void buildAction(ByteArrayOutputStream out, AbstractBuild<?, ?> build);
 }

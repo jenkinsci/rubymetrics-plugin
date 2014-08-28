@@ -11,7 +11,8 @@ import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
-import org.codehaus.plexus.util.StringOutputStream;
+import java.io.ByteArrayOutputStream;
+
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -28,7 +29,7 @@ public class RailsStatsPublisher extends AbstractRailsTaskPublisher {
         super(rakeInstallation, rakeWorkingDir, "stats");
     }
 
-    protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+    protected void buildAction(ByteArrayOutputStream out, AbstractBuild<?, ?> build) {
         final RailsStatsParser parser = new RailsStatsParser();
         RailsStatsResults results = parser.parse(out);
 

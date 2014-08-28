@@ -16,8 +16,8 @@ import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
 
 import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 
-import org.codehaus.plexus.util.StringOutputStream;
 import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
@@ -32,7 +32,7 @@ public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
         super(rakeInstallation, rakeWorkingDir, "notes");
     }
 
-    protected void buildAction(StringOutputStream out, AbstractBuild<?, ?> build) {
+    protected void buildAction(ByteArrayOutputStream out, AbstractBuild<?, ?> build) {
         final RailsNotesParser parser = new RailsNotesParser();
         RailsNotesResults results = parser.parse(out);
 

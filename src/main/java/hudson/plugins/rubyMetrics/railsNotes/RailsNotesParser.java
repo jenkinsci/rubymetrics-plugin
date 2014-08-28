@@ -8,12 +8,12 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.regex.Pattern;
+import java.io.ByteArrayOutputStream;
 
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.plexus.util.StringOutputStream;
 
 public class RailsNotesParser {
-    public RailsNotesResults parse(StringOutputStream output) {
+    public RailsNotesResults parse(ByteArrayOutputStream output) {
         return parse(output.toString());
     }
 
