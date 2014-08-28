@@ -11,8 +11,8 @@
     <artifactId>rubyMetrics</artifactId>
     <packaging>hpi</packaging>
     <version>1.5.1-SNAPSHOT</version>
-    <name>Jenkins Ruby metrics plugin</name>
-    <url>http://wiki.jenkins-ci.org/display/JENKINS/Ruby+Metrics+Plugin</url>
+    <name>RubyMetrics plugin for Jenkins</name>
+    <url>https://wiki.jenkins-ci.org/display/JENKINS/RubyMetrics+plugin</url>
 
     <scm>
         <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
@@ -22,9 +22,18 @@
 
     <developers>
         <developer>
+            <id>pkuczynski</id>
+            <name>Piotr Kuczynski</name>
+            <email>piotr.kuczynski@gmail.com</email>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+        <developer>
             <id>david_calavera</id>
             <name>David Calavera</name>
             <email>calavera@apache.org</email>
+            <roles>
+                <role>retired</role>
+            </roles>
         </developer>
     </developers>
 
