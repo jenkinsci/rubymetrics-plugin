@@ -1,3 +1,8 @@
+# 1.6.1 (work in progress)
+
+* Report value within empty range as 100%
+* Files ending with spec are counted into the tests pool  
+
 # 1.6.0 (August 29, 2014)
 
 * Upgrade to newer version of rake (1.8.0) and org.jenkins-ci.plugins (1.532.3) fixing JENKINS-22293 issue
