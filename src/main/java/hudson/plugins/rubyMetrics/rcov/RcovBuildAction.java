@@ -58,7 +58,7 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
     private int calcRangeScore(Integer max, Integer min, int value) {
         if (min == null || min < 0) min = 0;
         if (max == null || max > 100) max = 100;
-        if (min > max) min = max - 1;
+        if (min >= max) min = max - 1;
         int result = (int) (100f * (value - min.floatValue()) / (max.floatValue() - min.floatValue()));
         if (result < 0) return 0;
         if (result > 100) return 100;
