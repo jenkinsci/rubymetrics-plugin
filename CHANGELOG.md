@@ -1,4 +1,4 @@
-# 1.6.1 (work in progress)
+# 1.6.1 (September 2, 2014)
 
 * Report value within empty range as 100%
 * Files ending with spec are counted into the tests pool  
