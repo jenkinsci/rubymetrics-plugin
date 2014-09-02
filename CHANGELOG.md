@@ -1,3 +1,8 @@
+# 1.6.2 (September 2, 2014)
+
+* Changes RcovFileResult class to avoid retaining the source code of every file in the coverage report in memory for every build.
+
+
 # 1.6.1 (September 2, 2014)
 
 * Report value within empty range as 100%
