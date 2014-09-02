@@ -2,15 +2,14 @@ package hudson.plugins.rubyMetrics.railsNotes;
 
 import hudson.plugins.rubyMetrics.railsNotes.model.RailsNotesMetrics;
 import hudson.plugins.rubyMetrics.railsNotes.model.RailsNotesResults;
+import org.apache.commons.lang.StringUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.regex.Pattern;
-import java.io.ByteArrayOutputStream;
-
-import org.apache.commons.lang.StringUtils;
 
 public class RailsNotesParser {
     public RailsNotesResults parse(ByteArrayOutputStream output) {

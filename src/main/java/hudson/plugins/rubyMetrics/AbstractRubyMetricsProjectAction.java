@@ -1,15 +1,10 @@
 package hudson.plugins.rubyMetrics;
 
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Actionable;
-import hudson.model.ProminentProjectAction;
-import hudson.model.Result;
-
-import java.io.IOException;
-
+import hudson.model.*;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import java.io.IOException;
 
 @SuppressWarnings("unchecked")
 public abstract class AbstractRubyMetricsProjectAction<T extends AbstractRubyMetricsBuildAction> extends Actionable implements ProminentProjectAction {

@@ -1,15 +1,14 @@
 package hudson.plugins.rubyMetrics.rcov.model;
 
-import java.lang.reflect.Field;
-
 import hudson.model.FreeStyleBuild;
 import hudson.model.Run;
-
+import hudson.plugins.rubyMetrics.rcov.RcovBuildAction;
 import org.junit.Test;
+
+import java.lang.reflect.Field;
+
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-
-import hudson.plugins.rubyMetrics.rcov.RcovBuildAction;
 
 public class RcovFileResultTest {
     @Test

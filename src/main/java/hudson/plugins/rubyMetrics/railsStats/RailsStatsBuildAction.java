@@ -7,12 +7,11 @@ import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.util.ChartUtil;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
 import hudson.util.DataSetBuilder;
+import org.kohsuke.stapler.StaplerRequest;
+import org.kohsuke.stapler.StaplerResponse;
 
 import java.io.IOException;
 import java.util.Map;
-
-import org.kohsuke.stapler.StaplerRequest;
-import org.kohsuke.stapler.StaplerResponse;
 
 public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
 

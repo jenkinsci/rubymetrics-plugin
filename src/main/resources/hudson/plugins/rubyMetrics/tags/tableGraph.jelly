@@ -1,7 +1,6 @@
 <?jelly escape-by-default='true'?>
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
-         xmlns:t="/lib/hudson" xmlns:f="/lib/form"
-         xmlns:rcov="/hudson/plugins/rubyMetrics/tags">
+<j:jelly xmlns:j="jelly:core"
+        >
          
          <td class="value">
 	         <table cellspacing='0' cellpadding='0' align='right'>

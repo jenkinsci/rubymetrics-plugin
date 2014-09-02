@@ -2,28 +2,23 @@ package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.model.AbstractBuild;
-import hudson.model.AbstractProject;
-import hudson.model.Action;
-import hudson.model.BuildListener;
-import hudson.model.Result;
+import hudson.model.*;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.rcov.model.MetricTarget;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.plugins.rubyMetrics.rcov.model.Targets;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import net.sf.json.JSONObject;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.StaplerRequest;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.sf.json.JSONObject;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.kohsuke.stapler.DataBoundConstructor;
-import org.kohsuke.stapler.StaplerRequest;
 
 /**
  * Rcov {@link Publisher}

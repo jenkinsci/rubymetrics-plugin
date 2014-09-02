@@ -2,26 +2,21 @@ package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.BuildListener;
 import hudson.plugins.rubyMetrics.HtmlParser;
-import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileResult;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
 import hudson.util.IOException2;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.htmlparser.Node;
 import org.htmlparser.Parser;
-import org.htmlparser.Text;
-import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.filters.TagNameFilter;
 import org.htmlparser.tags.LinkTag;
 import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class SaikuroParser extends HtmlParser {
 

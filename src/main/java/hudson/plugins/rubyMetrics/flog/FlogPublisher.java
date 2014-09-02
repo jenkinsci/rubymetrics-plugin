@@ -13,12 +13,11 @@ import hudson.plugins.rubyMetrics.flog.model.FlogBuildResults;
 import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import org.kohsuke.stapler.DataBoundConstructor;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
-import java.io.ByteArrayOutputStream;
-
-import org.kohsuke.stapler.DataBoundConstructor;
 
 public class FlogPublisher extends AbstractRubyMetricsPublisher {
 

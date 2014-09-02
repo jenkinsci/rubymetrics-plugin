@@ -1,15 +1,6 @@
 package hudson.plugins.rubyMetrics;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import hudson.model.BuildListener;
-
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.Text;
@@ -17,6 +8,8 @@ import org.htmlparser.filters.NodeClassFilter;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+
+import java.io.*;
 
 public abstract class HtmlParser {
 

@@ -1,20 +1,16 @@
 package hudson.plugins.rubyMetrics.flog;
 
 import hudson.model.AbstractBuild;
-import hudson.model.HealthReport;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.flog.model.FlogBuildResults;
-import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
 import hudson.util.ChartUtil;
-import hudson.util.DataSetBuilder;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
+import hudson.util.DataSetBuilder;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.plot.CategoryPlot;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import java.util.Map;
-
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
 
 public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
 

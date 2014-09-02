@@ -1,6 +1,5 @@
 package hudson.plugins.rubyMetrics;
 
-import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 import hudson.FilePath;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
@@ -8,6 +7,8 @@ import hudson.model.Result;
 
 import java.io.File;
 import java.io.FilenameFilter;
+
+import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 
 public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
 

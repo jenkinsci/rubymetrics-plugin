@@ -2,13 +2,13 @@ package hudson.plugins.rubyMetrics;
 
 import hudson.FilePath;
 import hudson.Launcher;
+import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.StreamBuildListener;
-import hudson.model.AbstractBuild;
 import hudson.plugins.rake.Rake;
 
-import java.io.IOException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
 public abstract class AbstractRailsTaskPublisher extends AbstractRubyMetricsPublisher {
 

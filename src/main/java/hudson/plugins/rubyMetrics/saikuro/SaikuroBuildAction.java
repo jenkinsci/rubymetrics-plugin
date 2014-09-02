@@ -1,15 +1,13 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.AbstractBuild;
-import hudson.model.HealthReport;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileDetail;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileResult;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
 import hudson.util.ChartUtil;
-import hudson.util.DataSetBuilder;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
-
+import hudson.util.DataSetBuilder;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 

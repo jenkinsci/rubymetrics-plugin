@@ -5,14 +5,13 @@ import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.FreeStyleProject;
 import hudson.util.ArgumentListBuilder;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
-
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.jvnet.hudson.test.HudsonTestCase;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class FlogExecutorTest extends HudsonTestCase {
 

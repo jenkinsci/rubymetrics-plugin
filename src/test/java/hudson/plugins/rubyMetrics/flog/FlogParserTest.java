@@ -1,12 +1,11 @@
 package hudson.plugins.rubyMetrics.flog;
 
 import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
+import junit.framework.TestCase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import junit.framework.TestCase;
 
 public class FlogParserTest extends TestCase {
 

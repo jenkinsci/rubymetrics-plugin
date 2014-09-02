@@ -3,16 +3,10 @@ package hudson.plugins.rubyMetrics.railsStats;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsMetrics;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.TreeMap;
+import java.io.ByteArrayOutputStream;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.io.ByteArrayOutputStream;
 
 public class RailsStatsParser {
 

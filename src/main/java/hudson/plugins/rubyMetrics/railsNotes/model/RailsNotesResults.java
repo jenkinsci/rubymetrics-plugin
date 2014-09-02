@@ -1,13 +1,6 @@
 package hudson.plugins.rubyMetrics.railsNotes.model;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class RailsNotesResults {
     private Map<String, Map<RailsNotesMetrics, Integer>> metrics = new HashMap<String, Map<RailsNotesMetrics,Integer>>();

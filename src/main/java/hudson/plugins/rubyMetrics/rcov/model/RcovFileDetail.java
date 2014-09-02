@@ -2,15 +2,14 @@ package hudson.plugins.rubyMetrics.rcov.model;
 
 import hudson.model.AbstractBuild;
 import hudson.model.ModelObject;
-
 import hudson.plugins.rubyMetrics.rcov.RcovParser;
+import org.htmlparser.util.ParserException;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.logging.Logger;
-import static java.util.logging.Level.SEVERE;
 
-import org.htmlparser.util.ParserException;
+import static java.util.logging.Level.SEVERE;
 
 public class RcovFileDetail implements ModelObject, Serializable  {
 

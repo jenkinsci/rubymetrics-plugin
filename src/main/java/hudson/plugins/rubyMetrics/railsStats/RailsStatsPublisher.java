@@ -10,10 +10,9 @@ import hudson.plugins.rubyMetrics.AbstractRailsTaskPublisher;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import org.kohsuke.stapler.DataBoundConstructor;
 
 import java.io.ByteArrayOutputStream;
-
-import org.kohsuke.stapler.DataBoundConstructor;
 
 /**
  * Rails stats {@link Publisher}

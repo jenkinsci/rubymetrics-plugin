@@ -1,8 +1,9 @@
 package hudson.plugins.rubyMetrics.rcov.model;
 
+import org.jvnet.localizer.Localizable;
+
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import org.jvnet.localizer.Localizable;
 
 public class RcovResult extends RcovAbstractResult {
 

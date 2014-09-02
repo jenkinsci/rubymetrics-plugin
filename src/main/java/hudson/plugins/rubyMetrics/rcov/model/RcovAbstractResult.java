@@ -1,8 +1,8 @@
 package hudson.plugins.rubyMetrics.rcov.model;
 
-import java.math.BigDecimal;
-
 import org.apache.commons.lang.StringUtils;
+
+import java.math.BigDecimal;
 
 public class RcovAbstractResult {
 

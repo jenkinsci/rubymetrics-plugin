@@ -1,18 +1,18 @@
 package hudson.plugins.rubyMetrics.flog;
 
-import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 import hudson.EnvVars;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.util.ArgumentListBuilder;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.ByteArrayOutputStream;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 
 public class FlogExecutor {
 

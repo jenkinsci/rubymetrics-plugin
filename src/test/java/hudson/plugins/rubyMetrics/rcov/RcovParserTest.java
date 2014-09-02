@@ -2,11 +2,10 @@ package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
+import junit.framework.TestCase;
 
 import java.io.File;
 import java.io.InputStream;
-
-import junit.framework.TestCase;
 
 /**
  * RcovParser test

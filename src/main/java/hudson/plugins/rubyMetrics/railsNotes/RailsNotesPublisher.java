@@ -1,24 +1,18 @@
 package hudson.plugins.rubyMetrics.railsNotes;
 
 import hudson.Extension;
-import hudson.FilePath;
-import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
-import hudson.model.BuildListener;
-import hudson.model.StreamBuildListener;
 import hudson.plugins.rake.Rake;
 import hudson.plugins.rake.RubyInstallation;
 import hudson.plugins.rubyMetrics.AbstractRailsTaskPublisher;
 import hudson.plugins.rubyMetrics.railsNotes.model.RailsNotesResults;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
-
-import java.io.IOException;
-import java.io.ByteArrayOutputStream;
-
 import org.kohsuke.stapler.DataBoundConstructor;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Rails notes {@link Publisher}

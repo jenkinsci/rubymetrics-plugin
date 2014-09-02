@@ -3,19 +3,14 @@ package hudson.plugins.rubyMetrics.rcov;
 import hudson.model.AbstractBuild;
 import hudson.model.HealthReport;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
-import hudson.plugins.rubyMetrics.rcov.model.MetricTarget;
-import hudson.plugins.rubyMetrics.rcov.model.RcovFileDetail;
-import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
-import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
-import hudson.plugins.rubyMetrics.rcov.model.Targets;
+import hudson.plugins.rubyMetrics.rcov.model.*;
 import hudson.util.ChartUtil;
-import hudson.util.DataSetBuilder;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
-
-import java.util.List;
-
+import hudson.util.DataSetBuilder;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
+
+import java.util.List;
 
 public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
 

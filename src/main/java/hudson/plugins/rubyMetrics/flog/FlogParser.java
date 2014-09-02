@@ -2,15 +2,13 @@ package hudson.plugins.rubyMetrics.flog;
 
 import hudson.plugins.rubyMetrics.flog.model.FlogFileResults;
 import hudson.plugins.rubyMetrics.flog.model.FlogMethodResults;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.io.ByteArrayOutputStream;
-
 import jregex.Matcher;
 import jregex.Pattern;
-
 import org.apache.commons.lang.StringUtils;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class FlogParser {
 

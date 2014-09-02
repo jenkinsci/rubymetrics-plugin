@@ -4,16 +4,6 @@ import hudson.plugins.rubyMetrics.HtmlParser;
 import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.util.IOException2;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.Text;
@@ -27,6 +17,10 @@ import org.htmlparser.tags.TableRow;
 import org.htmlparser.tags.TableTag;
 import org.htmlparser.util.NodeList;
 import org.htmlparser.util.ParserException;
+
+import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RcovParser extends HtmlParser {
 
