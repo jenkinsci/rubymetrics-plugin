@@ -1,5 +1,0 @@
-<j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:d="jelly:define" xmlns:l="/lib/layout"
-         xmlns:t="/lib/hudson" xmlns:f="/lib/form" xmlns:rubyMetrics="/hudson/plugins/rubyMetrics/tags">
-         
-	<rubyMetrics:floatingBox title="Saikuro report"/>
-</j:jelly>
