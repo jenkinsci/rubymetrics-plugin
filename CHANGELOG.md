@@ -1,3 +1,7 @@
+# 1.6.3 (November 24, 2014)
+
+* Enable plug-in to work with older and LTS Jenkins releases
+
 # 1.6.2 (September 2, 2014)
 
 * Changes RcovFileResult class to avoid retaining the source code of every file in the coverage report in memory for every build.
