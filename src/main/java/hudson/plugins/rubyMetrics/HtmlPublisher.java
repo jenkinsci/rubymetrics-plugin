@@ -1,9 +1,7 @@
 package hudson.plugins.rubyMetrics;
 
 import hudson.FilePath;
-import hudson.model.AbstractBuild;
-import hudson.model.BuildListener;
-import hudson.model.Result;
+import hudson.model.*;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -18,31 +16,29 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
         return reportDir;
     }
 
-    protected boolean prepareMetricsReportBeforeParse(AbstractBuild<?, ?> build, BuildListener listener,
+    protected boolean prepareMetricsReportBeforeParse(Run<?, ?> run, FilePath workspace, TaskListener listener,
             FilenameFilter indexFilter, String toolShortName) throws InterruptedException {
-        if (build.getResult() == Result.FAILURE) {
+        if (run.getResult() == Result.FAILURE) {
             listener.getLogger().println("Build failed, skipping " + toolShortName + " coverage report");
             return true;
         }
         listener.getLogger().println("Publishing " + toolShortName + " report...");
 
-        final FilePath workspace = build.getModuleRoot();
-
-        boolean copied = moveReportsToBuildRootDir(workspace, build.getRootDir(), listener, reportDir, "**/*");
+        boolean copied = moveReportsToBuildRootDir(workspace, run.getRootDir(), listener, reportDir, "**/*");
         if (!copied) {
-            build.setResult(Result.FAILURE);
-            return fail(build, listener, toolShortName + " report directory wasn't found using the pattern '" + reportDir + "'.");
+            run.setResult(Result.FAILURE);
+            return fail(run, listener, toolShortName + " report directory wasn't found using the pattern '" + reportDir + "'.");
         }
 
-        File[] coverageFiles = build.getRootDir().listFiles(indexFilter);
+        File[] coverageFiles = run.getRootDir().listFiles(indexFilter);
         if (coverageFiles == null || coverageFiles.length == 0) {
-            return fail(build, listener, toolShortName + " report index file wasn't found");
+            return fail(run, listener, toolShortName + " report index file wasn't found");
         }
 
         return true;
     }
 
-    protected File[] getCoverageFiles(AbstractBuild<?, ?> build, FilenameFilter indexFilter) {
-        return build.getRootDir().listFiles(indexFilter);
+    protected File[] getCoverageFiles(Run<?, ?> run, FilenameFilter indexFilter) {
+        return run.getRootDir().listFiles(indexFilter);
     }
 }

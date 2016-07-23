@@ -2,6 +2,7 @@ package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.model.AbstractBuild;
 import hudson.model.HealthReport;
+import hudson.model.Run;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.rcov.model.*;
 import hudson.util.ChartUtil;
@@ -17,7 +18,7 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
     private final RcovResult results;
     private final List<MetricTarget> targets;
 
-    public RcovBuildAction(AbstractBuild<?, ?> owner, RcovResult results, List<MetricTarget> targets) {
+    public RcovBuildAction(Run<?, ?> owner, RcovResult results, List<MetricTarget> targets) {
         super(owner);
         this.results = results;
         this.targets = targets;

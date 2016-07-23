@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Run;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileDetail;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileResult;
@@ -15,7 +16,7 @@ public class SaikuroBuildAction extends AbstractRubyMetricsBuildAction{
 
     private SaikuroResult results;
 
-    public SaikuroBuildAction(AbstractBuild<?, ?> owner, SaikuroResult results) {
+    public SaikuroBuildAction(Run<?, ?> owner, SaikuroResult results) {
         super(owner);
         this.results = results;
     }

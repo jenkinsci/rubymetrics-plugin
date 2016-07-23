@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>1.532.3</version>
+        <version>1.580</version>
     </parent>
 
     <artifactId>rubyMetrics</artifactId>
@@ -62,8 +62,8 @@
         <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
         <url>https://github.com/jenkins/rubymetrics-plugin</url>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <plugins>

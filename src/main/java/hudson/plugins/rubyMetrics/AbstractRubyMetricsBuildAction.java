@@ -1,9 +1,6 @@
 package hudson.plugins.rubyMetrics;
 
-import hudson.model.AbstractBuild;
-import hudson.model.HealthReport;
-import hudson.model.HealthReportingAction;
-import hudson.model.Result;
+import hudson.model.*;
 import hudson.util.ChartUtil;
 import hudson.util.ColorPalette;
 import hudson.util.DataSetBuilder;
@@ -30,14 +27,14 @@ import java.util.Calendar;
 @SuppressWarnings("unchecked")
 public abstract class AbstractRubyMetricsBuildAction implements HealthReportingAction {
 
-    protected final AbstractBuild<?, ?> owner;
+    protected final Run<?, ?> owner;
 
-    protected AbstractRubyMetricsBuildAction(AbstractBuild<?, ?> owner) {
+    protected AbstractRubyMetricsBuildAction(Run<?, ?> owner) {
         this.owner = owner;
     }
 
     public <T extends AbstractRubyMetricsBuildAction> T getPreviousResult() {
-        AbstractBuild<?, ?> b = owner;
+        Run<?, ?> b = owner;
         while (true) {
             b = b.getPreviousBuild();
             if (b == null)
@@ -126,7 +123,7 @@ public abstract class AbstractRubyMetricsBuildAction implements HealthReportingA
         return chart;
     }
 
-    public AbstractBuild<?, ?> getOwner() {
+    public Run<?, ?> getOwner() {
         return owner;
     }
 

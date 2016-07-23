@@ -2,6 +2,7 @@ package hudson.plugins.rubyMetrics.rcov.model;
 
 import hudson.model.AbstractBuild;
 import hudson.model.ModelObject;
+import hudson.model.Run;
 import hudson.plugins.rubyMetrics.rcov.RcovParser;
 import org.htmlparser.util.ParserException;
 
@@ -17,10 +18,10 @@ public class RcovFileDetail implements ModelObject, Serializable  {
 
     private static final Logger LOGGER = Logger.getLogger(RcovFileDetail.class.getName());
 
-    private final AbstractBuild<?, ?> owner;
+    private final Run<?, ?> owner;
     private final RcovFileResult result;
 
-    public RcovFileDetail(final AbstractBuild<?, ?> owner, final RcovFileResult result) {
+    public RcovFileDetail(final Run<?, ?> owner, final RcovFileResult result) {
         this.owner = owner;
         this.result = result;
     }
@@ -29,7 +30,7 @@ public class RcovFileDetail implements ModelObject, Serializable  {
         return serialVersionUID;
     }
 
-    public AbstractBuild<?, ?> getOwner() {
+    public Run<?, ?> getOwner() {
         return owner;
     }
 
