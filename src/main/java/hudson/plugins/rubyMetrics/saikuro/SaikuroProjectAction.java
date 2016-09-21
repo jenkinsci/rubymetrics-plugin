@@ -1,10 +1,16 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
 
 public class SaikuroProjectAction<SaikuroBuildAction> extends AbstractRubyMetricsProjectAction {
 
+    public SaikuroProjectAction(Job<?, ?> job) {
+        super(job);
+    }
+
+    @Deprecated
     public SaikuroProjectAction(AbstractProject<?, ?> project) {
         super(project);
     }

@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.railsStats;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsMetrics;
 import hudson.plugins.rubyMetrics.railsStats.model.RailsStatsResults;
@@ -11,6 +12,8 @@ import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
@@ -20,6 +23,10 @@ public class RailsStatsBuildAction extends AbstractRubyMetricsBuildAction {
     public RailsStatsBuildAction(AbstractBuild<?, ?> owner, RailsStatsResults results) {
         super(owner);
         this.results = results;
+    }
+
+    public Collection<? extends Action> getProjectActions() {
+      return Collections.singletonList(new RailsStatsProjectAction(owner.getParent()));
     }
 
     public RailsStatsResults getResults() {

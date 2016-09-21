@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.model.Run;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileDetail;
@@ -12,6 +13,9 @@ import hudson.util.DataSetBuilder;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
+import java.util.Collection;
+import java.util.Collections;
+
 public class SaikuroBuildAction extends AbstractRubyMetricsBuildAction{
 
     private SaikuroResult results;
@@ -19,6 +23,10 @@ public class SaikuroBuildAction extends AbstractRubyMetricsBuildAction{
     public SaikuroBuildAction(Run<?, ?> owner, SaikuroResult results) {
         super(owner);
         this.results = results;
+    }
+
+    public Collection<? extends Action> getProjectActions() {
+      return Collections.singletonList(new SaikuroProjectAction(owner.getParent()));
     }
 
     @Override

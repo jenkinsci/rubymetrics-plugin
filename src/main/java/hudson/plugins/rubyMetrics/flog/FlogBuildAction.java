@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.flog;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.flog.model.FlogBuildResults;
 import hudson.util.ChartUtil;
@@ -11,6 +12,8 @@ import org.jfree.chart.plot.CategoryPlot;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.Collection;
+import java.util.Collections;
 
 public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
 
@@ -19,6 +22,10 @@ public class FlogBuildAction extends AbstractRubyMetricsBuildAction {
     public FlogBuildAction(AbstractBuild<?, ?> owner, FlogBuildResults results) {
         super(owner);
         this.results = results;
+    }
+
+    public Collection<? extends Action> getProjectActions() {
+      return Collections.singletonList(new FlogProjectAction(owner.getParent()));
     }
 
     @Override

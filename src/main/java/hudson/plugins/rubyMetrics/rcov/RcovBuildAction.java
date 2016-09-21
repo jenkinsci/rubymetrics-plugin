@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.model.AbstractBuild;
+import hudson.model.Action;
 import hudson.model.HealthReport;
 import hudson.model.Run;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
@@ -11,6 +12,8 @@ import hudson.util.DataSetBuilder;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
@@ -22,6 +25,10 @@ public class RcovBuildAction extends AbstractRubyMetricsBuildAction {
         super(owner);
         this.results = results;
         this.targets = targets;
+    }
+
+    public Collection<? extends Action> getProjectActions() {
+      return Collections.singletonList(new RcovProjectAction(owner.getParent()));
     }
 
     public HealthReport getBuildHealth() {

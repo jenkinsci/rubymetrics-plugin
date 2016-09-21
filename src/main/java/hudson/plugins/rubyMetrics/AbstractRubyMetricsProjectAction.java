@@ -9,14 +9,14 @@ import java.io.IOException;
 @SuppressWarnings("unchecked")
 public abstract class AbstractRubyMetricsProjectAction<T extends AbstractRubyMetricsBuildAction> extends Actionable implements ProminentProjectAction {
 
-    protected final AbstractProject<?, ?> project;
+    protected final Job<?, ?> job;
 
-    public AbstractRubyMetricsProjectAction(AbstractProject<?, ?> project) {
-        this.project = project;
+    public AbstractRubyMetricsProjectAction(Job<?, ?> job) {
+        this.job = job;
     }
 
-    public AbstractProject<?, ?> getProject() {
-        return project;
+    public Job<?, ?> getJob() {
+      return job;
     }
 
     public String getIconFileName() {
@@ -45,23 +45,23 @@ public abstract class AbstractRubyMetricsProjectAction<T extends AbstractRubyMet
     }
 
     public T getLastResult() {
-        for (AbstractBuild<?, ?> b = project.getLastStableBuild(); b != null; b = b.getPreviousNotFailedBuild()) {
-            if (b.getResult() == Result.FAILURE)
+        for (Run<?, ?> r = job.getLastStableBuild(); r != null; r = r.getPreviousNotFailedBuild()) {
+            if (r.getResult() == Result.FAILURE)
                 continue;
-            T r = b.getAction(getBuildActionClass());
-            if (r != null)
-                return r;
+            T result = r.getAction(getBuildActionClass());
+            if (result != null)
+                return result;
         }
         return null;
     }
 
     public Integer getLastResultBuild() {
-        for (AbstractBuild<?, ?> b = project.getLastStableBuild(); b != null; b = b.getPreviousNotFailedBuild()) {
-            if (b.getResult() == Result.FAILURE)
+        for (Run<?, ?> r = job.getLastStableBuild(); r != null; r = r.getPreviousNotFailedBuild()) {
+            if (r.getResult() == Result.FAILURE)
                 continue;
-            T r = b.getAction(getBuildActionClass());
-            if (r != null)
-                return b.getNumber();
+            T result = r.getAction(getBuildActionClass());
+            if (result != null)
+                return r.getNumber();
         }
         return null;
     }

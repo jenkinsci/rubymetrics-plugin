@@ -5,6 +5,7 @@ import hudson.util.ChartUtil;
 import hudson.util.ColorPalette;
 import hudson.util.DataSetBuilder;
 import hudson.util.ShiftedCategoryAxis;
+import jenkins.tasks.SimpleBuildStep;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -25,7 +26,7 @@ import java.io.IOException;
 import java.util.Calendar;
 
 @SuppressWarnings("unchecked")
-public abstract class AbstractRubyMetricsBuildAction implements HealthReportingAction {
+public abstract class AbstractRubyMetricsBuildAction implements HealthReportingAction, SimpleBuildStep.LastBuildAction {
 
     protected final Run<?, ?> owner;
 

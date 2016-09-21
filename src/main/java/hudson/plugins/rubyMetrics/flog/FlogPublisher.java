@@ -71,11 +71,6 @@ public class FlogPublisher extends AbstractRubyMetricsPublisher {
     }
 
     @Override
-    public Action getProjectAction(AbstractProject<?,?> project) {
-        return new FlogProjectAction<FlogBuildAction>(project);
-    }
-
-    @Override
     public BuildStepDescriptor<Publisher> getDescriptor() {
         return DESCRIPTOR;
     }

@@ -49,11 +49,6 @@ public class SaikuroPublisher extends HtmlPublisher implements SimpleBuildStep {
         }
     }
 
-    @Override
-    public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new SaikuroProjectAction(project);
-    }
-
     //@Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 

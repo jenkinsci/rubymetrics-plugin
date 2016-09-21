@@ -82,12 +82,6 @@ public class RcovPublisher extends HtmlPublisher implements SimpleBuildStep {
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new RcovProjectAction(project);
-    }
-
     public List<MetricTarget> getTargets() {
         return targets;
     }
