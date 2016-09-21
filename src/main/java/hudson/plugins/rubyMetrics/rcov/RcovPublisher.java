@@ -92,6 +92,7 @@ public class RcovPublisher extends HtmlPublisher implements SimpleBuildStep {
         return targets;
     }
 
+    @DataBoundSetter
     public void setTargets(List<MetricTarget> targets) {
         this.targets = targets;
     }
