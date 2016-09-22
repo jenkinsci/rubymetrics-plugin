@@ -1,9 +1,15 @@
 package hudson.plugins.rubyMetrics.railsNotes;
 
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
 
 public class RailsNotesProjectAction<RailsNotesBuildAction> extends AbstractRubyMetricsProjectAction {
+    public RailsNotesProjectAction(Job<?, ?> job) {
+        super(job);
+    }
+
+    @Deprecated
     public RailsNotesProjectAction(AbstractProject<?, ?> project) {
         super(project);
     }

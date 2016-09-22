@@ -36,11 +36,6 @@ public class RailsStatsPublisher extends AbstractRailsTaskPublisher {
         build.getActions().add(action);
     }
 
-    @Override
-    public Action getProjectAction(AbstractProject<?,?> project) {
-        return new RailsStatsProjectAction(project);
-    }
-
     @Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 

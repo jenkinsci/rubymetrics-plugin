@@ -1,5 +1,6 @@
 package hudson.plugins.rubyMetrics.railsNotes;
 
+import hudson.model.Action;
 import hudson.model.AbstractBuild;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsBuildAction;
 import hudson.plugins.rubyMetrics.railsNotes.model.RailsNotesMetrics;
@@ -8,6 +9,8 @@ import hudson.util.ChartUtil;
 import hudson.util.ChartUtil.NumberOnlyBuildLabel;
 import hudson.util.DataSetBuilder;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
@@ -16,6 +19,10 @@ public class RailsNotesBuildAction extends AbstractRubyMetricsBuildAction {
     public RailsNotesBuildAction(AbstractBuild<?, ?> owner, RailsNotesResults results) {
         super(owner);
         this.results = results;
+    }
+
+    public Collection<? extends Action> getProjectActions() {
+      return Collections.singletonList(new RailsNotesProjectAction(owner.getParent()));
     }
 
     public RailsNotesResults getResults() {

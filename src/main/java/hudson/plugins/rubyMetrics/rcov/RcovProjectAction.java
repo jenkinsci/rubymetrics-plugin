@@ -1,10 +1,16 @@
 package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.model.AbstractProject;
+import hudson.model.Job;
 import hudson.plugins.rubyMetrics.AbstractRubyMetricsProjectAction;
 
 public class RcovProjectAction<RcovBuildAction> extends AbstractRubyMetricsProjectAction {
 
+    public RcovProjectAction(Job<?, ?> job) {
+        super(job);
+    }
+
+    @Deprecated
     public RcovProjectAction(AbstractProject<?, ?> project) {
         super(project);
     }

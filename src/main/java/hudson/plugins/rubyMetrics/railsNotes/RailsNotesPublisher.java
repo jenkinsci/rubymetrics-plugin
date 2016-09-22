@@ -34,11 +34,6 @@ public class RailsNotesPublisher extends AbstractRailsTaskPublisher {
         build.getActions().add(action);
     }
 
-    @Override
-    public Action getProjectAction(AbstractProject<?,?> project) {
-        return new RailsNotesProjectAction(project);
-    }
-
     @Extension
     public static final DescriptorImpl DESCRIPTOR = new DescriptorImpl();
 

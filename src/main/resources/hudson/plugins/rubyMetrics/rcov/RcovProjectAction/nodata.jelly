@@ -2,7 +2,7 @@
 <j:jelly xmlns:j="jelly:core" xmlns:st="jelly:stapler" xmlns:l="/lib/layout"
         >
     <l:layout css="/plugin/rubyMetrics/css/style.css">
-        <st:include it="${it.project}" page="sidepanel.jelly"/>
+        <st:include it="${it.job}" page="sidepanel.jelly"/>
         <l:main-panel>
             <h1>No valid coverage data available</h1>
             <p>

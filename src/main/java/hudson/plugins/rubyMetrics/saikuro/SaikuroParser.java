@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
 import hudson.model.BuildListener;
+import hudson.model.TaskListener;
 import hudson.plugins.rubyMetrics.HtmlParser;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroFileResult;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
@@ -20,7 +21,7 @@ import java.io.InputStream;
 
 public class SaikuroParser extends HtmlParser {
 
-    public SaikuroParser(File rootFilePath, BuildListener listener) {
+    public SaikuroParser(File rootFilePath, TaskListener listener) {
         super(rootFilePath);
         this.listener = listener;
     }

@@ -1,20 +1,23 @@
 package hudson.plugins.rubyMetrics.saikuro;
 
+import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.*;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
 import hudson.plugins.rubyMetrics.saikuro.model.SaikuroResult;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import jenkins.tasks.SimpleBuildStep;
 import net.sf.json.JSONObject;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 
-public class SaikuroPublisher extends HtmlPublisher {
+public class SaikuroPublisher extends HtmlPublisher implements SimpleBuildStep {
 
     @DataBoundConstructor
     public SaikuroPublisher(String reportDir) {
@@ -25,31 +28,25 @@ public class SaikuroPublisher extends HtmlPublisher {
      * {@inheritDoc}
      */
     @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+    public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath workspace, @Nonnull Launcher launcher,
+                        @Nonnull TaskListener listener) throws InterruptedException, IOException {
         final SaikuroFilenameFilter indexFilter = new SaikuroFilenameFilter();
-        prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
-        if (build.getResult() == Result.FAILURE) {
-            return false;
+        prepareMetricsReportBeforeParse(run, workspace, listener, indexFilter, DESCRIPTOR.getToolShortName());
+        if (run.getResult() == Result.FAILURE) {
+            return;
         }
 
-        SaikuroParser parser = new SaikuroParser(build.getRootDir(), listener);
-        SaikuroResult results = parser.parse(getCoverageFiles(build, indexFilter)[0]);
+        SaikuroParser parser = new SaikuroParser(run.getRootDir(), listener);
+        SaikuroResult results = parser.parse(getCoverageFiles(run, indexFilter)[0]);
 
-        SaikuroBuildAction action = new SaikuroBuildAction(build, results);
-        build.getActions().add(action);
-
-        return true;
+        SaikuroBuildAction action = new SaikuroBuildAction(run, results);
+        run.getActions().add(action);
     }
 
     private static class SaikuroFilenameFilter implements FilenameFilter {
         public boolean accept(File dir, String name) {
             return name.equalsIgnoreCase("index_cyclo.html");
         }
-    }
-
-    @Override
-    public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new SaikuroProjectAction(project);
     }
 
     //@Extension

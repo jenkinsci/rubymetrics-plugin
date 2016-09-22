@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics;
 
 import hudson.model.BuildListener;
+import hudson.model.TaskListener;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.Text;
@@ -19,7 +20,7 @@ public abstract class HtmlParser {
     protected static final String CLASS_ATTR_NAME = "class";
 
     protected final File rootFilePath;
-    protected BuildListener listener;
+    protected TaskListener listener;
 
     public HtmlParser(File rootFilePath) {
         this.rootFilePath = rootFilePath;

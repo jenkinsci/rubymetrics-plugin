@@ -1,6 +1,7 @@
 package hudson.plugins.rubyMetrics.rcov;
 
 import hudson.Extension;
+import hudson.FilePath;
 import hudson.Launcher;
 import hudson.model.*;
 import hudson.plugins.rubyMetrics.HtmlPublisher;
@@ -9,11 +10,14 @@ import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
 import hudson.plugins.rubyMetrics.rcov.model.Targets;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Publisher;
+import jenkins.tasks.SimpleBuildStep;
 import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
+import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.StaplerRequest;
 
+import javax.annotation.Nonnull;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
@@ -27,9 +31,12 @@ import java.util.List;
  *
  */
 @SuppressWarnings({"unchecked", "serial"})
-public class RcovPublisher extends HtmlPublisher {
+public class RcovPublisher extends HtmlPublisher implements SimpleBuildStep {
 
-    private List<MetricTarget> targets;
+    private List<MetricTarget> targets = new ArrayList<MetricTarget>(){{
+        add(new MetricTarget(Targets.TOTAL_COVERAGE, 80, null, null));
+        add(new MetricTarget(Targets.CODE_COVERAGE, 80, null, null));
+    }};
 
     @DataBoundConstructor
     public RcovPublisher(String reportDir) {
@@ -40,27 +47,26 @@ public class RcovPublisher extends HtmlPublisher {
      * {@inheritDoc}
      */
     @Override
-    public boolean perform(AbstractBuild<?, ?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
+    public void perform(@Nonnull Run<?, ?> run, @Nonnull FilePath workspace, @Nonnull Launcher launcher,
+                        @Nonnull TaskListener listener) throws InterruptedException, IOException {
         final RcovFilenameFilter indexFilter = new RcovFilenameFilter();
-        prepareMetricsReportBeforeParse(build, listener, indexFilter, DESCRIPTOR.getToolShortName());
-        if (build.getResult() == Result.FAILURE) {
-            return false;
+        prepareMetricsReportBeforeParse(run, workspace, listener, indexFilter, DESCRIPTOR.getToolShortName());
+        if (run.getResult() == Result.FAILURE) {
+            return;
         }
 
-        RcovParser parser = new RcovParser(build.getRootDir());
-        RcovResult results = parser.parse(getCoverageFiles(build, indexFilter)[0]);
+        RcovParser parser = new RcovParser(run.getRootDir());
+        RcovResult results = parser.parse(getCoverageFiles(run, indexFilter)[0]);
 
-        RcovBuildAction action = new RcovBuildAction(build, results, targets);
-        build.getActions().add(action);
+        RcovBuildAction action = new RcovBuildAction(run, results, targets);
+        run.getActions().add(action);
 
         if (failMetrics(results, listener)) {
-            build.setResult(Result.UNSTABLE);
+            run.setResult(Result.UNSTABLE);
         }
-
-        return true;
     }
 
-    private boolean failMetrics(RcovResult results, BuildListener listener) {
+    private boolean failMetrics(RcovResult results, TaskListener listener) {
         float initRatio = 0;
         float resultRatio = 0;
         for (MetricTarget target : targets) {
@@ -76,16 +82,11 @@ public class RcovPublisher extends HtmlPublisher {
         return false;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Action getProjectAction(final AbstractProject<?, ?> project) {
-        return new RcovProjectAction(project);
-    }
-
     public List<MetricTarget> getTargets() {
         return targets;
     }
 
+    @DataBoundSetter
     public void setTargets(List<MetricTarget> targets) {
         this.targets = targets;
     }
