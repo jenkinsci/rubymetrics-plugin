@@ -9,7 +9,8 @@ import java.io.IOException;
 @SuppressWarnings("unchecked")
 public abstract class AbstractRubyMetricsProjectAction<T extends AbstractRubyMetricsBuildAction> extends Actionable implements ProminentProjectAction {
 
-    protected final Job<?, ?> job;
+    protected Job<?, ?> job;
+    private transient AbstractProject<?, ?> project; // Retain backwards compatibility with old build records
 
     public AbstractRubyMetricsProjectAction(Job<?, ?> job) {
         this.job = job;
@@ -66,4 +67,10 @@ public abstract class AbstractRubyMetricsProjectAction<T extends AbstractRubyMet
         return null;
     }
 
+    private Object readResolve() {
+        if (job == null) {
+           job = project;
+        }
+        return this;
+    }
 }
