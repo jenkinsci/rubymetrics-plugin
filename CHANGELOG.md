@@ -1,3 +1,8 @@
+# 1.6.4
+September 22, 2016
+
+* Add support for Pipeline jobs (#28)
+
 # 1.6.3
 November 24, 2014
 
