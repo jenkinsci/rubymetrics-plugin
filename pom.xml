@@ -12,7 +12,7 @@
     <packaging>hpi</packaging>
 
     <artifactId>rubyMetrics</artifactId>
-    <version>1.6.4</version>
+    <version>1.6.5-SNAPSHOT</version>
 
     <name>RubyMetrics plugin for Jenkins</name>
     <description>RubyMetrics plugin for Jenkins</description>
@@ -66,7 +66,7 @@
         <connection>scm:git:git://github.com/jenkinsci/rubymetrics-plugin.git</connection>
         <developerConnection>scm:git:git@github.com:jenkinsci/rubymetrics-plugin.git</developerConnection>
         <url>https://github.com/jenkins/rubymetrics-plugin</url>
-        <tag>rubyMetrics-1.6.4</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <build>
