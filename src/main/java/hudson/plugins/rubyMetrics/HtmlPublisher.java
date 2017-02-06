@@ -6,6 +6,8 @@ import hudson.model.*;
 import java.io.File;
 import java.io.FilenameFilter;
 
+import java.io.IOException;
+
 import static hudson.plugins.rubyMetrics.Utils.moveReportsToBuildRootDir;
 
 public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
@@ -17,7 +19,10 @@ public abstract class HtmlPublisher extends AbstractRubyMetricsPublisher {
     }
 
     protected boolean prepareMetricsReportBeforeParse(Run<?, ?> run, FilePath workspace, TaskListener listener,
-            FilenameFilter indexFilter, String toolShortName) throws InterruptedException {
+            FilenameFilter indexFilter, String toolShortName) throws InterruptedException, IOException {
+
+        final String reportDir = run.getEnvironment(listener).expand(this.reportDir);
+
         if (run.getResult() == Result.FAILURE) {
             listener.getLogger().println("Build failed, skipping " + toolShortName + " coverage report");
             return true;
