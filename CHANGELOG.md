@@ -1,4 +1,5 @@
-# Unreleased
+# 1.6.5
+February 7, 2017
 
 * Add ability to use environmental variables in path to reports (#32)
 
