@@ -3,7 +3,6 @@ package hudson.plugins.rubyMetrics.rcov;
 import hudson.plugins.rubyMetrics.HtmlParser;
 import hudson.plugins.rubyMetrics.rcov.model.RcovFileResult;
 import hudson.plugins.rubyMetrics.rcov.model.RcovResult;
-import hudson.util.IOException2;
 import org.htmlparser.Node;
 import org.htmlparser.Parser;
 import org.htmlparser.Text;
@@ -58,7 +57,7 @@ public class RcovParser extends HtmlParser {
 
             return result;
         } catch (Exception e) {
-            throw new IOException2("cannot parse rcov report file", e);
+            throw new IOException("cannot parse rcov report file", e);
         }
     }
 
